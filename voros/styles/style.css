@@ -1,0 +1,510 @@
+/*common styles for whole application*/
+body{
+    font-size: 14px;
+    font-family: "Arial";
+    padding: 0px;
+    margin: 0px;
+    background-color: #026890;
+}
+
+#overlay{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1007;
+    background-color: white;
+    opacity: 0.0;
+    filter: alpha(opacity=0);
+    display: block;
+    cursor: wait;
+}
+
+#secondbody{
+    background-color: #d2effe;
+    background-image: url('../images/bgimg.png');
+}
+
+#appholder{
+    background-image: url('../images/bground.png');
+    background-repeat: no-repeat;
+    background-position: top left;
+}
+
+#header{
+    height: 110px;
+    background-image: url('../images/logo.png');
+    background-repeat: no-repeat;
+    background-position: 5px;
+}
+
+#powered{
+    width: 230px;
+    height: 100px;
+    background-image: url('../images/powered.png');
+    background-repeat: no-repeat;
+    float: right;
+    padding-top: 5px;
+}
+
+#powered .active_language{
+    color: #b90800;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: default;
+}
+
+#powered span{
+    color: #026890;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#middle{
+}
+
+#canvas{
+    float: left;
+}
+
+#canvas_background{
+    text-align: center;
+    font-size: 14px;
+    color: #a6c9e2;
+    font-family: "Arial";
+    border: solid slategray 1px;
+    background-color: white;
+}
+
+#diagrammover{
+    cursor: move;
+    position: absolute;
+    filter: alpha(opacity=20);
+    opacity: 0.2;
+    background-color: orangered;
+    z-index: 53;
+    display: none;
+}
+
+#addpanel{
+    width: 240px;
+    height: 110px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url('../images/blockchooserbg.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#add_multiply_block, #add_sumator_block, #add_io_block{
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    margin-top: 25px;
+    float: left;
+}
+
+.clear{
+    clear: both;
+}
+
+.min_width{
+    width: 58px;
+}
+
+#solution{
+    position: absolute;
+    z-index: 50;
+    display: none;
+}
+
+#solution .mainmenu_item{
+    float: right;
+    margin-bottom: -32px;
+    z-index: 51;
+}
+
+.solutionholder{
+    font-family: Times, serif;
+    font-style: italic;
+    font-size: 15px;
+    width: 410px;
+    height: 50px;
+}
+
+#solutionwindowhandle{
+    cursor: move;
+}
+
+#tabs-1, #tabs-2, #tabs-3{
+    overflow: auto;
+    padding: 9px;
+}
+
+#footer{
+    height: 5px;
+}
+
+.footer_text{
+    display: none;
+}
+
+/****************************STYLES FOR SUBWINDOWS*****************************/
+
+.block_editor{
+    display: none;
+}
+
+input{
+    border: solid #a6c9e2 1px;
+}
+
+.normalinput{
+    width: 175px;
+}
+
+.tinyinput{
+    width: 30px;
+}
+
+.signum{
+    margin-left: 30px;
+    font-size: 14px;
+}
+
+.type{
+    margin-left: 16px;
+}
+
+.alertstyle{
+    float: left;
+    margin-right: 10px;
+}
+
+.nametext{
+    width: 120px;
+    display: inline-block;
+}
+
+.nametext .dimensions{
+    color: darkgrey;
+    font-size: 10px;
+}
+
+#fit_canvas{
+    margin-left: 35px;
+}
+
+/******************************STYLES FOR MENUS********************************/
+
+/*styles for contextmenus*/
+.contextmenu{
+    border: solid #a6c9e2 1px;
+    position: absolute;
+    background-color: white;
+    font-size: 12px;
+    display: none;
+    z-index: 1003;
+    width: 200px;
+}
+
+.contextmenu_item{
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.contextmenu_separator{
+    height: 1px;
+    background-color: silver;
+}
+
+.contextmenu_image{
+    width: 16px;
+    height: 16px;
+    float: right;
+    margin-left: 10px;
+}
+
+/*styles for mainmenu*/
+
+.mainmenu{
+    width: 60px;
+    float: left;
+}
+
+.mainmenu_item, .rightmenu_item{
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    margin-left: 14px;
+}
+
+.mainmenu_separator, .rightmenu_separator{
+    width: 24px;
+    background-color: #4297d7;
+    height: 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 18px;
+}
+
+.mainmenu_image{
+    width: 24px;
+    height: 24px;
+    margin: 4px;
+}
+
+.mainmenu_topcap, .rightmenu_topcap{
+    width: 60px;
+    height: 11px;
+    background-image: url('../images/mbgtc.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 10px;
+}
+
+.mainmenu_bottomcap, .rightmenu_bottomcap{
+    width: 60px;
+    height: 11px;
+    background-image: url('../images/mbgbc.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 10px;
+}
+
+.mainmenu_bg, .rightmenu_bg{
+    width: 60px;
+    background-image: url('../images/mbg.png');
+    background-position: center;
+    background-repeat: repeat-y;
+}
+
+.right_menu{
+    width: 60px;
+    float: right;
+}
+
+/************************** STYLES FOR BLOCKS *********************************/
+
+/*common styles*/
+
+.block{
+    position: absolute;
+    font-family: "Courier New", "Nimbus Mono L", Courier;
+    display: none;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.input_pin, .output_pin{
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+}
+
+.top_pinholder, .bottom_pinholder{
+    width: 10px;
+    height: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.left_pinholder, .right_pinholder{
+    height: 10px;
+    width: 10px;
+    margin-top: 24px;
+    float: left;
+}
+
+.top_pinholder .input_pin{
+    background-image: url('../images/arrow_top.png');
+}
+
+.bottom_pinholder .input_pin{
+    background-image: url('../images/arrow_bottom.png');
+}
+
+.left_pinholder .input_pin{
+    background-image: url('../images/arrow_left.png');
+}
+
+.right_pinholder .input_pin{
+    background-image: url('../images/arrow_right.png');
+}
+
+.top_pinholder .output_pin, .bottom_pinholder .output_pin{
+    background-image: url('../images/stroke_vertical.png');
+}
+
+.left_pinholder .output_pin, .right_pinholder .output_pin{
+    background-image: url('../images/stroke_horizontal.png');
+}
+
+.top_pinholder .selected{
+    border-top: solid lightblue 1px;
+    border-right: solid lightblue 1px;
+    border-left: solid lightblue 1px;
+}
+
+.bottom_pinholder .selected{
+    border-bottom: solid lightblue 1px;
+    border-right: solid lightblue 1px;
+    border-left: solid lightblue 1px;
+}
+
+.left_pinholder .selected{
+    border-top: solid lightblue 1px;
+    border-bottom: solid lightblue 1px;
+    border-left: solid lightblue 1px;
+}
+
+.right_pinholder .selected{
+    border-top: solid lightblue 1px;
+    border-right: solid lightblue 1px;
+    border-bottom: solid lightblue 1px;
+}
+
+.center_holder{
+    float: left;
+}
+
+.content_holder{
+    padding: 10px;
+    background-color: white;
+    border: solid black 1px;
+    cursor: pointer;
+}
+
+/*style for multiply block*/
+.numerator{
+    text-align: center;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.separator{
+    height: 1px;
+    background-color: black;
+    display: none;
+}
+
+.denominator{
+    text-align: center;
+    display: none;
+}
+
+sup{
+    font-size: 10px;
+}
+
+sub{
+    font-size: 10px;
+}
+
+/*styles for sumator block*/
+
+.signum_holder{
+    margin-left: -7px;
+    margin-right: -7px;
+    margin-top: -10px;
+    margin-bottom: -10px;
+    width: 30px;
+    height: 36px;
+}
+
+.left_signum, .right_signum{
+    float: left;
+    width: 8px;
+    margin-top: 10px;
+}
+
+.center_signum_holder{
+    float: left;
+    width: 14px;
+    text-align: center;
+}
+
+.top_signum{
+    margin-bottom: 4px;
+}
+
+.bottom_signum{
+}
+
+/*styles for io block*/
+
+.name_holder{
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+/*styles for lines*/
+
+.line{
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    cursor: pointer;
+}
+
+.line_element{
+    position: absolute;
+    background-color: black;
+}
+
+.horizontal_positioner{
+    width: 8px;
+    height: 8px;
+    border: solid black 1px;
+    cursor: e-resize;
+    position: absolute;
+    filter: alpha(opacity=20);
+    opacity: 0.2;
+    background-color: silver;
+    z-index: 3;
+}
+
+.vertical_positioner{
+    width: 8px;
+    height: 8px;
+    border: solid black 1px;
+    cursor: n-resize;
+    position: absolute;
+    filter: alpha(opacity=20);
+    opacity: 0.2;
+    background-color: silver;
+    z-index: 3;
+}
+
+/*styles for junction block*/
+
+.junction{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    cursor: pointer;
+    display: none;
+    z-index: 3;
+}
+
+.junction_h_element{
+    width: 8px;
+    height: 6px;
+    margin-left: 1px;
+    margin-top: 2px;
+    background-color: black;
+}
+
+.junction_v_element{
+    width: 6px;
+    height: 8px;
+    margin-left: 2px;
+    position: relative;
+    margin-top: -7px;
+    background-color: black;
+}

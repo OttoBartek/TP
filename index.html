@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Block scheme web app" content="">
+    <meta name="RF" content="">
+
+    <title>DP</title>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--fabric-->
+    <script type="text/javascript" src="vendor/fabricjs/fabric.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles-->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!--custom-->
+    <script>
+        var blockDrawData = {"Resistor":
+            [
+                {   "type":"path",
+                    "path":"M 0 5 L 10 5",
+                    "data":{
+                        "width":40,
+                        "height":20,
+                        "top":5,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {
+                    "type":"rect",
+                    "data":{
+                        "width":30,
+                        "height":10,
+                        "left":10,
+                        "fill":"white",
+                        "stroke":"black"
+                    }
+                },
+                {   "type":"path",
+                    "path":"M 0 5 L 10 5",
+                    "data":{
+                        "top": 5,
+                        "left":40,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"name",
+                    "Text":"Resistor",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top": 14,
+                        "left":3,
+                        "fontSize": 12,
+                        "fill": "black",
+                        "changeable":true
+                    }
+
+                }
+        ],"Point":
+            [
+                {
+                    "type":"circle",
+                    "data":{
+                        "width":40,
+                        "height":20,
+                        "radius":5,
+                        "fill":"black"
+                    }
+                },
+                {
+                    "type":"circle",
+                    "data":{
+                        "radius":8,
+                        "fill":false,
+                        "top":12,
+                        "invisible":true
+                    }
+                }
+            ],"Inductor":
+            [
+                {   "type":"path",
+                    "path":"M 1,8.5 L 6.5,8.5 C 6.5,8.5 6.5,4.5 10.5,4.5 C 14.5,4.5 14.5,8.5 14.5,8.5 C 14.5,8.5 14.5,4.5 18.5,4.5 C 22.5,4.5 22.5,8.5 22.5,8.5 C 22.5,8.5 22.5,4.5 26.5,4.5 C 30.5,4.5 30.5,8.5 30.5,8.5 C 30.5,8.5 30.5,4.5 34.5,4.5 C 38.5,4.5 38.5,8.5 38.5,8.5 L 44,8.5",
+                    "data":{
+                        "width":40,
+                        "height":20,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"name",
+                    "Text":"Inductor",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":15,
+                        "left":1,
+                        "fontSize": 12,
+                        "fill": "black",
+                        "changeable":true
+                    }
+
+                }
+        ],"Capacitor":
+            [
+                {   "type":"path",
+                    "path":"M 0 0 L 15 0",
+                    "data":{
+                        "width":40,
+                        "height":30,
+                        "top":10,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"path",
+                    "path":"M 0 0 L 0 20",
+                    "data":{
+                        "left":15,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"path",
+                    "path":"M 0 0 L 0 20",
+                    "data":{
+                        "left":20,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"path",
+                    "path":"M 0 0 L 15 0",
+                    "data":{
+                        "top":10,
+                        "left":20,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"name",
+                    "Text":"Capacitor",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":30,
+                        "left":0,
+                        "fontSize": 9,
+                        "fill": "black",
+                        "changeable":true
+                    }
+                }
+        ],"Uin":
+            [
+                {
+                    "type":"circle",
+                    "data":{
+                        "width":40,
+                        "height":30,
+                        "radius":11,
+                        "fill":"white",
+                        "stroke":"black"
+                    }
+                },
+                {
+                    "type":"circle",
+                    "data":{
+                        "radius":14,
+                        "fill":false,
+                        "stroke":false,
+                        "invisible":true
+                    }
+                },
+                {   "type":"name",
+                    "Text":"Uin",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":22,
+                        "left":1,
+                        "fontSize": 12,
+                        "fill": "black",
+                        "changeable":true
+                    }
+                }
+            ],"Uout":
+            [
+                {
+                    "type":"circle",
+                    "data":{
+                        "width":40,
+                        "height":30,
+                        "radius":11,
+                        "fill":"white",
+                        "stroke":"black"
+                    }
+                },
+                {   "type":"name",
+                    "Text":"Uout",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":22,
+                        "left":1,
+                        "fontSize": 12,
+                        "fill": "black",
+                        "changeable":true
+                    }
+                },
+                {   "type":"text",
+                    "Text":"V",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":7,
+                        "left":7,
+                        "fontSize": 12,
+                        "fill": "black",
+                        "changeable":false
+                    }
+                }
+            ]};
+
+        var blockParameters = {"Resistor":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":1,
+                    "MaxInputs":1,
+                    "ports":null,
+                    "NumOfTop":0,
+                    "NumOfBot":0,
+                    "BlockType":"Resistor",
+                    "title":"Parametre rezistor"
+                }
+            ],"Inductor":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":1,
+                    "MaxInputs":1,
+                    "ports":null,
+                    "NumOfTop":0,
+                    "NumOfBot":0,
+                    "BlockType":"Inductor",
+                    "title":"Parametre inductor"
+                }
+            ],"Capacitor":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":1,
+                    "MaxInputs":1,
+                    "ports":null,
+                    "NumOfTop":0,
+                    "NumOfBot":0,
+                    "BlockType":"Capacitor",
+                    "title":"Parametre capacitor"
+                }
+            ],"Uin":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":1,
+                    "MaxInputs":1,
+                    "ports":null,
+                    "NumOfTop":1,
+                    "NumOfBot":1,
+                    "BlockType":"Uin",
+                    "title":"Parametre napatie vstup"
+                }
+            ],"Uout":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":1,
+                    "MaxInputs":1,
+                    "ports":null,
+                    "NumOfTop":1,
+                    "NumOfBot":1,
+                    "BlockType":"Uout",
+                    "title":"Parametre napatie vystup"
+                }
+            ],"Point":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":3,
+                    "NumberOfOutputs":9,
+                    "MaxInputs":1,
+                    "ports":null,
+                    "NumOfTop":0,
+                    "NumOfBot":0,
+                    "BlockType":"Point",
+                    "title":"Parametre uzol",
+                    "baseBlockPoint":true
+                }
+            ]};
+
+        window.prepBlocks = function(typeBlock) {
+            var cx;
+            var blockData = blockDrawData[typeBlock];
+            cx = new fabric.Canvas(typeBlock,{width: blockData[0].data.width + 40, height: blockData[0].data.height + 12});
+            cx.selection = false;
+            var blockGroup = [];
+
+            $.each(blockData, function(i,part) {
+                if(part.type === 'rect')
+                    blockGroup[i] = new fabric.Rect(part.data);
+                else if(part.type === 'path')
+                    blockGroup[i] = new fabric.Path(part.path, part.data);
+                else if(part.type === 'circle')
+                    blockGroup[i] = new fabric.Circle(part.data);
+                else if(part.type === 'text' || part.type === 'name')
+                    blockGroup[i] = new fabric.IText(part.Text, part.data);
+                else if(part.type === 'triangle')
+                    blockGroup[i] = new fabric.Triangle(part.data);
+            });
+
+            var block = new fabric.Group(blockGroup);
+            cx.add(block); cx.bringForward(block);
+            block.evented = block.selectable = false;
+        };
+    </script>
+</head>
+
+<body>
+
+    <!-- output modal-->
+    <div class="modal fade" id="outputModal" tabindex="-1" role="dialog" aria-labelledby="outputModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="outputModalLabel">Solution</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //output modal-->
+
+    <!-- modal block settings-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Block settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--<form>-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="block-name" class="col-form-label">Názov bloku:</label>-->
+                    <!--<input type="text" class="form-control" id="block-name">-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<label for="input-number" class="col-form-label">Počet vstupov:</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<select class="form-control form-control-sm" id="input-number">&ndash;&gt;-->
+                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</form>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="changeBlock()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //modal block settings-->
+
+    <!-- file picker modal-->
+    <div class="modal fade bd-example-modal-sm" id="fileLoadModal" tabindex="-1" role="dialog" aria-labelledby="fileLoadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fileLoadModalLabel">Load model</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="modelFile" class="col-form-label">File:</label>
+                        <input type="file" id="fileToLoad" class="form-control" id="modelFile">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="loadModel()" class="btn btn-primary">Load model</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //file picker modal-->
+
+    <!-- help modal-->
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalLabel">Help</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Application controls</h5>
+                    <span><b>Del</b> - deletes active block</span><br/>
+                    <span><b>r</b> - rotates active block</span><br/>
+                    <span><b>Ctrl+j</b> - copies the type of an active block and creates a new instance</span><br/>
+                    <span><b>Ctrl+s</b> - allows user to save the current scheme</span><br/>
+                    <span><b>Directional arrows</b> - moves current block to equivalent direction</span><br/>
+                    <br/>
+                    <h5>How to use application</h5>
+                    <p>Once the empty scheme of user's choice is loaded, it is possible to <b>add blocks</b> by clicking
+                    on them once in the bottom left side of main menu. Once added, it is possible to connect these blocks
+                    by dragging user's mouse from one object's output to the input of another object.</p>
+                    <p>While creating the scheme, it is possible to alter each object's parameters by <b>double clicking on
+                        the object</b>. Once the whole scheme is created, connected and altered to the user's liking, it is possible to
+                    request the output of the scheme by clicking the <b>Solve/Export</b> button in the top left section of main menu.</p>
+                    <p>At any given time, it is possible to <b>save/load</b> a scheme in the scheme settings.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //help modal-->
+
+    <!--content-->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">DP</a>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file" aria-hidden="true"></i> Scheme types</a>
+                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="index.html" data-toggle="tooltip" title="Resistor - Inductance - Capacitor structures" data-placement="top">RLC</a>
+                        <a class="dropdown-item" href="algebra.html" data-toggle="tooltip" title="Simplification of block diagrams" data-placement="top">Block algebra</a>
+                        <a class="dropdown-item" href="simulation.html" data-toggle="tooltip" title="Building of block schemes for simulation" data-placement="top">BlockSim</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></i> Scheme settings</a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#" onclick="newScheme()"><i class="fa fa-refresh" aria-hidden="true"></i> New scheme</a>
+                        <a class="dropdown-item" href="#" onclick="saveScheme()"><i class="fa fa-download" aria-hidden="true"></i> Save scheme</a>
+                        <a class="dropdown-item" href="#" onclick="loadModal()"><i class="fa fa-upload" aria-hidden="true"></i> Load scheme</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" onclick="loadHelp()"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
+                </li>
+                <li>
+                    <a href="#" onclick="getOutput()"><i class="fa fa-check" aria-hidden="true"></i> Solve</a>
+                </li>
+                <hr>
+                <li>
+                    <span>Blocks</span>
+                </li>
+                <div class="container-fluid" id="block-container">
+                </div>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" oncontextmenu="return false;">
+            <div id="menu-toggle">
+                <a class="fa fa-bars fa-2x" href="#menu-toggle"></a>
+            </div>
+            <canvas id="main-canvas"></canvas>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /content -->
+    <!--custom-->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+        function loadModal(){
+            $('#fileLoadModal').modal();
+        }
+
+        function loadHelp(){
+            $('#helpModal').modal();
+        }
+
+        //canvas reference
+        var canvas = new fabric.Canvas('main-canvas');
+
+        //canvas resizing
+        window.onload = function(e){
+            canvasResize();
+            setSchemeType("rlc");
+            loadBlocks();
+            $("#wrapper").toggleClass("toggled");
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        };
+
+        window.onresize = function(e) {
+            canvasResize();
+        };
+
+        function canvasResize(){
+            canvas.setWidth(window.innerWidth);
+            canvas.setHeight(window.innerHeight);
+        }
+//      /canvas resizing
+    </script>
+    <script src="js/controller.js"></script>
+    <script src="js/blocks.js"></script>
+    <script src="js/scheme.js"></script>
+    <script src="js/output.js"></script>
+</body>
+
+</html>

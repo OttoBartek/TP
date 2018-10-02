@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!--BS.css-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="scripts/fabric.js"></script>
+</head>
+<body>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">DP</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/~fuhrich/index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <!--TODO: finish navbar + right login/reg-->
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <!--TODO: sidebar-->
+            <h6>Súčiastky</h6>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary" onclick="addComponent()">Pridať</button>
+                        <button type="button" class="btn btn-secondary" onclick="deleteActive()">Zmazať</button>
+                        <button type="button" class="btn btn-secondary" onclick="rotateActive()">Otočiť</button>
+                    </div>
+                </div>
+            </div>
+
+            <h6>Plátno</h6>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#clearCanvas">Premazať</button>
+            <button type="button" class="btn btn-secondary" onclick="demo()">Demo</button>
+            <!-- Modal -->
+            <div class="modal fade" id="clearCanvas" tabindex="-1" role="dialog" aria-labelledby="clearCanvasLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="clearCanvasLabel">Premazanie plátna</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Naozaj chcete premazať celé plátno?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="clearCanvas()" data-dismiss="modal">Áno</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="blockInfo" style="padding-top:15px;">
+                <h6>Active block information</h6>
+                <span id="type">Type: </span><br/>
+                <span id="blockType">Block type: </span><br/>
+                <span id="blockName">Block ID: </span><br/>
+                <span id="maxConnections">Max num of connections: </span><br/>
+                <span id="connectionNum">Current num of connections: </span>
+            </div>
+        </div>
+        <div class="col-sm-9 col-md-10 main">
+            <canvas id="workspace" width="1200" height="900" style="border:1px solid black">Tento prehliadač nepodporuje funkcionalitu (canvas) používanú touto aplikáciou.</canvas>
+
+            <script>
+                fabric.Group.prototype.hasControls = false;
+                var canvas = new fabric.Canvas('workspace');
+                canvas.stopContextMenu = true;
+
+                var maxHeight = document.getElementById("workspace").getAttribute("height");
+                var maxWidth = document.getElementById("workspace").getAttribute("width");
+
+                var targetWidth, targetHeight;
+
+                var BLOCK_NUM = 0;
+                var LINE_NUM = 0;
+                var originObject, targetObject = null;
+                var originPortPoints = new Array(4);
+                var targetPortPoints = new Array(4);
+
+                canvas.on('mouse:down', function(e) {
+                    if(e.target) {
+                        if (isPort(e)){
+                            if(originObject === null){
+                                originObject = e.target;
+                                var originName = e.target.get('blockName');
+                                originPortPoints = getObjectPort(originObject);
+                            }else{
+                                targetObject = e.target;
+                                var targetName = e.target.get('blockName');
+                                targetPortPoints = getObjectPort(targetObject);
+
+                                connectObjects(originObject, originName, originPortPoints, targetObject, targetName, targetPortPoints);
+
+                                originObject = targetObject = null;
+                                originPortPoints = [];
+                                targetPortPoints = [];
+                            }
+                            console.log("x1: " + originPortPoints[0] + ", y1: " + originPortPoints[1]);
+                            console.log("x2: " + originPortPoints[2] + ", y2: " + originPortPoints[3]);
+                            console.log('Location: ' + originPortPoints[4]);
+                        }
+                        if(!canvas.getActiveGroup()) {
+                            document.getElementById("type").innerHTML = "Type: "+e.target.get('type');
+                            document.getElementById("blockType").innerHTML = "Block type: "+e.target.get('blockType');
+                            document.getElementById("blockName").innerHTML = "Block ID: "+e.target.get('blockName');
+                            document.getElementById("maxConnections").innerHTML = "Max num of connections: "+e.target.get('maxConnections');
+                            document.getElementById("connectionNum").innerHTML = "Current num of connections: "+e.target.get('connectionCount');
+                        }
+                    }
+                });
+
+                function connectObjects(origin, originName, originPoints, target, targetName, targetPoints){
+                    setPort(origin,target,originPoints[4]);
+                    setPort(target,origin,targetPoints[4]);
+
+                    var line = makeLine([originPoints[0],originPoints[1],targetPoints[0],targetPoints[1]]);
+                    line.set('lineName','line'+LINE_NUM);
+                    LINE_NUM++;
+                    line.set('connection1',originName);
+                    line.set('connection2',targetName);
+                    canvas.add(line);
+                }
+
+                function setPort(object1, object2Name, port){
+                    switch (port) {
+                        case 'mt':
+                            object1.set('mtPort',object2Name);
+                            break;
+                        case 'mr':
+                            object1.set('mrPort',object2Name);
+                            break;
+                        case 'mb':
+                            object1.set('mbPort',object2Name);
+                            break;
+                        case 'ml':
+                            object1.set('mlPort',object2Name);
+                            break;
+                        default:
+                            console.log('error getting port');
+                            break;
+                    }
+                }
+
+                function makeLine(coords) {
+                    return new fabric.Line(coords, {
+                        fill: 'black',
+                        stroke: 'black',
+                        strokeWidth: 1,
+                        hasControls: false,
+                        selectable: false
+                    });
+                }
+
+                function isPort(e){
+                    var result = false;
+                    if(!(e.target.__corner === 0 || e.target.__corner === undefined)) {
+                        result = true;
+                    }
+                    return result;
+                }
+
+                //unused yet
+                function isRotated(e){
+                    var result = true;
+                    if(e.target.getAngle() === 0){
+                        result = false;
+                    }
+                    return result;
+                }
+
+                //ADD ONE COMPONENT
+                function addComponent(){
+                    targetHeight = Math.random() * (maxHeight - 0);
+                    targetWidth = Math.random() * (maxWidth - 0);
+
+                    //                        alert("Height = "+targetHeight+"\nWidth = "+targetWidth);
+
+                    var rnd = Math.floor(Math.random() * 2);
+                    if(rnd === 0) {
+                        fabric.Image.fromURL('images/condensator.png', function (img) {
+                            //block data structure
+                            img.set('type', 'block');
+                            img.set('blockType', 'condensator');
+                            img.set('maxConnections', 2);
+                            img.set('connectionCount', 0);
+                            img.set('blockName', img.get('type') + BLOCK_NUM);
+                            img.set('mlPort', null);
+                            img.set('mrPort', null);
+                            //block settings
+                            img.setTop(targetHeight);
+                            img.setLeft(targetWidth);
+                            img.setHeight(50);
+                            img.setWidth(50);
+                            img.lockScalingX = img.lockScalingY = true;
+                            img.hasRotatingPoint = false;
+                            img.hasBorders = false;
+                            img.transparentCorners = true;
+                            img.setControlsVisibility({
+                                tl: false, tr: false,
+                                br: false, bl: false, mt: false, mb: false
+                            });
+                            canvas.add(img);
+                        });
+                    }else{
+                        fabric.Image.fromURL('images/cievka.png', function (img) {
+                            //block data structure
+                            img.set('type', 'block');
+                            img.set('blockType', 'cievka');
+                            img.set('maxConnections', 4);
+                            img.set('connectionCount', 0);
+                            img.set('blockName', img.get('type') + BLOCK_NUM);
+                            img.set('mlPort', null);
+                            img.set('mrPort', null);
+                            //block settings
+                            img.setTop(targetHeight);
+                            img.setLeft(targetWidth);
+                            img.setHeight(50);
+                            img.setWidth(50);
+                            img.lockScalingX = img.lockScalingY = true;
+                            img.hasRotatingPoint = false;
+                            img.hasBorders = false;
+                            img.transparentCorners = true;
+                            img.setControlsVisibility({
+                                tl: false, tr: false,
+                                br: false, bl: false
+                            });
+                            canvas.add(img);
+                        });
+                    }
+                    BLOCK_NUM++;
+                }
+
+                //CLEAR CANVAS
+                function clearCanvas(){
+//                        if(confirm("Naozaj chcete premazať celé plátno?") == true)
+                    canvas.clear();
+                    BLOCK_NUM = 0;
+                    fabric.Object.prototype.originX = 'left';
+                    fabric.Object.prototype.originY = 'top'
+                }
+
+                function deleteActive(){
+                    if(canvas.getActiveGroup()){
+                        canvas.getActiveGroup().forEachObject(function(o){ canvas.remove(o) });
+                        canvas.discardActiveGroup().renderAll();
+                    } else {
+                        canvas.remove(canvas.getActiveObject());
+                    }
+                }
+
+                function rotateActive(){
+                    var newAngle = canvas.getActiveObject().getAngle() + 90;
+                    if(newAngle === 360){
+                        newAngle = 0;
+                    }
+                    canvas.getActiveObject().setAngle(newAngle);
+                    canvas.renderAll();
+                }
+
+                //PORT MANAGEMENT
+                function getObjectPort(object){
+                    var points = new Array(4);
+                    var port = object.__corner;
+
+                    console.log('findTargetPort - port: ' + object.__corner);
+
+                    switch (port) {
+                        case 'mt':
+                            points = [
+                                object.left + (object.width / 2), object.top,
+                                object.left + (object.width / 2), object.top,
+                                port
+                            ];
+                            break;
+                        case 'mr':
+                            points = [
+                                object.left + object.width, object.top + (object.height / 2),
+                                object.left + object.width, object.top + (object.height / 2),
+                                port
+                            ];
+                            break;
+                        case 'mb':
+                            points = [
+                                object.left + (object.width / 2), object.top + object.height,
+                                object.left + (object.width / 2), object.top + object.height,
+                                port
+                            ];
+                            break;
+                        case 'ml':
+                            points = [
+                                object.left, object.top + (object.height / 2),
+                                object.left, object.top + (object.height / 2),
+                                port
+                            ];
+                            break;
+
+                        default:
+                            console.log('error getting port');
+                            break;
+                    }
+                    return points;
+                }
+
+                // zistit port 1. objectu, ulozit do globalnej premennej, kym je premenna naplnena, cakaj na druhy port,
+                // potom spoj ciarov... (moznost graficky drzat ciaru na myske kym sa nespoji/nezrusi?)
+                // vyriesit zrusenie vyberu -> premazanie glob. premennej so suradnicami
+
+                //KEY MAPPING
+                window.onkeydown = function (e) {
+                    var key = e.keyCode ? e.keyCode : e.which;
+
+                    if (key === 46) {
+                        deleteActive();
+                    }
+                    if (key === 82) {
+                        rotateActive();
+                    }
+                };
+
+//                function demoMakeLine(coords){
+//                    return new fabric.Line(coords, {
+//                        fill: 'black',
+//                        strike: 'black',
+//                        strokeWidth: 4,
+//                        selectable: false
+//                    });
+//                }
+//
+//                //konz DEMO
+//                function demo(){
+//                    console.log('demo called');
+//                    var demoLine = demoMakeLine([15,15,30,30]);
+//                    console.log(demoLine.get('fill'));
+//                    canvas.add(demoLine);
+//                    console.log('line added');
+//                    canvas.renderAll();
+//                }
+
+                function makeRect(left, top, line1, line2) {
+                    var c = new fabric.Rect({
+                        left:left,
+                        top:top,
+                        width:20,
+                        height:20,
+                        strokeWidth:4,
+                        fill:'#fff',
+                        stroke: '#555'
+                    });
+                    c.hasControls = c.hasBorders = false;
+
+                    c.line1 = line1;
+                    c.line2 = line2;
+
+                    return c;
+                }
+
+                function demoMakeLine(coords) {
+                    return new fabric.Line(coords, {
+                        fill: 'black',
+                        stroke: 'black',
+                        strokeWidth: 3,
+                        selectable: false
+                    });
+                }
+
+                function demo(){
+                    fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
+                    var line = demoMakeLine([ 250, 125, 250, 175 ]);
+
+                    canvas.add(line);
+
+                    canvas.add(
+                        makeRect(line.get('x1'), line.get('y1'), null, line),
+                        makeRect(line.get('x2'), line.get('y2'), line)
+                    );
+
+                    canvas.on('object:moving', function(e) {
+                        var p = e.target;
+                        p.line1 && p.line1.set({ 'x2': p.left, 'y2': p.top });
+                        p.line2 && p.line2.set({ 'x1': p.left, 'y1': p.top });
+                        canvas.renderAll();
+                    });
+                }
+
+            </script>
+
+        </div>
+    </div>
+</div>
+
+
+<!--<script data-main="config" src="scripts/require.js"></script>-->
+<!--SCRIPTS-->
+<!--jQuery-->
+<script src="scripts/jquery-3.2.1.slim.min.js"></script>
+<!--Popper.scripts-->
+<script src="scripts/popper.min.js"></script>
+<!--BS.scripts-->
+<script src="scripts/bootstrap.min.js"></script>
+</body>
+</html>

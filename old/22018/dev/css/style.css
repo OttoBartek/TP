@@ -1,0 +1,26 @@
+body{
+     padding-top:6vh;
+     margin-bottom: -15px;
+     height:100vh;
+ }
+
+.navbar{
+    border:0;
+    height: 6vh;
+}
+
+.sidebar{
+    height: 94vh;
+    padding-top:20px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+}
+
+.sidebar button{
+    margin-bottom: 5px;
+}
+
+#workspace{
+    height: 900px;
+    background-color: #fff;
+}

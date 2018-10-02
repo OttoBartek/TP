@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!--BS.css-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="scripts/fabric.js"></script>
+    <script src="scripts/canvas-script.js"></script>
+</head>
+<body>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">DP</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/~fuhrich/index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="dev/index.html">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <!--TODO: finish navbar + right login/reg-->
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <!--TODO: sidebar-->
+            <h6>Súčiastky</h6>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary" onclick="addComponent()">Pridať</button>
+                        <button type="button" class="btn btn-secondary" onclick="deleteActive()">Zmazať</button>
+                        <button type="button" class="btn btn-secondary" onclick="rotateActive()">Otočiť</button>
+                    </div>
+                </div>
+            </div>
+
+            <h6>Plátno</h6>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#clearCanvas">Premazať</button>
+            <!-- Modal -->
+            <div class="modal fade" id="clearCanvas" tabindex="-1" role="dialog" aria-labelledby="clearCanvasLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="clearCanvasLabel">Premazanie plátna</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Naozaj chcete premazať celé plátno?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="clearCanvas()" data-dismiss="modal">Áno</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 col-md-10 main">
+            <canvas id="workspace" width="1200" height="900" style="border:1px solid black">Tento prehliadač nepodporuje funkcionalitu (canvas) používanú touto aplikáciou.</canvas>
+
+            <script>
+                fabric.Group.prototype.hasControls = fabric.Group.prototype.hasBorders = false;
+                var canvas = new fabric.Canvas('workspace');
+                canvas.stopContextMenu = true;
+
+                var maxHeight = document.getElementById("workspace").getAttribute("height");
+                var maxWidth = document.getElementById("workspace").getAttribute("width");
+
+                var targetWidth, targetHeight;
+
+                //ADD ONE COMPONENT
+                function addComponent(){
+                    targetHeight = Math.random() * (maxHeight - 0);
+                    targetWidth = Math.random() * (maxWidth - 0);
+
+                    //                        alert("Height = "+targetHeight+"\nWidth = "+targetWidth);
+
+                    fabric.Image.fromURL('images/condensator.png', function(img) {
+                        img.setTop(targetHeight);
+                        img.setLeft(targetWidth);
+                        img.setHeight(50);
+                        img.setWidth(50);
+                        img.hasControls = false;
+                        canvas.add(img);
+                    });
+                }
+
+                //CLEAR CANVAS
+                function clearCanvas(){
+//                        if(confirm("Naozaj chcete premazať celé plátno?") == true)
+                    canvas.clear();
+                }
+
+                function deleteActive(){
+                    if(canvas.getActiveGroup()){
+                        canvas.getActiveGroup().forEachObject(function(o){ canvas.remove(o) });
+                        canvas.discardActiveGroup().renderAll();
+                    } else {
+                        canvas.remove(canvas.getActiveObject());
+                    }
+                }
+
+                function rotateActive(){
+                    var newAngle = canvas.getActiveObject().getAngle() + 90;
+                    if(newAngle === 360){
+                        newAngle = 0;
+                    }
+                    canvas.getActiveObject().setAngle(newAngle);
+                    canvas.renderAll();
+                }
+
+                //KEY MAPPING
+                window.onkeydown = function (e) {
+                    var key = e.keyCode ? e.keyCode : e.which;
+
+                    if (key === 46) {
+                        deleteActive();
+                    }
+                    if (key === 82) {
+                        rotateActive();
+                    }
+                };
+            </script>
+
+        </div>
+    </div>
+</div>
+
+
+<!--<script data-main="config" src="scripts/require.js"></script>-->
+<!--SCRIPTS-->
+<!--jQuery-->
+<script src="scripts/jquery-3.2.1.slim.min.js"></script>
+<!--Popper.scripts-->
+<script src="scripts/popper.min.js"></script>
+<!--BS.scripts-->
+<script src="scripts/bootstrap.min.js"></script>
+</body>
+</html>

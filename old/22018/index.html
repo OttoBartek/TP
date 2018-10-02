@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Block scheme web app" content="">
+    <meta name="RF" content="">
+
+    <title>DP</title>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--fabric-->
+    <script type="text/javascript" src="vendor/fabricjs/fabric.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles-->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!--custom-->
+    <script>
+        var jsonBlock = {"Resistor":
+            [
+                {   "type":"path",
+                    "path":"M 0 5 L 10 5",
+                    "data":{
+                        "width":40,
+                        "height":20,
+                        "top":5,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {
+                    "type":"rect",
+                    "data":{
+                        "width":30,
+                        "height":10,
+                        "left":10,
+                        "fill":"white",
+                        "stroke":"black"
+                    }
+                },
+                {   "type":"path",
+                    "path":"M 0 5 L 10 5",
+                    "data":{
+                        "top": 5,
+                        "left":40,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"name",
+                    "Text":"Resistor",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top": 14,
+                        "left":3,
+                        "fontSize": 12,
+                        "fill": "black"
+                    }
+
+                }
+        ],"Inductor":
+            [
+                {   "type":"path",
+                    "path":"M 1,8.5 L 6.5,8.5 C 6.5,8.5 6.5,4.5 10.5,4.5 C 14.5,4.5 14.5,8.5 14.5,8.5 C 14.5,8.5 14.5,4.5 18.5,4.5 C 22.5,4.5 22.5,8.5 22.5,8.5 C 22.5,8.5 22.5,4.5 26.5,4.5 C 30.5,4.5 30.5,8.5 30.5,8.5 C 30.5,8.5 30.5,4.5 34.5,4.5 C 38.5,4.5 38.5,8.5 38.5,8.5 L 44,8.5",
+                    "data":{
+                        "width":40,
+                        "height":20,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"name",
+                    "Text":"Inductor",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":15,
+                        "left":1,
+                        "fontSize": 12,
+                        "fill": "black"
+                    }
+
+                }
+        ],"Capacitor":
+            [
+                {   "type":"path",
+                    "path":"M 0 0 L 15 0",
+                    "data":{
+                        "width":40,
+                        "height":30,
+                        "top":10,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"path",
+                    "path":"M 0 0 L 0 20",
+                    "data":{
+                        "left":15,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"path",
+                    "path":"M 0 0 L 0 20",
+                    "data":{
+                        "left":20,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"path",
+                    "path":"M 0 0 L 15 0",
+                    "data":{
+                        "top":10,
+                        "left":20,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {   "type":"name",
+                    "Text":"Capacitor",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":30,
+                        "left":0,
+                        "fontSize": 9,
+                        "fill": "black"
+                    }
+                }
+        ]};
+
+        var jsonParam = {"Resistor":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":1,
+                    "BlockType":"Resistor",
+                    "title":"Parametre rezistor"
+                },
+                {
+                    "type": "text",
+                    "data":
+                        {
+                            "title": "Number of outputs",
+                            "Name": "Inputs",
+                            "size": "10",
+                            "id": "Inputs",
+                            "value": "1"
+                        }
+                },
+                {
+                    "type": "selectbox",
+                    "data":
+                        {
+                            "title": "Display option",
+                            "Name": "DisplayOption",
+                            "id": "DisplayOption",
+                            "opt":
+                                [
+                                    {
+                                        "value": "bar",
+                                        "name": "bar"
+                                    },
+                                    {
+                                        "value": "none",
+                                        "name": "none"
+                                    }
+                                ]
+                        }
+                },
+                {
+                    "type": "checkbox",
+                    "data":
+                        {
+                            "title": "Bus selection mode",
+                            "Name": "BusSelectionMode",
+                            "id": "BusSelectionMode",
+                            "value": "off"
+                        }
+                }
+            ],"Inductor":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":1,
+                    "BlockType":"Inductor",
+                    "title":"Parametre iductor"
+                },
+                {
+                    "type": "text",
+                    "data":
+                        {
+                            "title": "Number of outputs",
+                            "Name": "Inputs",
+                            "size": "10",
+                            "id": "Inputs",
+                            "value": "1"
+                        }
+                },
+                {
+                    "type": "selectbox",
+                    "data":
+                        {
+                            "title": "Display option",
+                            "Name": "DisplayOption",
+                            "id": "DisplayOption",
+                            "opt":
+                                [
+                                    {
+                                        "value": "bar",
+                                        "name": "bar"
+                                    },
+                                    {
+                                        "value": "none",
+                                        "name": "none"
+                                    }
+                                ]
+                        }
+                },
+                {
+                    "type": "checkbox",
+                    "data":
+                        {
+                            "title": "Bus selection mode",
+                            "Name": "BusSelectionMode",
+                            "id": "BusSelectionMode",
+                            "value": "off"
+                        }
+                }
+            ],"Capacitor":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":1,
+                    "BlockType":"Capacitor",
+                    "title":"Parametre capacitor"
+                },
+                {
+                    "type": "text",
+                    "data":
+                        {
+                            "title": "Number of outputs",
+                            "Name": "Inputs",
+                            "size": "10",
+                            "id": "Inputs",
+                            "value": "1"
+                        }
+                },
+                {
+                    "type": "selectbox",
+                    "data":
+                        {
+                            "title": "Display option",
+                            "Name": "DisplayOption",
+                            "id": "DisplayOption",
+                            "opt":
+                                [
+                                    {
+                                        "value": "bar",
+                                        "name": "bar"
+                                    },
+                                    {
+                                        "value": "none",
+                                        "name": "none"
+                                    }
+                                ]
+                        }
+                },
+                {
+                    "type": "checkbox",
+                    "data":
+                        {
+                            "title": "Bus selection mode",
+                            "Name": "BusSelectionMode",
+                            "id": "BusSelectionMode",
+                            "value": "off"
+                        }
+                }
+            ]};
+
+        window.addlib = function(typeBlock) {
+            var name;
+            var objBlock = jsonBlock[typeBlock];
+            name = new fabric.Canvas(typeBlock,{width: objBlock[0].data.width + 40, height: objBlock[0].data.height + 12});
+            name.selection = false;
+            var partBlock = [];
+
+            $.each(objBlock, function(i,subBlock) {
+                if(subBlock.type === 'rect')
+                    partBlock[i] = new fabric.Rect(subBlock.data);
+                else if(subBlock.type === 'path')
+                    partBlock[i] = new fabric.Path(subBlock.path, subBlock.data);
+                else if(subBlock.type === 'circle')
+                    partBlock[i] = new fabric.Circle(subBlock.data);
+                else if(subBlock.type === 'text' || subBlock.type === 'name')
+                    partBlock[i] = new fabric.IText(subBlock.Text, subBlock.data);
+                else if(subBlock.type === 'triangle')
+                    partBlock[i] = new fabric.Triangle(subBlock.data);
+                else if(subBlock === 'Name')
+                    partBlock[i] = new fabric.Text(subBlock.Name, {left: posx, top: posy + objBlock[0].data.height + 5});
+            });
+
+            var block = new fabric.Group(partBlock);
+            name.add(block);
+            name.bringForward(block);
+            block.evented = block.selectable = false;
+        }
+    </script>
+</head>
+
+<body>
+    <!--content-->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="index.html">DP</a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Shortcuts</a>
+                </li>
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <hr>
+                <li>
+                    <span>Typ schémy</span>
+                    <select class="form-control form-control-sm" id="schema-select">
+                        <option>RLC</option>
+                        <option>Schema 2</option>
+                        <option>Another schema</option>
+                    </select>
+                </li>
+                <li>
+                    <span>Súčiastky</span>
+                </li>
+                <div class="container-fluid" id="block-container">
+                    <div class="row">
+                        <div class="block col-3" onclick="addBlock('Resistor')"><canvas id="Resistor"><script>addlib('Resistor')</script></canvas></div>
+                        <div class="block col-3" onclick="addBlock('Inductor')"><canvas id="Inductor"><script>addlib('Inductor')</script></canvas></div>
+                        <div class="block col-3" onclick="addBlock('Capacitor')"><canvas id="Capacitor"><script>addlib('Capacitor')</script></canvas></div>
+                    </div>
+                </div>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div id="menu-toggle">
+                <a class="fa fa-bars fa-2x" href="#menu-toggle"></a>
+            </div>
+            <canvas id="main-canvas"></canvas>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /content -->
+    <!--custom-->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+        //canvas reference
+        var canvas = new fabric.Canvas('main-canvas');
+
+//      canvas resizing
+        window.onload = function(e){
+            canvasResize();
+        }
+
+        window.onresize = function(e) {
+            canvasResize();
+        };
+
+        function canvasResize(){
+            canvas.setWidth(window.innerWidth);
+            canvas.setHeight(window.innerHeight);
+        }
+//      /canvas resizing
+    </script>
+    <script src="js/controller.js"></script>
+
+</body>
+
+</html>
