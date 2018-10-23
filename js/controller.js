@@ -1047,9 +1047,9 @@ function loadBlocks(){
         if(cnt == 1){
             data += '<div class="row">';
         }
-        data += '<div class="block col-3" onclick="addBlock(\''+key+'\')"><canvas id=\"'+key+'\"><script>prepBlocks(\''+key+'\')</script></canvas></div>';
+        data += '<div class="block col-6" onclick="addBlock(\''+key+'\')"><canvas id=\"'+key+'\"><script>prepBlocks(\''+key+'\')</script></canvas></div>';
         cnt++;
-        if(cnt>3){
+        if(cnt>2){
             data += '</div>';
             cnt = 1;
         }
