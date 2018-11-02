@@ -423,21 +423,37 @@
                 <a href="#">DP</a>
             </li>
             <li>
-                <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file" aria-hidden="true"></i> Scheme types</a>
-                <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="index.html" data-toggle="tooltip" title="Resistor - Inductance - Capacitor structures" data-placement="top">RLC</a>
-                    <a class="dropdown-item" href="algebra.html" data-toggle="tooltip" title="Simplification of block diagrams" data-placement="top">Block algebra</a>
-                    <a class="dropdown-item" href="simulation.html" data-toggle="tooltip" title="Building of block schemes for simulation" data-placement="top">BlockSim</a>
-                </div>
-            </li>
-            <li>
-                <a class="dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i></i> Scheme settings</a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#" onclick="newScheme()"><i class="fa fa-refresh" aria-hidden="true"></i> New scheme</a>
-                    <a class="dropdown-item" href="#" onclick="saveScheme()"><i class="fa fa-download" aria-hidden="true"></i> Save scheme</a>
-                    <a class="dropdown-item" href="#" onclick="loadModal()"><i class="fa fa-upload" aria-hidden="true"></i> Load scheme</a>
-                </div>
-            </li>
+                    <a class="btn drop" data-toggle="collapse" href="#types" role="button" aria-expanded="false"
+                        aria-controls="types">
+                        <span><i class="fa fa-file" aria-hidden="true"></i> Scheme types</span>
+                    </a>
+                    <div class="collapse" id="types">
+                        <div class="card card-body">
+                            <a class="dropdown-item" href="index.html" data-toggle="tooltip" title="Resistor - Inductance - Capacitor structures"
+                                data-placement="top">RLC</a>
+                            <a class="dropdown-item" href="algebra.html" data-toggle="tooltip" title="Simplification of block diagrams"
+                                data-placement="top">Block algebra</a>
+                            <a class="dropdown-item" href="simulation.html" data-toggle="tooltip" title="Building of block schemes for simulation"
+                                data-placement="top">BlockSim</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a class="btn drop" data-toggle="collapse" href="#setting" role="button" aria-expanded="false"
+                        aria-controls="types">
+                        <span><i class="fa fa-cog" aria-hidden="true"></i> Scheme setting</span>
+                    </a>
+                    <div class="collapse" id="setting">
+                        <div class="card card-body">
+                                <a class="dropdown-item setting-item" href="#" onclick="newScheme()"><i class="fa fa-refresh drop" aria-hidden="true"></i>
+                                    New scheme</a>
+                                <a class="dropdown-item setting-item" href="#" onclick="saveScheme()"><i class="fa fa-download drop" aria-hidden="true"></i>
+                                    Save scheme</a>
+                                <a class="dropdown-item setting-item" href="#" onclick="loadModal()"><i class="fa fa-upload drop" aria-hidden="true"></i>
+                                    Load scheme</a>
+                        </div>
+                    </div>
+                </li>
             <li>
                 <a href="#" onclick="loadHelp()"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
             </li>
@@ -448,7 +464,7 @@
             <li>
                 <span>Blocks</span>
             </li>
-            <div class="container-fluid" id="block-container">
+            <div id="block-container">
             </div>
         </ul>
     </div>
