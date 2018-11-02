@@ -508,6 +508,16 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
+
+       $(document).on("input","#multiply-citatel", function () {
+           console.log('ok')
+           vypocetMultiply()
+       })
+
+        $(document).on("input","#multiply-menovatel", function () {
+            console.log('ok')
+            vypocetMultiply()
+        })
     };
 
     window.onresize = function(e) {
