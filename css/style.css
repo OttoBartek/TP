@@ -5,6 +5,27 @@ html, body{
     overflow-x: hidden;
 }
 
+.setting-item {
+  padding-left: 0;
+}
+
+#sidebar-wrapper {
+  overflow-x: hidden;
+}
+
+.component {
+  padding-bottom: 10px;
+}
+
+.drop {
+  text-align: unset;
+  padding: 10px 0 10px 0;
+}
+
+i.drop {
+  padding: 0;
+}
+
 li span{
     color: #37474F;
 }
