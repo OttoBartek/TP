@@ -2767,6 +2767,20 @@
             $('#fileLoadModal').modal();
         }
 
+        //draggable modal
+        $(".modal > div").draggable({
+            stop: function() {
+                console.log($(this).css("top"));
+            }
+        });
+
+        //set original position on modal close
+        $('.modal').on('hidden.bs.modal', function (e) {
+            $($(this).children()[0]).css("top","0px")
+            $($(this).children()[0]).css("left","0px")
+        });
+
+
         function loadHelp() {
             $('#helpModal').modal();
         }

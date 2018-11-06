@@ -5,15 +5,19 @@ var schemeType;
 $.each(Object.keys(blockDrawData),function(i,nameBlock){
     number[nameBlock] = 0;
 });
-var posx = 100; var posy = posx;
+
+var posCanvas = 100; var posy = posCanvas;
 canvas.selection=false;
 data = blockParameters;
 var connToBlock, connFromBlock, connPointIn;
 var inPosition, movingInPosition;
 
-window.addBlock = function (blockType) {
-    counter++; number[blockType]++;
-    posx+=5; posy+=5;
+window.addBlock = function (blockType, posx, posy) {
+
+    posx -=posCanvas;
+    counter++;
+    number[blockType]++;
+
     var objBlock = blockDrawData[blockType];
     var parBlock = blockParameters[blockType];
     var type = blockType + number[blockType];
@@ -1047,7 +1051,7 @@ function loadBlocks(){
         if(cnt == 1){
             data += '<div class="row">';
         }
-        data += '<div class="block col-6" onclick="addBlock(\''+key+'\')"><canvas id=\"'+key+'\"><script>prepBlocks(\''+key+'\')</script></canvas></div>';
+        data += '<div class="block col-6"><canvas id=\"'+key+'\"><script>prepBlocks(\''+key+'\')</script></canvas></div>';
         cnt++;
         if(cnt>2){
             data += '</div>';
@@ -1055,6 +1059,118 @@ function loadBlocks(){
         }
     });
     $('#block-container').html(data);
+
+    $.each($(".block > div"), function (key, value) {
+        dragElement(this);
+    });
+
+    function dragElement(elmnt) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+        var blockType = "";
+
+        elmnt.onmousedown = dragMouseDown;
+        elmnt.ontouchstart = dragMouseDown;
+
+        function dragMouseDown(e) {
+
+            elmnt.id = "draggedEl";
+            $(elmnt).css("position","absolute")
+            $(elmnt).detach().appendTo($("#wrapper"))
+            blockType = $(elmnt).children("canvas")[0].id;
+
+            loadBlocks();
+
+            var width = $(elmnt).width()
+            var height = $(elmnt).height()
+
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+
+            if(e.type === "touchstart"){
+                pos3 = e.touches[0].clientX;
+                pos4 = e.touches[0].clientY;
+
+                document.ontouchend = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.ontouchmove = elementDrag;
+            }else{
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                document.onmouseup = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
+            }
+
+            // elmnt.style.top = (pos3) + "px";
+            // elmnt.style.left = (pos4) + "px";
+            elmnt.style.top = pos4-height/2+"px";
+            elmnt.style.left = pos3-width/5+"px";
+            elmnt.style.zIndex = "1500";
+
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+
+            if(e.type === "touchmove"){
+                pos1 = pos3 - e.touches[0].clientX;
+                pos2 = pos4 - e.touches[0].clientY;
+                pos3 = e.touches[0].clientX;
+                pos4 = e.touches[0].clientY;
+            }else{
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+            }
+
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement(e) {
+
+            var width = $(elmnt).width()
+            var height = $(elmnt).height()
+
+            var props =  document.getElementById("page-content-wrapper").getBoundingClientRect();
+
+            var left = props["left"];
+            var top = props["top"];
+
+            if(e.type === "touchend"){
+
+                // stop moving when mouse button is released:
+                document.ontouchend = null;
+
+                document.ontouchmove = null;
+
+                addBlock(blockType, pos3-left+80, pos4-top-16)
+                $(elmnt).css("background","red");
+
+                // if(e.touches[0].clientX-width/5 > left && e.touches[0].clientY-height/2 > top){
+                //     $(elmnt).css("background","red");
+                //     addBlock(blockType, e.touches[0].clientX-left+80, e.touches[0].clientY-top-16)
+                // }
+            }else{
+                // stop moving when mouse button is released:
+                document.onmouseup = null;
+                document.onmousemove = null;
+
+                if(e.clientX-width/5 > left && e.clientY-height/2 > top)
+                    addBlock(blockType, e.clientX-left+80, e.clientY-top-16)
+            }
+
+
+            $(elmnt).remove();
+        }
+    }
 }
 
 
