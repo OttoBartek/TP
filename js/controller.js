@@ -2,6 +2,8 @@ var scheme = {};
 var number = {};
 var counter = 0;
 var schemeType;
+var allow_delete=0;
+
 $.each(Object.keys(blockDrawData),function(i,nameBlock){
     number[nameBlock] = 0;
 });
@@ -2052,6 +2054,44 @@ function remove(o) {
         delete o[key];
     }
 }
+function status_normal_mod(){
+    allow_delete = 0;
+    var element = document.getElementById("trash");
+    element.classList.remove("panel2color");
+    var element = document.getElementById("mouse");
+    element.classList.add("panel2color");
+    var element = document.getElementById("minus");
+    element.classList.remove("panel2color");
+}
+function status_connect(){
+    allow_delete = 0;
+    var element = document.getElementById("trash");
+    element.classList.remove("panel2color");
+    var element = document.getElementById("minus");
+    element.classList.add("panel2color");
+    var element = document.getElementById("mouse");
+    element.classList.remove("panel2color");
+}
+function status_remove(){
+    allow_delete = allow_delete ? 0 : 1;
+    var element = document.getElementById("trash");
+    if (allow_delete) element.classList.add("panel2color")
+    else element.classList.remove("panel2color");
+    var element = document.getElementById("mouse");
+    element.classList.remove("panel2color");
+    var element = document.getElementById("minus");
+    element.classList.remove("panel2color");
+}
+
+document.addEventListener('mousedown', function(event) {
+  lastDownTarget = event.target;
+    if(allow_delete){
+            if(selectedElement.baseBlock){
+                deleteBlock(selectedElement,scheme[selectedElement.type].NumberOfInputs);
+            }
+        }
+}, false);
+
 
 document.addEventListener('keydown', (event) => {
     const keyName = event.key;
