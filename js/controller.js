@@ -10,8 +10,22 @@ $.each(Object.keys(blockDrawData),function(i,nameBlock){
 
 var posCanvas = 100; var posy = posCanvas;
 canvas.selection=false;
+/*Data contains parameters for all usable components in schema*/
 data = blockParameters;
 var connToBlock, connFromBlock, connPointIn;
+
+
+/*Pridane globalne premenne*/
+var portPadding = 5;
+var portWidth = 10;
+var portHeight = 10;
+
+/*TESTOVANIE ONLY*/
+var portBorders = true;
+var rectBorders = true;
+var rectControls = true;
+
+
 var inPosition, movingInPosition;
 
 window.addBlock = function (blockType, posx, posy) {
@@ -57,8 +71,28 @@ window.addBlock = function (blockType, posx, posy) {
     var io = data[blockType][0].io;
     var ports = data[blockType][0].ports;
     var numberOfInputs = parBlock[0].NumberOfInputs;
-    var block = new fabric.Group(partBlock, {baseBlock:1, type: type, left: posx, top: posy, io: io, ports: ports, numberOfInputs: numberOfInputs, ZOrder: counter, "BlockType" : blockType});
-    block.hasBorders = block.hasControls = false;
+
+    var groupxDiff = 10;
+    var groupyDiff = 10;
+    var groupWidth = 50;
+    var groupHeight = 50;
+
+    var block = new fabric.Group(partBlock, {
+        baseBlock:1,
+        type: type,
+        left: posx,
+        top: posy,
+        width: groupWidth,
+        height: groupHeight,
+        io: io,
+        ports: ports,
+        numberOfInputs: numberOfInputs,
+        ZOrder: counter,
+        "BlockType" : blockType
+    });
+
+    /*TESTOVANIE Block borders*/
+    block.hasBorders = block.hasControls = true;
     canvas.add(block);
     var addPort;
 
@@ -67,13 +101,25 @@ window.addBlock = function (blockType, posx, posy) {
             left: posx + block.width + 5, top: posy + block.height/2-15,
             angle:90,
             lockMovementX: true, lockMovementY: true,
-            width: 10, height: 10, fill: 'black',
+            width: portWidth, height: portHeight, fill: 'black',
             hoverCursor: 'pointer',
-            hasControls: false, hasBorders: false,
+            hasControls: false, hasBorders: portBorders,
             type: type + 'O',
+            padding: portPadding,
             Out: 1
         });
         canvas.add(outPart);
+        /*Pridany out port do schemy*/
+        addPort = {[type+'O'] : {
+                "connectedLine": "",
+                "parentBlock":type,
+                "portName":type+'O',
+                "portNumber":1,
+                "full":false
+            }
+        };
+        scheme = $.extend(scheme, addPort);
+
     }
     if (io === 'in' || io === 'both') {
         if (numberOfInputs === 1 || blockType === 'Point') {
@@ -81,10 +127,11 @@ window.addBlock = function (blockType, posx, posy) {
                 left: posx + 1, top: posy + block.height / 2 - 15,
                 angle: 90,
                 lockMovementX: true, lockMovementY: true,
-                width: 10, height: 10, fill: 'black',
+                width: portWidth, height: portHeight, fill: 'black',
                 hoverCursor: 'pointer',
-                hasControls: false, hasBorders: false,
+                hasControls: false, hasBorders: portBorders,
                 type: type + 'I',
+                padding: portPadding,
                 In: 1
             });
             canvas.add(inPart);
@@ -105,10 +152,11 @@ window.addBlock = function (blockType, posx, posy) {
                     left: posx + 1, top: position,
                     angle: 90,
                     lockMovementX: true, lockMovementY: true,
-                    width: 10, height: 10, fill: 'black',
+                    width: portWidth, height: portHeight, fill: 'black',
                     hoverCursor: 'pointer',
-                    hasControls: false, hasBorders: false,
+                    hasControls: false, hasBorders: portBorders,
                     type: type + 'I' + i,
+                    padding: portPadding,
                     In: 1
                 });
 
@@ -132,7 +180,7 @@ window.addBlock = function (blockType, posx, posy) {
             lockMovementX: true, lockMovementY: true,
             width: 10, height: 10, fill: 'black',
             hoverCursor: 'pointer',
-            hasControls: false, hasBorders: false,
+            hasControls: rectControls, hasBorders: rectBorders,
             type: type + 'T',
             TopPort: 1
         });
@@ -144,7 +192,7 @@ window.addBlock = function (blockType, posx, posy) {
             lockMovementX: true, lockMovementY: true,
             width: 10, height: 10, fill: 'black',
             hoverCursor: 'pointer',
-            hasControls: false, hasBorders: false,
+            hasControls: rectControls, hasBorders: rectBorders,
             type: type + 'B',
             BotPort: 1
         });
@@ -195,22 +243,121 @@ window.addBlock = function (blockType, posx, posy) {
 
 var selectedElement = null;
 
+/*Premenne pre vytvaranie spojovacej ciary*/
+var isDown = false;
+var order = 0;
+var lineName;
+var connLine = null;
+var connPortFrom;
+var connPortTo;
+
 //selection control
 //on object selected
-canvas.on('object:selected', function(options) {
-    selectedElement = options.target;
-    $.each(selectedElement._objects, function (name, property) {
-        if(!property.text) {
-            if(!property.hasOwnProperty('invisible')){
-                property.set({'stroke': 'red'});
+canvas.on('object:selected', function (e) {
+    selectedElement = e.target;
+    console.log("Element selected:");
+    console.log(selectedElement);
+
+    if (selectedElement !== null) {
+
+        var f = checkPorts(selectedElement);
+        console.log(f);
+        if (f === 1) { //IN
+            if(connLine != null) {
+                clearSelection();
             }
         }
-    });
+        else if (f === 2) { // OUT
+            connPortFrom = selectedElement; //TODO
+            console.log("Selected element type");
+            console.log(selectedElement.type);
+            console.log("Scheme");
+            console.log(scheme);
+            connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
+            console.log("Port from selected:");
+            console.log(connPortFrom);
+
+            var startX = connPortFrom.left - portWidth / 2;
+            var startY = connPortFrom.top + portHeight / 2;
+            var points = [startX, startY, startX, startY];
+            connLine = new fabric.Line(points, {
+                strokeWidth: 1,
+                stroke: 'cyan',
+                type: 'temporaryLine'
+            });
+            canvas.add(connLine);
+
+            isDown = true;
+        }
+
+        $.each(selectedElement._objects, function (name, property) {
+            if (!property.text) {
+                if (!property.hasOwnProperty('invisible')) {
+                    property.set({'stroke': 'red'});
+                }
+            }
+        });
+        canvas.renderAll();
+    }
+});
+
+/* TODO Vracia 1 ak je port In, 2 ak Out ak je to daco ine tak 0 */
+function checkPorts(selectedElement) {
+    var ret = 0;
+    if (selectedElement.In) {
+        selectedElement.set({fill: 'blue'});
+        if (isDown === true) {
+            isDown = false;
+            console.log("Connecting ports " + selectedElement);
+        }
+        ret = 1;
+    }
+    else if (selectedElement.Out) {
+        selectedElement.set({fill: 'red'});
+        if (isDown === false) {
+            isDown = true;
+        }
+        ret = 2;
+    }
     canvas.renderAll();
+    return ret;
+}
+
+/* Clear vsetkych pomocnych premennych na vytvaranie spojenia */
+function clearSelection() {
+    isDown = false;
+    connLine = null; // TODO
+    connFromBlock = null;
+    connToBlock = null;
+    deleteLastObject();
+    canvas.renderAll(); // neviem ci je treba
+}
+
+
+function portFull(blockFrom, blockTo) {
+    return (scheme[blockFrom.type].NumberOfFullOutputs < scheme[blockFrom.type].NumberOfOutputs && scheme[blockTo.type].NumberOfFullInputs < scheme[blockTo.type].NumberOfInputs);
+    //!scheme[element.type].TopFull && !scheme[connPointIn].full
+}
+
+
+canvas.on('mouse:move', function(option) {
+    if(isDown) {
+        var pointer = canvas.getPointer(option.e);
+        connLine.set({ x2: pointer.x, y2: pointer.y });
+        canvas.renderAll();
+    }
+});
+canvas.on('mouse:up', function (option) {
+    //isDown = false;
 });
 
 //on click off block
 canvas.on('selection:cleared', function(options) {
+    if(isDown) { //TODO
+        if (connLine != null) {
+            clearSelection();
+        }
+    }
     $.each(selectedElement._objects, function (name, property) {
         if(!property.text) {
             if(!property.hasOwnProperty('invisible')){
@@ -223,6 +370,87 @@ canvas.on('selection:cleared', function(options) {
 
 //on target block change
 canvas.on('selection:updated', function(options) {
+    /* TODO vytvorit cestu a zvysit pocet v portoch bloku from aj to */
+    selectedElement = null;
+    selectedElement = options.target;
+
+    console.log("Updated:");
+    console.log(selectedElement);
+
+    if (selectedElement !== null) {
+        var f = checkPorts(options.target);
+        if(f === 1) { //port je IN
+
+            connToBlock = getObject(scheme[selectedElement.type].parentBlock);
+
+            //if(!portFull(connFromBlock, connToBlock) && ((connFromBlock && connToBlock) && (connFromBlock !== connToBlock))) {
+            if((connFromBlock && connToBlock) && (connFromBlock !== connToBlock)) {
+
+                connPointIn = connFromBlock.type;
+                console.log("main obj: " + connToBlock.type + " port: " + connPointIn + " port num:" + scheme[connPointIn].portNumber);
+                console.log(connToBlock.BlockType);
+                //deleteLastObject(); TODO clearSelection();
+
+                //console.log("out: " + scheme[selectedElement.type].ZOrder+" in: "+scheme[options.type].ZOrder);
+                //if(connToBlock.BlockType === 'Point') {
+                var beginBlockOrder = scheme[connFromBlock.type].ZOrder;
+                var endBlockOrder = scheme[connToBlock.type].ZOrder;
+                order++;
+
+
+                // beginBlock, endBlock, beginOrder, endOrder, typeConnection, originPort, inCount, inPort
+                var lineA = createLine(connFromBlock, connToBlock, beginBlockOrder, endBlockOrder, 'block', 'out', scheme[connToBlock.type].NumberOfInputs, scheme[connPointIn].portNumber);
+                canvas.add(lineA);
+                lineName = 'line' + order;
+
+                scheme[connToBlock.type].connectedToBlocks.push(connToBlock.type);
+                scheme[connToBlock.type].connectedFromBlocks.push(connToBlock.type);
+
+                //data prep
+                scheme[connToBlock.type].outLine = lineName;
+                scheme[connToBlock.type].inLine = lineName;
+                var NumOut = scheme[connToBlock.type].NumberOfFullOutputs;
+                scheme[connToBlock.type].NumberOfFullOutputs = NumOut + 1;
+                scheme[connPointIn].full = true;
+                var NumIn = scheme[connToBlock.type].NumberOfFullInputs;
+                scheme[connToBlock.type].NumberOfFullInputs = NumIn + 1;
+
+                var lines = {
+                    [lineName]: {
+                        "ZOrder": order,
+                        "Src": connToBlock.ZOrder + "#out:" + scheme[connToBlock.type].NumberOfFullOutputs,
+                        "Dst": connToBlock.ZOrder + "#in:" + scheme[connPointIn].portNumber,
+                        "From": connToBlock.type,
+                        "To": connToBlock.type,
+                        "ToPort": scheme[connPointIn].portName,
+                        "Typ": "simple",
+                        "hasPoint": false,
+                        "objectType": "line",
+                        "typeConnection": "block",
+                        "fromPort": "out"
+                    }
+                };
+                scheme = $.extend(scheme, lines);
+                lineA.sendToBack();
+
+                scheme[connToBlock.type].connectedLines.push(lineName);
+                scheme[connToBlock.type].connectedLines.push(lineName);
+
+                var deletePointA = createDeletePoint(connToBlock, connToBlock, order, scheme[connPointIn].portNumber);
+                canvas.add(deletePointA);
+                canvas.on('object:moving', function (e) {
+                    redrawLine(e.target, 'out');
+                    canvas.renderAll();
+                });
+
+            }
+            else {
+                window.alert("Port full!");
+            }
+            //canvas.off('mouse:down'); canvas.off('mouse:move'); canvas.off('mouse:up');
+        }
+    }
+
     $.each(selectedElement._objects, function (name, property) {
         if(!property.text) {
             if(!property.hasOwnProperty('invisible')){
@@ -355,6 +583,7 @@ canvas.on('mouse:over', function(e) {
             e.target.set({fill: 'gray'});
             canvas.renderAll();
 
+            /* VYTVARANIE CIARY
             canvas.on('mouse:down', function(o) {
                 isDown = true;
                 selectedElement = connFromBlock = getMainObject(e.target.type);
@@ -401,14 +630,19 @@ canvas.on('mouse:over', function(e) {
                 });
                 canvas.add(newLine);
             });
+            */
 
+
+            /* Posuvanie ciary
             canvas.on('mouse:move', function(o) {
                 if(!isDown){return;}
                 var pointer = canvas.getPointer(o.e);
                 newLine.set({ x2: pointer.x, y2: pointer.y });
                 canvas.renderAll();
             });
+            */
 
+            /*// Save bloku ku ktoremu sa pripaja
             canvas.on('mouse:up', function(o) {
                 var pointer = canvas.getPointer(o.e);
                 canvas.forEachObject(function (obj) {
@@ -444,6 +678,7 @@ canvas.on('mouse:over', function(e) {
 
                     }
                 });
+
 
                 var options = connToBlock;
                 deleteLastObject();
@@ -566,12 +801,14 @@ canvas.on('mouse:over', function(e) {
                 isDown = false;
                 options = connToBlock = null;
                 canvas.off('mouse:down'); canvas.off('mouse:move'); canvas.off('mouse:up');
-            });
+
+            });*/
         }
         else if(e.target.TopPort){
             e.target.set({fill: 'gray'});
             canvas.renderAll();
 
+            /*
             canvas.on('mouse:down', function(o) {
                 isDown = true;
                 selectedElement = connFromBlock = getMainObject(e.target.type);
@@ -585,14 +822,17 @@ canvas.on('mouse:over', function(e) {
                 });
                 canvas.add(newLine);
             });
-
+            */
+            /*
             canvas.on('mouse:move', function(o) {
                 if(!isDown){return;}
                 var pointer = canvas.getPointer(o.e);
                 newLine.set({ x2: pointer.x, y2: pointer.y });
                 canvas.renderAll();
             });
+             */
 
+            /*
             canvas.on('mouse:up', function(o) {
                 var pointer = canvas.getPointer(o.e);
                 canvas.forEachObject(function (obj) {
@@ -658,13 +898,13 @@ canvas.on('mouse:over', function(e) {
                 isDown = false;
                 options = connToBlock = null;
                 canvas.off('mouse:down'); canvas.off('mouse:move'); canvas.off('mouse:up');
-            });
+            });*/
         }
         else if(e.target.BotPort){
             e.target.set({fill: 'gray'});
             canvas.renderAll();
 
-            canvas.on('mouse:down', function(o) {
+            /*canvas.on('mouse:down', function(o) {
                 isDown = true;
                 selectedElement = connFromBlock = getMainObject(e.target.type);
                 var ccaLeft = connFromBlock.left + connFromBlock.width/2-2;
@@ -676,15 +916,18 @@ canvas.on('mouse:over', function(e) {
                     type: 'temporaryLine'
                 });
                 canvas.add(newLine);
-            });
+            });*/
 
+            /*
             canvas.on('mouse:move', function(o) {
                 if(!isDown){return;}
                 var pointer = canvas.getPointer(o.e);
                 newLine.set({ x2: pointer.x, y2: pointer.y });
                 canvas.renderAll();
             });
+            */
 
+            /*
             canvas.on('mouse:up', function(o) {
                 var pointer = canvas.getPointer(o.e);
                 canvas.forEachObject(function (obj) {
@@ -697,7 +940,7 @@ canvas.on('mouse:over', function(e) {
                     }
                 });
 
-                var options = connToBlock
+                var options = connToBlock;
                 deleteLastObject();
 
                 if((selectedElement && options) && (selectedElement !== options)) {
@@ -750,11 +993,13 @@ canvas.on('mouse:over', function(e) {
                 isDown = false;
                 options = connToBlock = null;
                 canvas.off('mouse:down'); canvas.off('mouse:move'); canvas.off('mouse:up');
-            });
+            });*/
         }
         else if(e.target.DPoint){
             e.target.set({stroke:'orange'});
             canvas.renderAll();
+
+            /*Vymazanie prepajcej ciary*/
             canvas.on('mouse:down', function(o) {
                 if(o.target.DPoint) {
                     // console.log(getObjectByType('line' + o.target.DPoint));
@@ -775,10 +1020,12 @@ canvas.on('mouse:over', function(e) {
                 }
             });
         }
-        else if(e.target.POut){
+        else if(e.target.POut)
+        {
             e.target.set({fill: 'gray'});
             canvas.renderAll();
 
+            /*
             canvas.on('mouse:down', function(o) {
                 isDown = true;
                 selectedElement = connFromBlock = getObject(e.target.type);
@@ -793,14 +1040,16 @@ canvas.on('mouse:over', function(e) {
                 });
                 canvas.add(newLine);
             });
-
+            */
+            /*
             canvas.on('mouse:move', function(o) {
                 if(!isDown){return;}
                 var pointer = canvas.getPointer(o.e);
                 newLine.set({ x2: pointer.x, y2: pointer.y });
                 canvas.renderAll();
             });
-
+            */
+            /*
             canvas.on('mouse:up', function(o) {
                 var pointer = canvas.getPointer(o.e);
                 canvas.forEachObject(function (obj) {
@@ -836,7 +1085,8 @@ canvas.on('mouse:over', function(e) {
 
                     }
                 });
-
+                */
+                /*
                 var options = connToBlock;
                 deleteLastObject();
 
@@ -899,7 +1149,7 @@ canvas.on('mouse:over', function(e) {
                     options = connToBlock = null;
                     canvas.off('mouse:down'); canvas.off('mouse:move'); canvas.off('mouse:up');
                 }
-            });
+            });*/
         }
         else{
             canvas.off('mouse:down');
@@ -1188,7 +1438,7 @@ function getMainObject(blockPort) {
     return tmp;
 }
 
-//get object by object name
+//get object by object name called when moving objects
 function getObject(block) {
     var tmp;
     var typeBlockName = block;
@@ -1614,6 +1864,7 @@ function createLine(beginBlock, endBlock, beginOrder, endOrder, typeConnection, 
         });
     }
 
+    console.log("Creating path: " + startX, startY, stopX, stopY, originPort, beginBlock, endBlock);
     return newPath = new fabric.Path(createPath(startX, startY, stopX, stopY, originPort, beginBlock, endBlock), {
         type: 'line' + order,
         fromPort: originPort,
@@ -1948,6 +2199,7 @@ function redrawLine(movedBlock, originPort){
     });
 }
 
+/* Used for deleting*/
 function removeFromArray(target, toRemove, array){
     if(array === 'to') {
         var index = scheme[target].connectedFromBlocks.indexOf(toRemove);
