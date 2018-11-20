@@ -265,6 +265,8 @@ canvas.on('object:selected', function (e) {
         if (f === 1) { //IN
             if(connLine != null) {
                 clearSelection();
+                connPortTo = selectedElement;
+                console.log("Port to selected:");
             }
         }
         else if (f === 2) { // OUT
@@ -274,9 +276,12 @@ canvas.on('object:selected', function (e) {
             console.log("Scheme");
             console.log(scheme);
             connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
+            console.log("Setting from block");
+
             console.log("Port from selected:");
             console.log(connPortFrom);
 
+            // zaciatok tyrkysovej ciary
             var startX = connPortFrom.left - portWidth / 2;
             var startY = connPortFrom.top + portHeight / 2;
             var points = [startX, startY, startX, startY];
@@ -319,12 +324,13 @@ function checkPorts(selectedElement) {
         }
         ret = 2;
     }
-    canvas.renderAll();
+    //canvas.renderAll();
     return ret;
 }
 
 /* Clear vsetkych pomocnych premennych na vytvaranie spojenia */
 function clearSelection() {
+    console.log("Clearing selection")
     isDown = false;
     connLine = null; // TODO
     connFromBlock = null;
@@ -333,9 +339,16 @@ function clearSelection() {
     canvas.renderAll(); // neviem ci je treba
 }
 
-
-function portFull(blockFrom, blockTo) {
-    return (scheme[blockFrom.type].NumberOfFullOutputs < scheme[blockFrom.type].NumberOfOutputs && scheme[blockTo.type].NumberOfFullInputs < scheme[blockTo.type].NumberOfInputs);
+/* blockFrom je blok kde sa zacina spojenie zisteny pomocou getObject(scheme[selectedElement.type].parentBlock);
+* rovnako sa ziskava blockTo
+* */
+function portEmpty(blockFrom, blockTo) {
+    //TODO checky sa musia viazat na porty nie na bloky spravit pole pre input pole pre output pole pre top a bottom porty
+    //TODO index v poli bude index portu ak na tom indexe je false port je plny a neda sa spojit
+    //TODO v scheme treba zapisovat tieto polia je ale potrebne zabezpecit aby sa nezmenil vystup !!!
+    var fromFlag = scheme[blockFrom.type].NumberOfFullOutputs < scheme[blockFrom.type].NumberOfOutputs;
+    var toFlag = scheme[blockTo.type].NumberOfFullInputs < scheme[blockTo.type].NumberOfInputs;
+    return fromFlag && toFlag;
     //!scheme[element.type].TopFull && !scheme[connPointIn].full
 }
 
@@ -379,12 +392,15 @@ canvas.on('selection:updated', function(options) {
 
     if (selectedElement !== null) {
         var f = checkPorts(options.target);
-        if(f === 1) { //port je IN
+        if(f === 1 && connFromBlock != null) { //port je IN
 
             connToBlock = getObject(scheme[selectedElement.type].parentBlock);
-
-            //if(!portFull(connFromBlock, connToBlock) && ((connFromBlock && connToBlock) && (connFromBlock !== connToBlock))) {
-            if((connFromBlock && connToBlock) && (connFromBlock !== connToBlock)) {
+            console.log("Setting to block");
+            if(!((connFromBlock && connToBlock) && (connFromBlock !== connToBlock))) {
+                window.alert("Cant connect to the same block!");
+                clearSelection();
+            }
+            else if(portEmpty(connFromBlock, connToBlock)) {
 
                 connPointIn = connFromBlock.type;
                 console.log("main obj: " + connToBlock.type + " port: " + connPointIn + " port num:" + scheme[connPointIn].portNumber);
@@ -399,6 +415,7 @@ canvas.on('selection:updated', function(options) {
 
 
                 // beginBlock, endBlock, beginOrder, endOrder, typeConnection, originPort, inCount, inPort
+                // typeConnection moze byt block alebo point netusim na co je point .....
                 var lineA = createLine(connFromBlock, connToBlock, beginBlockOrder, endBlockOrder, 'block', 'out', scheme[connToBlock.type].NumberOfInputs, scheme[connPointIn].portNumber);
                 canvas.add(lineA);
                 lineName = 'line' + order;
@@ -446,8 +463,12 @@ canvas.on('selection:updated', function(options) {
             }
             else {
                 window.alert("Port full!");
+                clearSelection();
             }
             //canvas.off('mouse:down'); canvas.off('mouse:move'); canvas.off('mouse:up');
+        }
+        else if(f === 2) {
+            connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
         }
     }
 
@@ -551,10 +572,10 @@ canvas.on('object:moving', function(e) {
         scheme[e.target.type].Position_Array[1] = e.target.top;
     }
 });
-
+/*
 var isDown = false;
 var order = 0;
-var lineName;
+var lineName;*/
 
 //control logs
 canvas.on('object:added', function (e) {
@@ -1864,7 +1885,7 @@ function createLine(beginBlock, endBlock, beginOrder, endOrder, typeConnection, 
         });
     }
 
-    console.log("Creating path: " + startX, startY, stopX, stopY, originPort, beginBlock, endBlock);
+    console.log("Creating path : " + startX, startY, stopX, stopY, originPort, beginBlock, endBlock);
     return newPath = new fabric.Path(createPath(startX, startY, stopX, stopY, originPort, beginBlock, endBlock), {
         type: 'line' + order,
         fromPort: originPort,
