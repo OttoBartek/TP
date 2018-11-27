@@ -12,6 +12,10 @@ var posCanvas = 100; var posy = posCanvas;
 canvas.selection=false;
 /*Data contains parameters for all usable components in schema*/
 data = blockParameters;
+
+/*TESTING ONLY*/
+
+
 var connToBlock, connFromBlock, connPointIn;
 
 
@@ -21,9 +25,9 @@ var portWidth = 10;
 var portHeight = 10;
 
 /*TESTOVANIE ONLY*/
-var portBorders = true;
-var rectBorders = true;
-var rectControls = true;
+var portBorders = false;
+var rectBorders = false;
+var rectControls = false;
 
 
 var inPosition, movingInPosition;
@@ -67,6 +71,7 @@ window.addBlock = function (blockType, posx, posy) {
 
     var io = data[blockType][0].io;
     var ports = data[blockType][0].ports;
+
     var numberOfInputs = parBlock[0].NumberOfInputs;
 
     var groupxDiff = 10;
@@ -89,7 +94,7 @@ window.addBlock = function (blockType, posx, posy) {
     });
 
     /*TESTOVANIE Block borders*/
-    block.hasBorders = block.hasControls = true;
+    block.hasBorders = block.hasControls = false;
     canvas.add(block);
     var addPort;
 
@@ -134,11 +139,11 @@ window.addBlock = function (blockType, posx, posy) {
             });
             canvas.add(inPart);
             addPort = {[type+'I'] : {
-                "connectedLine": "",
-                "parentBlock":type,
-                "portName":type+'I',
-                "portNumber":1,
-                "full":false
+                    "connectedLine": "",
+                    "parentBlock":type,
+                    "portName":type+'I',
+                    "portNumber":1,
+                    "full":false
                 }
             };
             scheme = $.extend(scheme, addPort);
@@ -161,11 +166,11 @@ window.addBlock = function (blockType, posx, posy) {
                 canvas.add(inPart);
 
                 addPort = {[type+'I'+i] : {
-                    "connectedLine": "",
-                    "parentBlock":type,
-                    "portName":type+'I'+i,
-                    "portNumber":i,
-                    "full":false
+                        "connectedLine": "",
+                        "parentBlock":type,
+                        "portName":type+'I'+i,
+                        "portNumber":i,
+                        "full":false
                     }
                 };
                 scheme = $.extend(scheme, addPort);
@@ -252,49 +257,45 @@ var connPortTo;
 //selection control
 //on object selected
 canvas.on('object:selected', function (e) {
+    clearCanvas(); // draw previous object with black borders
+
     selectedElement = e.target;
     console.log("Element selected:");
     console.log(selectedElement);
 
     if (selectedElement !== null) {
+        /*Vymazanie prepajcej ciary*/
+        if (selectedElement.DPoint) {
+            deleteLineHandler();
+        } else { // Vybraty port
 
-        var f = checkPorts(selectedElement); // zisti ci je target port a aky je to port
-        console.log(f);
+            var f = checkPorts(selectedElement); // zisti ci je target port a aky je to port
+            if (f === 2) { // OUT
+                //connPortFrom = selectedElement;
+                connPortFrom = scheme[selectedElement.type];
+                console.log("Selected element type");
+                console.log(selectedElement.type);
+                console.log("Scheme");
+                console.log(scheme);
+                connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
+                console.log("Setting from block");
 
-        if (f === 2) { // OUT
-            connPortFrom = selectedElement; //TODO
-            console.log("Selected element type");
-            console.log(selectedElement.type);
-            console.log("Scheme");
-            console.log(scheme);
-            connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
-            console.log("Setting from block");
+                console.log("Port from selected:");
+                console.log(connPortFrom);
 
-            console.log("Port from selected:");
-            console.log(connPortFrom);
-
-            // zaciatok tyrkysovej ciary
-            var startX = connPortFrom.left - portWidth / 2;
-            var startY = connPortFrom.top + portHeight / 2;
-            var points = [startX, startY, startX, startY];
-            connLine = new fabric.Line(points, {
-                strokeWidth: 1,
-                stroke: 'cyan',
-                type: 'temporaryLine'
-            });
-            canvas.add(connLine);
-
-            isDown = true;
-        }
-
-        $.each(selectedElement._objects, function (name, property) {
-            if (!property.text) {
-                if (!property.hasOwnProperty('invisible')) {
-                    property.set({'stroke': 'red'});
-                }
+                // Vytvorenie tyrkysovej ciary
+                createConnectingCyanLine(connPortFrom);
             }
-        });
-        canvas.renderAll();
+
+            $.each(selectedElement._objects, function (name, property) {
+                if (!property.text) {
+                    if (!property.hasOwnProperty('invisible')) {
+                        property.set({'stroke': 'red'});
+                    }
+                }
+            });
+            canvas.renderAll();
+        }
     }
 });
 
@@ -311,32 +312,44 @@ function checkPorts(selectedElement) {
     return ret;
 }
 
-/* Clear vsetkych pomocnych premennych na vytvaranie spojenia */
+/* Creating mouse following line */
+function createConnectingCyanLine(originPort) {
+    // zaciatok tyrkysovej ciary
+    var portObject = getObject(originPort.portName);
+    var startX = portObject.left - portWidth / 2;
+    var startY = portObject.top + portHeight / 2;
+    var points = [startX, startY, startX, startY];
+    connLine = new fabric.Line(points, {
+        strokeWidth: 1,
+        stroke: 'cyan',
+        type: 'temporaryLine'
+    });
+    canvas.add(connLine);
+
+    isDown = true;
+}
+
+/* Clear cyan line following mouse */
 function clearSelection() {
-
-    //TODO TREBA SPRAVIT CHECK ZE TA CIARA KTORA SA MAZE TAM SKUTOCNE JE ABY SA NEVYMAZALO DACO INE
-
-    console.log("Clearing selection");
-    connLine = null; // TODO
-    connFromBlock = null;
-    connPortFrom = null;
-    deleteLastObject();
-    canvas.renderAll(); // neviem ci je treba
+    if(connLine != null) {
+        deleteLastObject();
+        console.log("Clearing selection");
+        connLine = null;
+        isDown = false;
+    }
+    canvas.renderAll();
 }
 
 /* blockFrom je blok kde sa zacina spojenie zisteny pomocou getObject(scheme[selectedElement.type].parentBlock);
 * rovnako sa ziskava blockTo
+* Function finds out if outputs of origin block are empty and if input ports of second block are empty
 * */
-function portEmpty(blockFrom, blockTo) {
-    //TODO checky sa musia viazat na porty nie na bloky spravit pole pre input pole pre output pole pre top a bottom porty
-    //TODO index v poli bude index portu ak na tom indexe je false port je plny a neda sa spojit
-    //TODO v scheme treba zapisovat tieto polia je ale potrebne zabezpecit aby sa nezmenil vystup !!!
+function portsEmpty(blockFrom, blockTo, selectedPort) {
     var fromFlag = scheme[blockFrom.type].NumberOfFullOutputs < scheme[blockFrom.type].NumberOfOutputs;
     var toFlag = scheme[blockTo.type].NumberOfFullInputs < scheme[blockTo.type].NumberOfInputs;
-    return fromFlag && toFlag;
-    //!scheme[element.type].TopFull && !scheme[connPointIn].full
+    var inputFlag = selectedPort.full;
+    return (fromFlag && toFlag && !inputFlag);
 }
-
 
 canvas.on('mouse:move', function(option) {
     if(isDown === true) {
@@ -346,137 +359,169 @@ canvas.on('mouse:move', function(option) {
     }
 });
 
+function clearCanvas() {
+    console.log("Clearing canvas");
+    if(isDown === true) {
+        clearSelection();
+    }
+    // Zmena farby ohranicenia
+    if(selectedElement != null) {
+        $.each(selectedElement._objects, function (name, property) {
+            if (!property.text) {
+                if (!property.hasOwnProperty('invisible')) {
+                    property.set({'stroke': 'black'});
+                }
+            }
+        });
+        selectedElement = null;
+    }
+}
 
-canvas.on('mouse:up', function (option) {
-    //isDown = false;
-
-});
+function resetGlobals() {
+    if(connToBlock != null)
+        connToBlock = null;
+    if(connFromBlock != null)
+        connFromBlock = null;
+    if(connPortFrom != null)
+        connPortFrom = null;
+    if(connPortTo != null)
+        connPortTo = null;
+}
 
 //on click off block
 canvas.on('selection:cleared', function(options) {
-    if(isDown === true) { //TODO
-        console.log("is down set cleared");
-        if (connLine != null) {
-            clearSelection();
-            isDown = false;
-        }
-    }
-    $.each(selectedElement._objects, function (name, property) {
-        if(!property.text) {
-            if(!property.hasOwnProperty('invisible')){
-                property.set({'stroke': 'black'});
-            }
-        }
-    });
-    selectedElement = null;
+    clearSelection();
+    clearCanvas();
+    resetGlobals();
 });
+
+
+/* Handles deleting connecting line when DPoint object is selected or updated */
+function deleteLineHandler() {
+    console.log(getObjectByType('line' + selectedElement.DPoint));
+    console.log('DELETING: line' + selectedElement.DPoint);
+
+    if (scheme['line' + selectedElement.DPoint].hasPoint) {
+        var point = 'point' + selectedElement.DPoint;
+        var pointLine = getObject(scheme[point].outLine);
+    }
+    deleteLine(getObjectByType('line' + selectedElement.DPoint));
+    if (pointLine) {
+        deleteLine(pointLine);
+    }
+    clearSelection();
+}
+
 
 //on target block change
 canvas.on('selection:updated', function(options) {
-    /* TODO vytvorit cestu a zvysit pocet v portoch bloku from aj to */
-    selectedElement = null;
+    clearCanvas();
+
     selectedElement = options.target;
 
     console.log("Updated:");
     console.log(selectedElement);
+    console.log(scheme[selectedElement.type]);
 
     if (selectedElement !== null) {
-        var f = checkPorts(options.target);
-        if(f === 1 && connFromBlock != null) { //port je IN
-
+        /* Vymazanie prepajacej ciary */
+        if (selectedElement.DPoint) {
+            deleteLineHandler();
+        } else { // vybraty port
             connToBlock = getObject(scheme[selectedElement.type].parentBlock);
-            console.log("Setting to block");
-            if(!((connFromBlock && connToBlock) && (connFromBlock !== connToBlock))) {
-                window.alert("Cant connect to the same block!");
-                clearSelection();
-                isDown = false;
+            var f = checkPorts(selectedElement);
+            if (f === 1 && connFromBlock != null) { //port je IN
+                if (!((connFromBlock && connToBlock) && (connFromBlock !== connToBlock))) {
+                    window.alert("Cant connect to the same block!");
+                    clearSelection();
+                } else if (portsEmpty(connFromBlock, connToBlock, selectedElement)) {
+
+                    clearSelection();
+
+                    connPortTo = scheme[selectedElement.type];
+
+                    //console.log("out: " + scheme[selectedElement.type].ZOrder+" in: "+scheme[options.type].ZOrder);
+
+                    var beginBlockOrder = scheme[connFromBlock.type].ZOrder;
+                    var endBlockOrder = scheme[connToBlock.type].ZOrder;
+                    order++;
+
+                    // beginBlock, endBlock, beginOrder, endOrder, typeConnection, originPort, inCount, inPort
+                    // typeConnection moze byt block alebo point
+                    var lineA = createLine(connFromBlock, connToBlock, beginBlockOrder, endBlockOrder, 'block', 'out', scheme[connToBlock.type].NumberOfInputs, connPortTo.portNumber);
+                    canvas.add(lineA);
+                    lineName = 'line' + order;
+
+                    scheme[connToBlock.type].connectedToBlocks.push(connToBlock.type);
+                    scheme[connToBlock.type].connectedFromBlocks.push(connToBlock.type);
+
+                    //data prep
+                    scheme[connToBlock.type].outLine = lineName;
+                    scheme[connToBlock.type].inLine = lineName;
+                    var NumOut = scheme[connToBlock.type].NumberOfFullOutputs;
+                    scheme[connFromBlock.type].NumberOfFullOutputs = NumOut + 1;
+                    connPortTo.full = true;
+                    connPortTo.connectedLine = lineName;
+                    connPortFrom.full = true;
+                    connPortFrom.connectedLine = lineName;
+
+                    console.log("SELECTED ELEMENT");
+                    console.log(scheme[selectedElement.type]);
+
+                    var NumIn = scheme[connToBlock.type].NumberOfFullInputs;
+                    scheme[connToBlock.type].NumberOfFullInputs = NumIn + 1;
+
+                    var lines = {
+                        [lineName]: {
+                            "ZOrder": order,
+                            "Src": connToBlock.ZOrder + "#out:" + scheme[connToBlock.type].NumberOfFullOutputs,
+                            "Dst": connToBlock.ZOrder + "#in:" + connPortTo.portNumber,
+                            "From": connToBlock.type,
+                            "To": connToBlock.type,
+                            "ToPort": connPortTo.portName,
+                            "Typ": "simple",
+                            "hasPoint": false,
+                            "objectType": "line",
+                            "typeConnection": "block",
+                            "fromPort": "out"
+                        }
+                    };
+                    scheme = $.extend(scheme, lines);
+                    lineA.sendToBack();
+
+                    scheme[connToBlock.type].connectedLines.push(lineName);
+                    scheme[connToBlock.type].connectedLines.push(lineName);
+
+                    var deletePointA = createDeletePoint(connToBlock, connToBlock, order, connPortTo.portNumber);
+                    canvas.add(deletePointA);
+                    canvas.on('object:moving', function (e) {
+                        redrawLine(e.target, 'out');
+                        canvas.renderAll();
+                    });
+
+                    clearCanvas();
+                    resetGlobals();
+                }
+                else {
+                    window.alert("Port full!");
+                    clearSelection();
+                }
             }
-            else if(portEmpty(connFromBlock, connToBlock)) {
-                /*NIKAM INAM TO NESMIE IST LEBO SA TO CELE ROZDRBE*/
-                connLine = null; // TODO
-                deleteLastObject();
-                canvas.renderAll();
-                /*****/
-
-                connPointIn = connFromBlock.type;
-                console.log("main obj: " + connToBlock.type + " port: " + connPointIn + " port num:" + scheme[connPointIn].portNumber);
-                console.log(connToBlock.BlockType);
-                //deleteLastObject(); TODO clearSelection();
-
-                //console.log("out: " + scheme[selectedElement.type].ZOrder+" in: "+scheme[options.type].ZOrder);
-                //if(connToBlock.BlockType === 'Point') {
-                var beginBlockOrder = scheme[connFromBlock.type].ZOrder;
-                var endBlockOrder = scheme[connToBlock.type].ZOrder;
-                order++;
-
-
-                // beginBlock, endBlock, beginOrder, endOrder, typeConnection, originPort, inCount, inPort
-                // typeConnection moze byt block alebo point netusim na co je point .....
-                var lineA = createLine(connFromBlock, connToBlock, beginBlockOrder, endBlockOrder, 'block', 'out', scheme[connToBlock.type].NumberOfInputs, scheme[connPointIn].portNumber);
-                canvas.add(lineA);
-                lineName = 'line' + order;
-
-                scheme[connToBlock.type].connectedToBlocks.push(connToBlock.type);
-                scheme[connToBlock.type].connectedFromBlocks.push(connToBlock.type);
-
-                //data prep
-                scheme[connToBlock.type].outLine = lineName;
-                scheme[connToBlock.type].inLine = lineName;
-                var NumOut = scheme[connToBlock.type].NumberOfFullOutputs;
-                scheme[connToBlock.type].NumberOfFullOutputs = NumOut + 1;
-                scheme[connPointIn].full = true;
-                var NumIn = scheme[connToBlock.type].NumberOfFullInputs;
-                scheme[connToBlock.type].NumberOfFullInputs = NumIn + 1;
-
-                var lines = {
-                    [lineName]: {
-                        "ZOrder": order,
-                        "Src": connToBlock.ZOrder + "#out:" + scheme[connToBlock.type].NumberOfFullOutputs,
-                        "Dst": connToBlock.ZOrder + "#in:" + scheme[connPointIn].portNumber,
-                        "From": connToBlock.type,
-                        "To": connToBlock.type,
-                        "ToPort": scheme[connPointIn].portName,
-                        "Typ": "simple",
-                        "hasPoint": false,
-                        "objectType": "line",
-                        "typeConnection": "block",
-                        "fromPort": "out"
-                    }
-                };
-                scheme = $.extend(scheme, lines);
-                lineA.sendToBack();
-
-                scheme[connToBlock.type].connectedLines.push(lineName);
-                scheme[connToBlock.type].connectedLines.push(lineName);
-
-                var deletePointA = createDeletePoint(connToBlock, connToBlock, order, scheme[connPointIn].portNumber);
-                canvas.add(deletePointA);
-                canvas.on('object:moving', function (e) {
-                    redrawLine(e.target, 'out');
-                    canvas.renderAll();
-                });
-
-                isDown=false;
+            else if (f === 2) { // Port je out
+                connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
+                //TODO pozret ci je output port prazdny pred vytvaranim liny treba menit veci v scheme
+                connPortFrom = scheme[selectedElement.type];
+                if (connLine == null) {
+                    // Vytvorenie tyrkysovej ciary
+                    createConnectingCyanLine(connPortFrom);
+                } else {
+                    clearSelection();
+                }
 
             }
-            else {
-                window.alert("Port full!");
-                clearSelection();
-                isDown = false;
-            }
-        }
-        else if(f === 2) {
-            connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
         }
     }
 
-    $.each(selectedElement._objects, function (name, property) {
-        if(!property.text) {
-            if(!property.hasOwnProperty('invisible')){
-                property.set({'stroke': 'black'});
-            }
-        }
-    });
     selectedElement = null;
     selectedElement = options.target;
     $.each(selectedElement._objects, function (name, property) {
@@ -486,7 +531,6 @@ canvas.on('selection:updated', function(options) {
             }
         }
     });
-
 });
 //!selection control
 
@@ -571,6 +615,7 @@ canvas.on('object:moving', function(e) {
         scheme[e.target.type].Position_Array[1] = e.target.top;
     }
 });
+
 /*
 var isDown = false;
 var order = 0;
@@ -614,29 +659,6 @@ canvas.on('mouse:over', function(e) {
         else if(e.target.DPoint){
             e.target.set({stroke:'orange'});
             canvas.renderAll();
-
-            /*Vymazanie prepajcej ciary*/
-            canvas.on('mouse:down', function(o) {
-                if(o.target.DPoint) {
-                    // console.log(getObjectByType('line' + o.target.DPoint));
-                    // console.log('DELETING: line' + o.target.DPoint);
-
-                    //TODO Uncaught TypeError: Cannot read property 'hasPoint' of undefined
-                    if(scheme['line'+o.target.DPoint].hasPoint){
-                        var point = 'point'+o.target.DPoint;
-                        var pointLine = getObject(scheme[point].outLine);
-                    }
-                    deleteLine(getObjectByType('line' + o.target.DPoint));
-                    if(pointLine) {
-                        deleteLine(pointLine);
-                    }
-                    isDown = false;
-                    selectedElement = null;
-                    connFromBlock = null;
-                    connToBlock = null;
-                    //canvas.off('mouse:down'); canvas.off('mouse:move'); canvas.off('mouse:up');
-                }
-            });
         }
         else if(e.target.POut)
         {
@@ -644,6 +666,7 @@ canvas.on('mouse:over', function(e) {
             canvas.renderAll();
         }
         else{
+
             /*canvas.off('mouse:down');
             canvas.off('mouse:move');
             canvas.off('mouse:up');*/
@@ -743,13 +766,13 @@ canvas.on('mouse:dblclick', function(e) {
 
             modal.modal();
         }
-        /*canvas.off('mouse:down');
+        canvas.off('mouse:down');
         canvas.off('mouse:move');
-        canvas.off('mouse:up');*/
+        canvas.off('mouse:up');
     }
-    /*canvas.off('mouse:down');
+    canvas.off('mouse:down');
     canvas.off('mouse:move');
-    canvas.off('mouse:up');*/
+    canvas.off('mouse:up');
 });
 
 
@@ -1316,7 +1339,8 @@ function createLine(beginBlock, endBlock, beginOrder, endOrder, typeConnection, 
                 stopY = tY+tHeight-13;
             }
         }
-    }else if(inCount > 1){
+    }
+    else if(inCount > 1){
         var ip, position;
         if(scheme[endBlock.type].Rotation === 0) {
             ip = tHeight/inCount - (tHeight/inCount/2) + 3;
@@ -1348,29 +1372,13 @@ function createLine(beginBlock, endBlock, beginOrder, endOrder, typeConnection, 
             stopY = topPos;
         }
     }
+    //console.log("Creating path : " + startX, startY, stopX, stopY, originPort, beginBlock, endBlock);
 
-    if(endBlock.numberOfInputs === 1 || endBlock.BlockType === 'Point'){
-        return newPath = new fabric.Path(createPath(startX, startY, stopX, stopY, originPort, beginBlock, endBlock), {
-            type: 'line' + order,
-            fromPort: originPort,
-            toPort:inPort,
-            toPortName:endBlock.type+'I',
-            startX: startX, startY: startY, stopX: stopX, stopY: stopY,
-            stroke: 'black', strokeWidth: 1, objectCaching: false,
-            fill: false, selectable: false,
-            blockOut: beginOrder, blockIn: endOrder,
-            objectOut: beginBlock, objectIn: endBlock,
-            typeConnection: typeConnection,
-            minX: 0, minY: 0
-        });
-    }
-
-    console.log("Creating path : " + startX, startY, stopX, stopY, originPort, beginBlock, endBlock);
     return newPath = new fabric.Path(createPath(startX, startY, stopX, stopY, originPort, beginBlock, endBlock), {
         type: 'line' + order,
         fromPort: originPort,
         toPort:inPort,
-        toPortName:endBlock.type+'I'+inPort,
+        toPortName: (endBlock.numberOfInputs === 1 || endBlock.BlockType === 'Point') ? endBlock.type+'I' : endBlock.type+'I'+inPort ,
         startX: startX, startY: startY, stopX: stopX, stopY: stopY,
         stroke: 'black', strokeWidth: 1, objectCaching: false,
         fill: false, selectable: false,
@@ -1435,7 +1443,7 @@ function createDeletePoint(beginBlock, endBlock, order, inPort) {
     var x3 = x2; var y3 = y2;
 
     var newPoint = new fabric.Path('M 0 0 L 10 10 M 10 0 L 0 10');
-    newPoint.set({left: x3 - 5,	top: y3 - 5,lockMovementX: true, lockMovementY: true,
+    newPoint.set({left: x3 - 5, top: y3 - 5,lockMovementX: true, lockMovementY: true,
         hoverCursor: 'pointer', stroke:'red', strokeWidth:2, hasControls: false, hasBorders: false,
         type: 'dpoint' + order, DPoint: order});
     return newPoint;
@@ -1470,7 +1478,7 @@ function createConnectionPoint(beginBlock, lineOrder, fromPort) {
 
     return newPoint = new fabric.Circle({
         ZOrder: 'P' + lineOrder,
-        left: x1,	top: y1,
+        left: x1,   top: y1,
         lockMovementX: true, lockMovementY: true,
         hoverCursor: 'pointer',
         radius:5, fill: 'black',
@@ -1504,206 +1512,206 @@ function redrawLine(movedBlock, originPort){
 
         if(movedLine.type.substr(0, 4) === 'line') {
 
-                if (movedLine.objectOut.type === idPoint) {
-                    startX = movedBlock.left + movedBlock.width;
-                    startY = movedBlock.top + movedBlock.height / 2;
-                    stopX = movedLine.stopX;
-                    stopY = movedLine.stopY;
+            if (movedLine.objectOut.type === idPoint) {
+                startX = movedBlock.left + movedBlock.width;
+                startY = movedBlock.top + movedBlock.height / 2;
+                stopX = movedLine.stopX;
+                stopY = movedLine.stopY;
+            }
+            if (movedLine.objectOut.type === id) {
+                beginBlock = movedBlock;
+                if(scheme[movedBlock.type].Rotation === 0) {
+                    startX = fX + fWidth;
+                    startY = fY + fHeight / 2 - 10;
                 }
-                if (movedLine.objectOut.type === id) {
-                    beginBlock = movedBlock;
+                else if(scheme[movedBlock.type].Rotation === 90){
+                    if(schemeType === 'rlc'){
+                        startX = fX - 5;
+                        startY = fY + fWidth;
+                    }
+                    else if(schemeType === 'schema2'){
+                        startX = fX + fWidth/2-5;
+                        startY = fY + fHeight - 4;
+                    }
+                    else{
+                        startX = fX + fWidth/2-5;
+                        startY = fY + fHeight-15;
+                    }
+                }
+                else if(scheme[movedBlock.type].Rotation === 180){
+                    startX = fX - 5;
+                    startY = fY + fHeight / 2 - 8;
+                }
+                else if(scheme[movedBlock.type].Rotation === 270){
+                    if(schemeType === 'rlc'){
+                        startX = fX + 5;
+                        startY = fY - fWidth - 3;
+                    }
+                    else{
+                        startX = fX + fWidth/2;
+                        startY = fY - 10;
+                    }
+                }
+                stopX = movedLine.stopX;
+                stopY = movedLine.stopY;
+            }
+            else if (movedLine.objectIn.type === id) {
+                endBlock = movedBlock;
+                var inCount = scheme[movedBlock.type].NumberOfInputs;
+                startX = movedLine.startX;
+                startY = movedLine.startY;
+                if(inCount === 1 || movedBlock.BlockType === 'Point') {
                     if(scheme[movedBlock.type].Rotation === 0) {
-                        startX = fX + fWidth;
-                        startY = fY + fHeight / 2 - 10;
+                        stopX = tX;
+                        stopY = tY + tHeight / 2 - 10;
                     }
                     else if(scheme[movedBlock.type].Rotation === 90){
                         if(schemeType === 'rlc'){
-                            startX = fX - 5;
-                            startY = fY + fWidth;
-                        }
-                        else if(schemeType === 'schema2'){
-                            startX = fX + fWidth/2-5;
-                            startY = fY + fHeight - 4;
-                        }
-                        else{
-                            startX = fX + fWidth/2-5;
-                            startY = fY + fHeight-15;
+                            stopX = tX+tHeight/2-18;
+                            stopY = tY-8;
+                        }else{
+                            stopX = tX+tWidth/2-5;
+                            stopY = tY - 8;
                         }
                     }
                     else if(scheme[movedBlock.type].Rotation === 180){
-                        startX = fX - 5;
-                        startY = fY + fHeight / 2 - 8;
+                        if(schemeType === 'rlc'){
+                            stopX = tX+tWidth + 3;
+                            stopY = tY + tHeight/2 - 8;
+                        }else{
+                            stopX = tX+tWidth;
+                            stopY = tY+tHeight/2-8;
+                        }
                     }
                     else if(scheme[movedBlock.type].Rotation === 270){
                         if(schemeType === 'rlc'){
-                            startX = fX + 5;
-                            startY = fY - fWidth - 3;
+                            stopX = tX+tHeight/2-10;
+                            stopY = tY + tHeight/2 - 8;
+                        }else if(schemeType === 'schema2'){
+                            stopX = tX+tWidth/2;
+                            stopY = tY+tHeight;
                         }
                         else{
-                            startX = fX + fWidth/2;
-                            startY = fY - 10;
+                            stopX = tX+tWidth/2;
+                            stopY = tY+tHeight-13;
                         }
                     }
-                    stopX = movedLine.stopX;
-                    stopY = movedLine.stopY;
-                }
-                else if (movedLine.objectIn.type === id) {
-                    endBlock = movedBlock;
-                    var inCount = scheme[movedBlock.type].NumberOfInputs;
-                    startX = movedLine.startX;
-                    startY = movedLine.startY;
-                    if(inCount === 1 || movedBlock.BlockType === 'Point') {
-                        if(scheme[movedBlock.type].Rotation === 0) {
-                            stopX = tX;
-                            stopY = tY + tHeight / 2 - 10;
+                }else if(inCount > 1){
+                    if(scheme[movedBlock.type].Rotation === 0) {
+                        ip = tHeight/inCount - (tHeight/inCount/2) + 3;
+                        for (var i = 1; i <= inCount; i++) {
+                            inputName = movedBlock.type + 'I' + i;
+                            position = tY + (i * ip) - 9;
+                            if (scheme[inputName].full && movedLine.toPort === i) {
+                                stopX = tX+1;
+                                stopY = position;
+                            }
                         }
-                        else if(scheme[movedBlock.type].Rotation === 90){
-                            if(schemeType === 'rlc'){
-                                stopX = tX+tHeight/2-18;
-                                stopY = tY-8;
-                            }else{
-                                stopX = tX+tWidth/2-5;
+                    }
+                    else if(scheme[movedBlock.type].Rotation === 90) {
+                        ip = tWidth/inCount - (tWidth/inCount/2) + 5;
+                        for (var i = 1; i <= inCount; i++) {
+                            inputName = movedBlock.type + 'I' + i;
+                            position = tX + (i * ip) - 3;
+                            if (scheme[inputName].full && movedLine.toPort === i) {
+                                stopX = position;
                                 stopY = tY - 8;
                             }
                         }
-                        else if(scheme[movedBlock.type].Rotation === 180){
-                            if(schemeType === 'rlc'){
-                                stopX = tX+tWidth + 3;
-                                stopY = tY + tHeight/2 - 8;
-                            }else{
+                    }
+                    else if(scheme[movedBlock.type].Rotation === 180) {
+                        ip = tHeight/inCount - (tHeight/inCount/2) + 3;
+                        for (var i = 1; i <= inCount; i++) {
+                            inputName = movedBlock.type + 'I' + i;
+                            position = tY + (i * ip);
+                            if (scheme[inputName].full && movedLine.toPort === i) {
                                 stopX = tX+tWidth;
-                                stopY = tY+tHeight/2-8;
+                                stopY = position-5;
                             }
                         }
-                        else if(scheme[movedBlock.type].Rotation === 270){
-                            if(schemeType === 'rlc'){
-                                stopX = tX+tHeight/2-10;
-                                stopY = tY + tHeight/2 - 8;
-                            }else if(schemeType === 'schema2'){
-                                stopX = tX+tWidth/2;
-                                stopY = tY+tHeight;
-                            }
-                            else{
-                                stopX = tX+tWidth/2;
-                                stopY = tY+tHeight-13;
-                            }
+                    }
+                    else if(scheme[movedBlock.type].Rotation === 270) {
+                        ip = tWidth/inCount - (tWidth/inCount/2) + 5;
+                        var topPos = tY+tHeight-13;
+                        if(schemeType === 'schema2'){
+                            topPos += 15;
                         }
-                    }else if(inCount > 1){
-                        if(scheme[movedBlock.type].Rotation === 0) {
-                            ip = tHeight/inCount - (tHeight/inCount/2) + 3;
-                            for (var i = 1; i <= inCount; i++) {
-                                inputName = movedBlock.type + 'I' + i;
-                                position = tY + (i * ip) - 9;
-                                if (scheme[inputName].full && movedLine.toPort === i) {
-                                    stopX = tX+1;
-                                    stopY = position;
-                                }
-                            }
-                        }
-                        else if(scheme[movedBlock.type].Rotation === 90) {
-                            ip = tWidth/inCount - (tWidth/inCount/2) + 5;
-                            for (var i = 1; i <= inCount; i++) {
-                                inputName = movedBlock.type + 'I' + i;
-                                position = tX + (i * ip) - 3;
-                                if (scheme[inputName].full && movedLine.toPort === i) {
-                                    stopX = position;
-                                    stopY = tY - 8;
-                                }
-                            }
-                        }
-                        else if(scheme[movedBlock.type].Rotation === 180) {
-                            ip = tHeight/inCount - (tHeight/inCount/2) + 3;
-                            for (var i = 1; i <= inCount; i++) {
-                                inputName = movedBlock.type + 'I' + i;
-                                position = tY + (i * ip);
-                                if (scheme[inputName].full && movedLine.toPort === i) {
-                                    stopX = tX+tWidth;
-                                    stopY = position-5;
-                                }
-                            }
-                        }
-                        else if(scheme[movedBlock.type].Rotation === 270) {
-                            ip = tWidth/inCount - (tWidth/inCount/2) + 5;
-                            var topPos = tY+tHeight-13;
-                            if(schemeType === 'schema2'){
-                                topPos += 15;
-                            }
-                            for (var i = 1; i <= inCount; i++) {
-                                inputName = movedBlock.type + 'I' + i;
-                                position = tX + (i * ip);
-                                if (scheme[inputName].full && movedLine.toPort === i) {
-                                    stopX = position-12;
-                                    stopY = topPos;
-                                }
+                        for (var i = 1; i <= inCount; i++) {
+                            inputName = movedBlock.type + 'I' + i;
+                            position = tX + (i * ip);
+                            if (scheme[inputName].full && movedLine.toPort === i) {
+                                stopX = position-12;
+                                stopY = topPos;
                             }
                         }
                     }
                 }
             }
+        }
 
-            if(startX) {
-                offSet = 20;
-                beginBlock = getObject(scheme[movedLine.type].From);
-                endBlock = getObject(scheme[movedLine.type].To);
+        if(startX) {
+            offSet = 20;
+            beginBlock = getObject(scheme[movedLine.type].From);
+            endBlock = getObject(scheme[movedLine.type].To);
 
-                movedLine.set({
-                    'path': createPath(startX,startY,stopX,stopY,null,beginBlock,endBlock),
-                    'startX': startX,
-                    'startY': startY,
-                    'stopX': stopX,
-                    'stopY': stopY,
-                    'hasControls': false
-                });
+            movedLine.set({
+                'path': createPath(startX,startY,stopX,stopY,null,beginBlock,endBlock),
+                'startX': startX,
+                'startY': startY,
+                'stopX': stopX,
+                'stopY': stopY,
+                'hasControls': false
+            });
 
-                if(scheme[movedLine.type].hasPoint) {
-                    movedPoint = getObjectByType('point' + scheme[movedLine.type].ZOrder);
+            if(scheme[movedLine.type].hasPoint) {
+                movedPoint = getObjectByType('point' + scheme[movedLine.type].ZOrder);
 
-                    if(scheme[beginBlock.type].Rotation === 0) {
-                        movedPoint.left = startX + 15;
-                        movedPoint.top = startY - 4;
-                    }
-                    else if(scheme[beginBlock.type].Rotation === 90) {
-                        movedPoint.left = startX - 4;
-                        movedPoint.top = startY + 15;
-                    }
-                    else if(scheme[beginBlock.type].Rotation === 180) {
-                        movedPoint.left = startX - 25;
-                        movedPoint.top = startY - 4;
-                    }
-                    else if(scheme[beginBlock.type].Rotation === 270) {
-                        movedPoint.left = startX - 5;
-                        movedPoint.top = startY - 28;
-                    }
-                    movedPoint.setCoords();
+                if(scheme[beginBlock.type].Rotation === 0) {
+                    movedPoint.left = startX + 15;
+                    movedPoint.top = startY - 4;
                 }
-
-                movedPointDel = getObjectByType('dpoint' + scheme[movedLine.type].ZOrder);
-                offset = 20;
-
-                if(scheme[endBlock.type].Rotation === 0) {
-                    movedPointDel.left = stopX - offSet - 5;
-                    movedPointDel.top = stopY - 5;
+                else if(scheme[beginBlock.type].Rotation === 90) {
+                    movedPoint.left = startX - 4;
+                    movedPoint.top = startY + 15;
                 }
-                else if(scheme[endBlock.type].Rotation === 90) {
-                    movedPointDel.left = stopX - 5;
-                    movedPointDel.top = stopY - offset - 3;
+                else if(scheme[beginBlock.type].Rotation === 180) {
+                    movedPoint.left = startX - 25;
+                    movedPoint.top = startY - 4;
                 }
-                else if(scheme[endBlock.type].Rotation === 180) {
-                    movedPointDel.left = stopX + offset - 5;
-                    movedPointDel.top = stopY - 5;
+                else if(scheme[beginBlock.type].Rotation === 270) {
+                    movedPoint.left = startX - 5;
+                    movedPoint.top = startY - 28;
                 }
-                else if(scheme[endBlock.type].Rotation === 270) {
-                    movedPointDel.left = stopX - 5;
-                    movedPointDel.top = stopY + offset - 3;
-                }
-                movedPointDel.setCoords();
-
-                canvas.forEachObject(function(tempObj) {
-                    if(tempObj.type.substr(0, 4) === 'line' && ('point' + scheme[movedLine.type].ZOrder) === tempObj.objectOut.type) {
-                        redrawLine(movedPoint);
-                    }
-                });
+                movedPoint.setCoords();
             }
+
+            movedPointDel = getObjectByType('dpoint' + scheme[movedLine.type].ZOrder);
+            offset = 20;
+
+            if(scheme[endBlock.type].Rotation === 0) {
+                movedPointDel.left = stopX - offSet - 5;
+                movedPointDel.top = stopY - 5;
+            }
+            else if(scheme[endBlock.type].Rotation === 90) {
+                movedPointDel.left = stopX - 5;
+                movedPointDel.top = stopY - offset - 3;
+            }
+            else if(scheme[endBlock.type].Rotation === 180) {
+                movedPointDel.left = stopX + offset - 5;
+                movedPointDel.top = stopY - 5;
+            }
+            else if(scheme[endBlock.type].Rotation === 270) {
+                movedPointDel.left = stopX - 5;
+                movedPointDel.top = stopY + offset - 3;
+            }
+            movedPointDel.setCoords();
+
+            canvas.forEachObject(function(tempObj) {
+                if(tempObj.type.substr(0, 4) === 'line' && ('point' + scheme[movedLine.type].ZOrder) === tempObj.objectOut.type) {
+                    redrawLine(movedPoint);
+                }
+            });
+        }
     });
 }
 
@@ -1759,6 +1767,7 @@ function deleteLine(deleteLineObj){
 
     var NumIn, NumOut;
 
+    /*TODO from port na ciare nieje objekt port ale iba string */
     if(scheme[blockNameTo] || scheme[blockNameFrom]) {
         if (originPort === 'out') {
             if (scheme[blockNameFrom]) {
@@ -1848,12 +1857,12 @@ function status_remove(){
 }
 
 document.addEventListener('mousedown', function(event) {
-  lastDownTarget = event.target;
+    lastDownTarget = event.target;
     if(allow_delete){
-            if(selectedElement.baseBlock){
-                deleteBlock(selectedElement,scheme[selectedElement.type].NumberOfInputs);
-            }
+        if(selectedElement.baseBlock){
+            deleteBlock(selectedElement,scheme[selectedElement.type].NumberOfInputs);
         }
+    }
 }, false);
 
 
