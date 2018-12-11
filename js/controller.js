@@ -262,29 +262,34 @@ canvas.on('object:selected', function (e) {
     selectedElement = e.target;
     console.log("Element selected:");
     console.log(selectedElement);
+    console.log(scheme[selectedElement.type]);
 
     if (selectedElement !== null) {
         /*Vymazanie prepajcej ciary*/
         if (selectedElement.DPoint) {
-            deleteLineHandler();
+            deleteLineHandler(selectedElement);
         } else { // Vybraty port
-
             var f = checkPorts(selectedElement); // zisti ci je target port a aky je to port
-            if (f === 2) { // OUT
+            if ((f === 2 || f === 3) && scheme[selectedElement.type].full === false) { // OUT alebo pout co je point na ciare
                 //connPortFrom = selectedElement;
                 connPortFrom = scheme[selectedElement.type];
+                if(f === 2) {
+                    connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
+                } else if(f === 3) {
+                    connFromBlock = getObject(scheme[selectedElement.parentObject]);
+                }
                 console.log("Selected element type");
                 console.log(selectedElement.type);
                 console.log("Scheme");
                 console.log(scheme);
-                connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
+
                 console.log("Setting from block");
 
                 console.log("Port from selected:");
                 console.log(connPortFrom);
 
                 // Vytvorenie tyrkysovej ciary
-                createConnectingCyanLine(connPortFrom);
+                createConnectingCyanLine(selectedElement);
             }
 
             $.each(selectedElement._objects, function (name, property) {
@@ -299,25 +304,33 @@ canvas.on('object:selected', function (e) {
     }
 });
 
-/* Vracia 1 ak je port In, 2 ak Out ak je to daco ine tak 0 */
+/* Vracia 1 ak je port In, 2 ak Out alebo POut ak je to daco ine tak 0 */
 function checkPorts(selectedElement) {
+
     var ret = 0;
     if (selectedElement.In) {
         ret = 1;
-    }
-    else if (selectedElement.Out) {
+    } else if (selectedElement.Out) {
         ret = 2;
+    } else if(selectedElement.POut){
+        ret = 3;
+    } else if(selectedElement.TopPort) {
+        ret = 4;
+    } else if(selectedElement.BotPort) {
+        ret = 5;
     }
     canvas.renderAll();
     return ret;
 }
 
 /* Creating mouse following line */
-function createConnectingCyanLine(originPort) {
+function createConnectingCyanLine(selected) {
     // zaciatok tyrkysovej ciary
-    var portObject = getObject(originPort.portName);
-    var startX = portObject.left - portWidth / 2;
-    var startY = portObject.top + portHeight / 2;
+    var startX, startY;
+    console.log(selected);
+    startX = selected.left + selected.width;
+    startY = selected.top + selected.height;
+
     var points = [startX, startY, startX, startY];
     connLine = new fabric.Line(points, {
         strokeWidth: 1,
@@ -333,7 +346,7 @@ function createConnectingCyanLine(originPort) {
 function clearSelection() {
     if(connLine != null) {
         deleteLastObject();
-        console.log("Clearing selection");
+        //console.log("Clearing selection");
         connLine = null;
         isDown = false;
     }
@@ -348,6 +361,7 @@ function portsEmpty(blockFrom, blockTo, selectedPort) {
     var fromFlag = scheme[blockFrom.type].NumberOfFullOutputs < scheme[blockFrom.type].NumberOfOutputs;
     var toFlag = scheme[blockTo.type].NumberOfFullInputs < scheme[blockTo.type].NumberOfInputs;
     var inputFlag = selectedPort.full;
+    console.log("Port full ? " + (fromFlag && toFlag && !inputFlag));
     return (fromFlag && toFlag && !inputFlag);
 }
 
@@ -360,7 +374,7 @@ canvas.on('mouse:move', function(option) {
 });
 
 function clearCanvas() {
-    console.log("Clearing canvas");
+    //console.log("Clearing canvas");
     if(isDown === true) {
         clearSelection();
     }
@@ -397,15 +411,18 @@ canvas.on('selection:cleared', function(options) {
 
 
 /* Handles deleting connecting line when DPoint object is selected or updated */
-function deleteLineHandler() {
-    console.log(getObjectByType('line' + selectedElement.DPoint));
-    console.log('DELETING: line' + selectedElement.DPoint);
-
-    if (scheme['line' + selectedElement.DPoint].hasPoint) {
-        var point = 'point' + selectedElement.DPoint;
+function deleteLineHandler(selected) {
+    console.log(selected);
+    // ak ta ciara ma okruhly POut port na spajanie s ciarou
+    // tak sa vymaze aj ta ciara
+    // DPoint oznacuje id ciary DPoint samotny nieje v scheme
+    var line = scheme['line' + selected.DPoint];
+    if (line.hasPoint) {
+        var point = 'point' + selected.DPoint;
         var pointLine = getObject(scheme[point].outLine);
     }
-    deleteLine(getObjectByType('line' + selectedElement.DPoint));
+    scheme[line.fromPortOut].full = false;
+    deleteLine(getObjectByType('line' + selected.DPoint));
     if (pointLine) {
         deleteLine(pointLine);
     }
@@ -419,14 +436,22 @@ canvas.on('selection:updated', function(options) {
 
     selectedElement = options.target;
 
-    console.log("Updated:");
-    console.log(selectedElement);
-    console.log(scheme[selectedElement.type]);
+    $.each(selectedElement._objects, function (name, property) {
+        if(!property.text) {
+            if(!property.hasOwnProperty('invisible')){
+                property.set({'stroke': 'red'});
+            }
+        }
+    });
+
+    //console.log("Updated:");
+    //console.log(selectedElement);
+    //console.log(scheme[selectedElement.type]);
 
     if (selectedElement !== null) {
         /* Vymazanie prepajacej ciary */
         if (selectedElement.DPoint) {
-            deleteLineHandler();
+            deleteLineHandler(selectedElement);
         } else { // vybraty port
             connToBlock = getObject(scheme[selectedElement.type].parentBlock);
             var f = checkPorts(selectedElement);
@@ -434,7 +459,7 @@ canvas.on('selection:updated', function(options) {
                 if (!((connFromBlock && connToBlock) && (connFromBlock !== connToBlock))) {
                     window.alert("Cant connect to the same block!");
                     clearSelection();
-                } else if (portsEmpty(connFromBlock, connToBlock, selectedElement)) {
+                } else if (portsEmpty(connFromBlock, connToBlock, scheme[selectedElement.type])) {
 
                     clearSelection();
 
@@ -446,53 +471,80 @@ canvas.on('selection:updated', function(options) {
                     var endBlockOrder = scheme[connToBlock.type].ZOrder;
                     order++;
 
+                    var portString = "out";
+                    var connTypeString = "block";
+                    var srcStringLastPart = scheme[connFromBlock.type].NumberOfFullOutputs;
+                    var dstStringLastPart = connPortTo.portNumber;
+                    var typString = "simple";
+                    switch (f) {
+                        case 3:
+                            portString = "point";
+                            connTypeString = "point";
+                            typString = "point";
+                            break;
+                        case 4:
+                            portString = "top";
+                            connTypeString = "top";
+                            srcStringLastPart = "1";
+                            dstStringLastPart = scheme[connToBlock.type].NumberOfFullInputs;
+                            break;
+                        case 5:
+                            portString = "bot";
+                            connTypeString = "bot";
+                            srcStringLastPart = "1";
+                            dstStringLastPart = scheme[connToBlock.type].NumberOfFullInputs;
+                            break;
+                    }
+
                     // beginBlock, endBlock, beginOrder, endOrder, typeConnection, originPort, inCount, inPort
                     // typeConnection moze byt block alebo point
-                    var lineA = createLine(connFromBlock, connToBlock, beginBlockOrder, endBlockOrder, 'block', 'out', scheme[connToBlock.type].NumberOfInputs, connPortTo.portNumber);
+                    var lineA = createLine(connFromBlock, connToBlock, beginBlockOrder, endBlockOrder, connTypeString, portString, scheme[connToBlock.type].NumberOfInputs, connPortTo.portNumber);
                     canvas.add(lineA);
                     lineName = 'line' + order;
 
-                    scheme[connToBlock.type].connectedToBlocks.push(connToBlock.type);
-                    scheme[connToBlock.type].connectedFromBlocks.push(connToBlock.type);
+                    scheme[connFromBlock.type].connectedToBlocks.push(connToBlock.type);
+                    scheme[connToBlock.type].connectedFromBlocks.push(connFromBlock.type);
 
                     //data prep
-                    scheme[connToBlock.type].outLine = lineName;
                     scheme[connToBlock.type].inLine = lineName;
-                    var NumOut = scheme[connToBlock.type].NumberOfFullOutputs;
-                    scheme[connFromBlock.type].NumberOfFullOutputs = NumOut + 1;
+                    scheme[connFromBlock.type].outLine = lineName;
+                    //var NumOut = scheme[connFromBlock.type].NumberOfFullOutputs;
+                    scheme[connFromBlock.type].NumberOfFullOutputs += 1;
                     connPortTo.full = true;
                     connPortTo.connectedLine = lineName;
                     connPortFrom.full = true;
                     connPortFrom.connectedLine = lineName;
 
-                    console.log("SELECTED ELEMENT");
-                    console.log(scheme[selectedElement.type]);
+                    //console.log("SELECTED ELEMENT");
+                    //console.log(scheme[selectedElement.type]);
 
-                    var NumIn = scheme[connToBlock.type].NumberOfFullInputs;
-                    scheme[connToBlock.type].NumberOfFullInputs = NumIn + 1;
+                    //var NumIn = scheme[connToBlock.type].NumberOfFullInputs;
+                    scheme[connToBlock.type].NumberOfFullInputs += 1;
+
 
                     var lines = {
                         [lineName]: {
                             "ZOrder": order,
-                            "Src": connToBlock.ZOrder + "#out:" + scheme[connToBlock.type].NumberOfFullOutputs,
-                            "Dst": connToBlock.ZOrder + "#in:" + connPortTo.portNumber,
-                            "From": connToBlock.type,
+                            "Src": connFromBlock.ZOrder + "#"+portString+":" + srcStringLastPart,
+                            "Dst": connToBlock.ZOrder + "#in:" + dstStringLastPart,
+                            "From": connFromBlock.type,
                             "To": connToBlock.type,
                             "ToPort": connPortTo.portName,
-                            "Typ": "simple",
+                            "Typ": typString,
                             "hasPoint": false,
                             "objectType": "line",
-                            "typeConnection": "block",
-                            "fromPort": "out"
+                            "typeConnection": connTypeString,
+                            "fromPort": portString,
+                            "fromPortOut": connPortFrom.portName
                         }
                     };
                     scheme = $.extend(scheme, lines);
                     lineA.sendToBack();
 
                     scheme[connToBlock.type].connectedLines.push(lineName);
-                    scheme[connToBlock.type].connectedLines.push(lineName);
+                    scheme[connFromBlock.type].connectedLines.push(lineName);
 
-                    var deletePointA = createDeletePoint(connToBlock, connToBlock, order, connPortTo.portNumber);
+                    var deletePointA = createDeletePoint(connFromBlock, connToBlock, order, connPortTo.portNumber);
                     canvas.add(deletePointA);
                     canvas.on('object:moving', function (e) {
                         redrawLine(e.target, 'out');
@@ -508,29 +560,19 @@ canvas.on('selection:updated', function(options) {
                 }
             }
             else if (f === 2) { // Port je out
-                connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
-                //TODO pozret ci je output port prazdny pred vytvaranim liny treba menit veci v scheme
-                connPortFrom = scheme[selectedElement.type];
-                if (connLine == null) {
-                    // Vytvorenie tyrkysovej ciary
-                    createConnectingCyanLine(connPortFrom);
-                } else {
-                    clearSelection();
+                if(scheme[selectedElement.type].full === false) {
+                    connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
+                    connPortFrom = scheme[selectedElement.type];
+                    if (connLine == null) {
+                        // Vytvorenie tyrkysovej ciary
+                        createConnectingCyanLine(selectedElement);
+                    } else {
+                        clearSelection();
+                    }
                 }
-
             }
         }
     }
-
-    selectedElement = null;
-    selectedElement = options.target;
-    $.each(selectedElement._objects, function (name, property) {
-        if(!property.text) {
-            if(!property.hasOwnProperty('invisible')){
-                property.set({'stroke': 'red'});
-            }
-        }
-    });
 });
 //!selection control
 
@@ -681,6 +723,7 @@ canvas.on('mouse:dblclick', function(e) {
     if(e.target !== undefined) {
         if (e.target.type.substr(0, 4) === 'line') {
             if(schemeType !== 'rlc' && !scheme[e.target.type].hasPoint && (scheme[e.target.type].Typ) !== "point") {
+                var selectedElement = getObject(e.target.type);
                 var lineOut = scheme[e.target.type].From;
                 var lineOutObject = getObject(lineOut);
                 var lineInObject = getObject(scheme[e.target.type].To);
