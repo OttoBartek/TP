@@ -9,6 +9,7 @@ $.each(Object.keys(blockDrawData),function(i,nameBlock){
 var posCanvas = 100; var posy = posCanvas;
 canvas.selection=false;
 data = blockParameters;
+portPos = portPositions;
 var connToBlock, connFromBlock, connPointIn;
 var inPosition, movingInPosition;
 
@@ -22,6 +23,7 @@ window.addBlock = function (blockType, posx, posy) {
     var parBlock = blockParameters[blockType];
     var type = blockType + number[blockType];
     var partBlock = [];
+    var portPos = portPositions[blockType][0];
 
     $.each(objBlock, function(i,subBlock) {
         if(subBlock.type === 'rect')
@@ -54,6 +56,7 @@ window.addBlock = function (blockType, posx, posy) {
 
     var io = data[blockType][0].io;
     var ports = data[blockType][0].ports;
+
     var numberOfInputs = parBlock[0].NumberOfInputs;
     var block = new fabric.Group(partBlock, {baseBlock:1, type: type, left: posx, top: posy, io: io, ports: ports, numberOfInputs: numberOfInputs, ZOrder: counter, "BlockType" : blockType});
     block.hasBorders = block.hasControls = false;
@@ -61,8 +64,10 @@ window.addBlock = function (blockType, posx, posy) {
     var addPort;
 
     if(io === 'out' || io === 'both') {
+
         var outPart = new fabric.Triangle({
-            left: posx + block.width + 5, top: posy + block.height/2-15,
+            // left: posx + block.width + 5, top: posy + block.height/2-15,
+            left: posx + portPos.out.left, top: posy + portPos.out.top,
             angle:90,
             lockMovementX: true, lockMovementY: true,
             width: 10, height: 10, fill: 'black',
@@ -76,7 +81,7 @@ window.addBlock = function (blockType, posx, posy) {
     if (io === 'in' || io === 'both') {
         if (numberOfInputs === 1 || blockType === 'Point') {
             var inPart = new fabric.Triangle({
-                left: posx + 1, top: posy + block.height / 2 - 15,
+                left: posx + portPos.in.left, top: posy + portPos.in.top,
                 angle: 90,
                 lockMovementX: true, lockMovementY: true,
                 width: 10, height: 10, fill: 'black',
@@ -96,11 +101,9 @@ window.addBlock = function (blockType, posx, posy) {
             };
             scheme = $.extend(scheme, addPort);
         } else if (numberOfInputs > 1) {
-            inPosition = block.height/numberOfInputs - (block.height/numberOfInputs/2) + 3;
             for (var i = 1; i <= numberOfInputs; i++) {
-                var position = posy + (i * inPosition) - 14;
                 var inPart = new fabric.Triangle({
-                    left: posx + 1, top: position,
+                    left: posx + portPos.in[i-1].left, top: posy + portPos.in[i-1].top,
                     angle: 90,
                     lockMovementX: true, lockMovementY: true,
                     width: 10, height: 10, fill: 'black',
@@ -124,7 +127,9 @@ window.addBlock = function (blockType, posx, posy) {
             }
         }
     }
+
     if(ports === 'top' || ports === 'both') {
+
         var topPart = new fabric.Rect({
             left: posx + block.width/2-8, top: posy-10,
             lockMovementX: true, lockMovementY: true,
@@ -183,6 +188,7 @@ window.addBlock = function (blockType, posx, posy) {
             "connectedFromBlocks":[]
         }
     };
+
     scheme = $.extend(scheme, addObj);
     //console.log(scheme);
     //console.log(addObj)
@@ -245,6 +251,18 @@ var cornerLXT, cornerLYT, cornerRXB, cornerRYB;
 //object movement
 canvas.on('object:moving', function(e) {
     //top/bot ports
+
+    var rot = scheme[selectedElement.type].Rotation;
+    var portPos = portPositions[selectedElement.BlockType][rot];
+
+    canvas.forEachObject(function(obj) {
+        if(obj.type === selectedElement.type + 'IMG') {
+            obj.left = cornerLXT + 1;
+            obj.top = cornerLYT+5;
+            obj.setCoords();
+        }
+    });
+
     if(selectedElement.ports){
         cornerLXT = selectedElement.left;
         cornerLYT = selectedElement.top;
@@ -284,18 +302,19 @@ canvas.on('object:moving', function(e) {
         if(selectedElement.io === 'out' || selectedElement.io === 'both') {
             canvas.forEachObject(function(obj) {
                 if(obj.type === selectedElement.type + 'O') {
-                    obj.left = cornerLXT + selectedElement.width + 5;
-                    obj.top = cornerLYT + selectedElement.height/2 - 15;
+                    obj.left = cornerLXT + portPos.out.left;
+                    obj.top = cornerLYT + portPos.out.top;
                     obj.setCoords();
                 }
             });
         }
         if(selectedElement.io === 'in' || selectedElement.io === 'both') {
+
             if(selectedElement.numberOfInputs === 1 || selectedElement.BlockType === 'Point') {
                 canvas.forEachObject(function (obj) {
                     if (obj.type === selectedElement.type + 'I') {
-                        obj.left = cornerLXT + 1;
-                        obj.top = cornerLYT + selectedElement.height / 2 - 15;
+                        obj.left = cornerLXT + portPos.in.left;
+                        obj.top = cornerLYT + portPos.in.top;
                         obj.setCoords();
                     }
                 });
@@ -305,8 +324,8 @@ canvas.on('object:moving', function(e) {
                 for(var i = 1; i <= selectedElement.numberOfInputs; i++) {
                     canvas.forEachObject(function (obj) {
                         if (obj.type === selectedElement.type + 'I' + i) {
-                            obj.left = cornerLXT + 1;
-                            obj.top = cornerLYT + (i * movingInPosition) - 14;
+                            obj.left = cornerLXT + portPos.in[i-1].left;
+                            obj.top = cornerLYT + portPos.in[i-1].top;;
                             obj.setCoords();
                         }
                     });
@@ -1970,7 +1989,7 @@ function removeFromArray(target, toRemove, array){
 }
 
 function deleteLine(deleteLineObj){
-    //console.log(deleteLineObj);
+    //(deleteLineObj);
     blockNameTo = scheme[deleteLineObj.type].To;
     blockNameFrom = scheme[deleteLineObj.type].From;
 
@@ -2134,7 +2153,8 @@ $(document).bind('keydown', function(e) {
         if(selectedElement) {
             if(selectedElement.baseBlock) {
                 e.preventDefault();
-                addBlock(selectedElement.BlockType);
+                console.log(selectedElement);
+                addBlock(selectedElement.BlockType,selectedElement.left+150,selectedElement.top+50);
             }
         }
         return false;

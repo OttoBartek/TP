@@ -62,9 +62,9 @@
                         "Text": "Resistor",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 14,
-                            "left": 3,
-                            "fontSize": 12,
+                            "top": 13,
+                            "left": 0,
+                            "fontSize": 9,
                             "fill": "black",
                             "changeable": true
                         }
@@ -108,9 +108,9 @@
                         "Text": "Inductor",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 15,
-                            "left": 1,
-                            "fontSize": 12,
+                            "top": 13,
+                            "left": 0,
+                            "fontSize": 9,
                             "fill": "black",
                             "changeable": true
                         }
@@ -166,7 +166,7 @@
                         "Text": "Capacitor",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 30,
+                            "top": 22,
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
@@ -176,11 +176,24 @@
                 ], "Uin":
                 [
                     {
+                        "type": "path",
+                        "path": "M 0 30 L 10 30",
+                        "data": {
+                            "width": 10,
+                            "height": 30,
+                            "top": 10,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false
+                        }
+                    },
+                    {
                         "type": "circle",
                         "data": {
                             "width": 40,
                             "height": 30,
                             "radius": 11,
+                            "left":10,
                             "fill": "white",
                             "stroke": "black"
                         }
@@ -199,21 +212,45 @@
                         "Text": "Uin",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 22,
-                            "left": 1,
-                            "fontSize": 12,
+                            "top": 23,
+                            "left": 0,
+                            "fontSize": 9,
                             "fill": "black",
                             "changeable": true
                         }
+                    },{
+                    "type": "path",
+                    "path": "M 32 30 L 42 30",
+                    "data": {
+                        "width": 10,
+                        "height": 30,
+                        "top": 10,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
                     }
+                }
                 ], "Uout":
                 [
+                    {
+                        "type": "path",
+                        "path": "M 0 30 L 10 30",
+                        "data": {
+                            "width": 10,
+                            "height": 30,
+                            "top": 10,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false
+                        }
+                    },
                     {
                         "type": "circle",
                         "data": {
                             "width": 40,
                             "height": 30,
                             "radius": 11,
+                            "left":10,
                             "fill": "white",
                             "stroke": "black"
                         }
@@ -223,9 +260,9 @@
                         "Text": "Uout",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 22,
-                            "left": 1,
-                            "fontSize": 12,
+                            "top": 23,
+                            "left": 0,
+                            "fontSize": 9,
                             "fill": "black",
                             "changeable": true
                         }
@@ -236,10 +273,22 @@
                         "data": {
                             "fontFamily": "Arial",
                             "top": 7,
-                            "left": 7,
-                            "fontSize": 12,
+                            "left": 18,
+                            "fontSize": 9,
                             "fill": "black",
                             "changeable": false
+                        }
+                    }
+                    ,{
+                        "type": "path",
+                        "path": "M 32 30 L 42 30",
+                        "data": {
+                            "width": 10,
+                            "height": 30,
+                            "top": 10,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false
                         }
                     }
                 ]
@@ -326,6 +375,263 @@
                         "baseBlockPoint": true
                     }
                 ]
+        };
+
+        var portPositions = {
+            "Resistor":
+                {
+                    90:{
+                        "in":{
+                            "top":2,
+                            "left":0,
+                        },
+                        "out":{
+                            "top":60,
+                            "left":0,
+                        }
+                    },
+                    180:{
+                        "in":{
+                            "top":11,
+                            "left":49,
+                        },
+                        "out":{
+                            "top":11,
+                            "left":-10,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":-1,
+                            "left":0,
+                        },
+                        "out":{
+                            "top":-61,
+                            "left":0,
+                        }
+                    },
+                    0:{
+                        "in":{
+                            "top":0,
+                            "left":3,
+                        },
+                        "out":{
+                            "top":0,
+                            "left":60,
+                        }
+                    }
+                }
+                , "Inductor":
+                {
+                    90:{
+                        "in":{
+                            "top":2,
+                            "left":1,
+                        },
+                        "out":{
+                            "top":54,
+                            "left":1,
+                        }
+                    },
+                    180:{
+                        "in":{
+                            "top":10,
+                            "left":40,
+                        },
+                        "out":{
+                            "top":10,
+                            "left":-10,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":-1,
+                            "left":-1,
+                        },
+                        "out":{
+                            "top":-55,
+                            "left":-1,
+                        }
+                    },
+                    0:{
+                        "in":{
+                            "top":-1,
+                            "left":2,
+                        },
+                        "out":{
+                            "top":-1,
+                            "left":54,
+                        }
+                    }
+                }, "Capacitor":
+                {
+                    90:{
+                        "in":{
+                            "top":2,
+                            "left":-5,
+                        },
+                        "out":{
+                            "top":46,
+                            "left":-5,
+                        }
+                    },
+                    180:{
+                        "in":{
+                            "top":16,
+                            "left":33,
+                        },
+                        "out":{
+                            "top":16,
+                            "left":-10,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":-2,
+                            "left":5,
+                        },
+                        "out":{
+                            "top":-46,
+                            "left":5,
+                        }
+                    },
+                    0:{
+                        "in":{
+                            "top":5,
+                            "left":2,
+                        },
+                        "out":{
+                            "top":5,
+                            "left":46,
+                        }
+                    }
+                }, "Uin":
+                {
+                    90:{
+                        "in":{
+                            "top":1,
+                            "left":-5,
+                        },
+                        "out":{
+                            "top":53,
+                            "left":-5,
+                        }
+                    },
+                    180:{
+                        "in":{
+                            "top":16,
+                            "left":41,
+                        },
+                        "out":{
+                            "top":16,
+                            "left":-10,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":-1,
+                            "left":5,
+                        },
+                        "out":{
+                            "top":-53,
+                            "left":5,
+                        }
+                    },
+                    0:{
+                        "in":{
+                            "top":5,
+                            "left":2,
+                        },
+                        "out":{
+                            "top":5,
+                            "left":53,
+                        }
+                    }
+                }, "Uout":
+                {
+                    90:{
+                        "in":{
+                            "top":1,
+                            "left":-5,
+                        },
+                        "out":{
+                            "top":53,
+                            "left":-5,
+                        }
+                    },
+                    180:{
+                        "in":{
+                            "top":16,
+                            "left":41,
+                        },
+                        "out":{
+                            "top":16,
+                            "left":-10,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":-1,
+                            "left":5,
+                        },
+                        "out":{
+                            "top":-53,
+                            "left":5,
+                        }
+                    },
+                    0:{
+                        "in":{
+                            "top":5,
+                            "left":2,
+                        },
+                        "out":{
+                            "top":5,
+                            "left":53,
+                        }
+                    }
+                }, "Point":
+                {
+                    90:{
+                        "in":{
+                            "top":2,
+                            "left":0,
+                        },
+                        "out":{
+                            "top":60,
+                            "left":0,
+                        }
+                    },
+                    180:{
+                        "in":{
+                            "top":11,
+                            "left":49,
+                        },
+                        "out":{
+                            "top":11,
+                            "left":-10,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":-1,
+                            "left":0,
+                        },
+                        "out":{
+                            "top":-61,
+                            "left":0,
+                        }
+                    },
+                    0:{
+                        "in":{
+                            "top":0,
+                            "left":3,
+                        },
+                        "out":{
+                            "top":0,
+                            "left":60,
+                        }
+                    }
+                }
         };
 
         window.prepBlocks = function (typeBlock) {

@@ -8,6 +8,8 @@
     <meta name="RF" content="">
 
     <title>DP</title>
+    <!--Html2Canvas-->
+    <script src="js/html2canvas.min.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
@@ -41,7 +43,7 @@
                     "data":{
                         "width":40,
                         "height":40,
-                        "fill":"white",
+                        "fill":false,
                         "stroke":"black"
                     }
                 },
@@ -53,8 +55,21 @@
                         "left":16,
                         "fontSize": 12,
                         "fill": "black",
-                        "changeable":true
+                        "changeable":true,
                     }
+                },
+                {
+                    "type": "name",
+                    "Text": "Multiply",
+                    "data": {
+                        "fontFamily": "Arial",
+                        "top": 43,
+                        "left": 0,
+                        "fontSize": 9,
+                        "fill": "black",
+                        "changeable": true
+                    }
+
                 }
             ]
             ,"Sumator":
@@ -82,7 +97,7 @@
                     "Text":"+",
                     "data":{
                         "fontFamily": "Arial",
-                        "top":8,
+                        "top":3,
                         "left":5,
                         "fontSize": 12,
                         "fill": "black",
@@ -94,13 +109,26 @@
                     "Text":"+",
                     "data":{
                         "fontFamily": "Arial",
-                        "top":20,
+                        "top":24,
                         "left":5,
                         "fontSize": 12,
                         "fill": "black",
                         "extra":"sumator-second",
                         "changeable":false
                     }
+                },
+                {
+                    "type": "name",
+                    "Text": "Sumator",
+                    "data": {
+                        "fontFamily": "Arial",
+                        "top": 43,
+                        "left": 0,
+                        "fontSize": 9,
+                        "fill": "black",
+                        "changeable": true
+                    }
+
                 }
             ],"IOin":
             [
@@ -133,6 +161,19 @@
                         "fill": "black",
                         "changeable":false
                     }
+                },
+                {
+                    "type": "name",
+                    "Text": "IOin",
+                    "data": {
+                        "fontFamily": "Arial",
+                        "top": 43,
+                        "left": 0,
+                        "fontSize": 9,
+                        "fill": "black",
+                        "changeable": true
+                    }
+
                 }
             ],"IOout":
             [
@@ -165,11 +206,25 @@
                         "fill": "black",
                         "changeable":false
                     }
+                },
+                {
+                    "type": "name",
+                    "Text": "IOout",
+                    "data": {
+                        "fontFamily": "Arial",
+                        "top": 43,
+                        "left": 0,
+                        "fontSize": 9,
+                        "fill": "black",
+                        "changeable": true
+                    }
+
                 }
             ]
         };
 
-        var blockParameters = {"Multiply":
+        var blockParameters = {
+            "Multiply":
             [
                 {   "io":"both",
                     "NumberOfInputs":1,
@@ -273,6 +328,177 @@
                     "title":"Parametre IOout"
                 }
             ]};
+
+        var portPositions = {
+            "Multiply":
+                {
+                    90:{
+                        "in":{
+                            "top":1,
+                            "left":-15,
+                        },
+                        "out":{
+                            "top":51,
+                            "left":-15,
+                        }
+                    },
+                    180:{
+                        "in":{
+                            "top":25,
+                            "left":40,
+                        },
+                        "out":{
+                            "top":25,
+                            "left":-10,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":-1,
+                            "left":15,
+                        },
+                        "out":{
+                            "top":-51,
+                            "left":15,
+                        }
+                    },
+                    0:{
+                        "in":{
+                            "top":15,
+                            "left":2,
+                        },
+                        "out":{
+                            "top":15,
+                            "left":51,
+                        }
+                    },
+                    "img":{
+                        "in":{
+                            "top":15,
+                            "left":2,
+                        },
+                        "out":{
+                            "top":15,
+                            "left":121,
+                        }
+                    }
+                },
+            "Sumator":
+                {
+                    90:{
+                        "in":[{
+                            "top":1,
+                            "left":-5,
+                        },
+                            {
+                            "top":1,
+                            "left":-25,
+                            }
+                        ],
+                        "out":{
+                            "top":51,
+                            "left":-15,
+                        }
+                    },
+                    180:{
+                        "in":[{
+                            "top":18,
+                            "left":40,
+                        },
+                            {
+                                "top":36,
+                                "left":40,
+                            }
+                        ],
+                        "out":{
+                            "top":25,
+                            "left":-10,
+                        }
+                    },
+                    270:{
+                        "in":[{
+                            "top":0,
+                            "left":4,
+                        },
+                            {
+                                "top":0,
+                                "left":25,
+                            }
+                        ],
+                        "out":{
+                            "top":-51,
+                            "left":15,
+                        }
+                    },
+                    0:{
+                        "in":[{
+                            "top":5,
+                            "left":2,
+                        },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                        ],
+                        "out":{
+                            "top":15,
+                            "left":51,
+                        }
+                    }
+                },"IOin":
+                {
+                    90:{
+                        "out":{
+                            "top":51,
+                            "left":-15,
+                        }
+                    },
+                    180:{
+                        "out":{
+                            "top":28,
+                            "left":-10,
+                        }
+                    },
+                    270:{
+                        "out":{
+                            "top":-51,
+                            "left":15,
+                        }
+                    },
+                    0:{
+                        "out":{
+                            "top":15,
+                            "left":51,
+                        }
+                    }
+                },"IOout":
+                {
+                    90:{
+                        "in":{
+                            "top":1,
+                            "left":-15,
+                        }
+                    },
+                    180:{
+                        "in":{
+                            "top":25,
+                            "left":41,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":-1,
+                            "left":15,
+                        }
+                    },
+                    0:{
+                        "in":{
+                            "top":15,
+                            "left":2,
+                        }
+                    }
+                }
+        };
 
         window.prepBlocks = function(typeBlock) {
             var cx;

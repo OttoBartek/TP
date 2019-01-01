@@ -1,16 +1,21 @@
+var img2=null;
+var img = null;
+
 function changeBlock(){
     //console.log(changingElement.type);
 
+    var type = changingElement.type;
+
     //zmena mena bloku
     var newName = $('#block-name').val();
-    if(newName !== scheme[changingElement.type].VisibleName){
-        scheme[changingElement.type].VisibleName = newName;
-        changingElement._objects.forEach(function(obj){
-            if(obj.text && obj.changeable)
-                obj.set({text:newName});
-            canvas.renderAll();
-        });
-    }
+    // if(newName !== scheme[changingElement.type].VisibleName){
+    //     scheme[changingElement.type].VisibleName = newName;
+    //     changingElement._objects.forEach(function(obj){
+    //         if(obj.text && obj.changeable)
+    //             obj.set({text:newName});
+    //         canvas.renderAll();
+    //     });
+    // }
     //zmena poctu portov
     if($('#input-number').length) {
         var inputNum = $('#input-number').val();
@@ -79,6 +84,7 @@ function changeBlock(){
                 if (denominator != '1') {
                     if (denominator.match(/^-?\d+( -?\d+)*$/)) {
                         if (numerator.match(/^-?\d+( -?\d+)*$/)) {
+
                             scheme[changingElement.type].extra = [numerator, denominator];
 
                             changingElement._objects.forEach(function (obj) {
@@ -243,6 +249,62 @@ function changeBlock(){
         scheme[changingElement.type].extra = resultArr;
     }
 
+    canvas.forEachObject(function(obj) {
+        console.log(obj);
+        if(obj != undefined){
+            if(obj.type == changingElement.type + 'IMG') {
+                canvas.remove(obj);
+            }
+        }
+    });
+
+    if(img!=null){
+
+        var change = changingElement;
+
+        changingElement._objects.forEach(function(obj){
+            if(obj.text && obj.changeable)
+                obj.set({text:""});
+            canvas.renderAll();
+        });
+
+        if(img2==null){
+            setTimeout(function(){
+
+
+                fabric.Image.fromURL(img2.src, function(img) {
+
+                    var oImg = img.set({ left: change.left+1, top: change.top+5,width:110,hasControls: false, hasBorders: false,lockMovementX: true, lockMovementY: true,type: type + 'IMG',}).scale(0.6);
+                    canvas.add(oImg);
+                    canvas.sendToBack(oImg);
+
+                    change = null;
+                });
+
+            }, 500);
+
+        }else{
+            fabric.Image.fromURL(img2.src, function(img) {
+
+                var oImg = img.set({ left: change.left+1, top: change.top+5,width:110,hasControls: false, hasBorders: false,lockMovementX: true, lockMovementY: true,type: type + 'IMG',}).scale(0.6);
+                canvas.add(oImg);
+                canvas.sendToBack(oImg);
+
+                change = null;
+            });
+        }
+
+        // changingElement.set({width:110})
+        // change._objects[1].set({width:110})
+        // change._objects[0].set({width:110})
+    //
+    //     var portPos = portPositions[change.BlockType]["img"];
+    //
+    //     var input = getObject(change.type + 'O');
+    //     input.set({angle: 90, top: change.top + portPos.out.top, left: change.left + portPos.out.left});
+    //     input.setCoords();
+    }
+
     $('#exampleModal').modal('hide');
     changingElement = null;
 }
@@ -256,9 +318,8 @@ function rotateObject(target, rotateBy){
     rotation += rotateBy;
     if(rotation % 360 == 0){rotation=0};
     scheme[target.type].Rotation = rotation;
-    if(schemeType === 'rlc') {
-        target.set({angle: rotation});
-    }
+
+    target.set({angle: rotation});
     target.setCoords();
 
     var x = target.left;
@@ -266,170 +327,115 @@ function rotateObject(target, rotateBy){
     var width = target.width;
     var height  = target.height;
 
-    if(schemeType === 'rlc') {
-        if (rotation == 90) {
-            if (ports == 'both' || ports == 'in') {
-                if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
-                    var input = getObject(blockName + 'I');
-                    input.set({angle: rotation + 90});
+    var portPos = portPositions[target.BlockType][rotation];
+
+    if (rotation == 90) {
+        if (ports == 'both' || ports == 'in') {
+            if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
+                var input = getObject(blockName + 'I');
+                input.set({angle: rotation + 90, top: y + portPos.in.top, left: x + portPos.in.left});
+                input.setCoords();
+            }else{
+                for (var i = 1; i <= inputCount; i++){
+                    var input = getObject(blockName+'I'+i);
+                    input.set({angle: rotation + 90, top: y + portPos.in[i-1].top, left: x + + portPos.in[i-1].left});
                     input.setCoords();
                 }
-            }
-            if (ports == 'both' || ports == 'out') {
-                var input = getObject(blockName + 'O');
-                input.set({angle: rotation + 90, top: y + width + 8, left: x});
-                input.setCoords();
             }
         }
-        if (rotation == 180) {
-            target.set({angle: 0});
-            target.setCoords();
-            if (ports == 'both' || ports == 'in') {
-                if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
-                    var input = getObject(blockName + 'I');
-                    input.set({angle: rotation + 90, top: y + height / 2 - 3, left: x + width - 5});
-                    input.setCoords();
-                }
-            }
-            if (ports == 'both' || ports == 'out') {
-                var input = getObject(blockName + 'O');
-                input.set({angle: rotation + 90, top: y + height / 2 - 3, left: x - 10});
-                input.setCoords();
-            }
-        }
-        if (rotation == 270) {
-            if (ports == 'both' || ports == 'in') {
-                if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
-                    var input = getObject(blockName + 'I');
-                    input.set({angle: rotation + 90, left: x, top: y});
-                    input.setCoords();
-                }
-            }
-            if (ports == 'both' || ports == 'out') {
-                var input = getObject(blockName + 'O');
-                input.set({angle: rotation + 90, top: y - width - 8, left: x});
-                input.setCoords();
-            }
-        }
-        if (rotation == 0) {
-            if (ports == 'both' || ports == 'in') {
-                if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
-                    var input = getObject(blockName + 'I');
-                    input.set({angle: 90, left: x + 1, top: y + height / 2 - 15});
-                    input.setCoords();
-                }
-            }
-            if (ports == 'both' || ports == 'out') {
-                var input = getObject(blockName + 'O');
-                input.set({angle: 90, top: y + height / 2 - 15, left: x + width + 5});
-                input.setCoords();
-            }
+        if (ports == 'both' || ports == 'out') {
+            var input = getObject(blockName + 'O');
+            input.set({angle: rotation + 90, top: y + portPos.out.top, left: x + portPos.out.left});
+            input.setCoords();
         }
     }
-    else{
-        if (rotation == 90) {
-            if (ports == 'both' || ports == 'in') {
-                if (inputCount == 1) {
-                    var input = getObject(blockName + 'I');
-                    input.set({angle: rotation + 90,left:x+width/2, top:y});
+    if (rotation == 180) {
+        target.set({angle: 0});
+        target.setCoords();
+        if (ports == 'both' || ports == 'in') {
+            if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
+                var input = getObject(blockName + 'I');
+                input.set({angle: rotation + 90, top: y + portPos.in.top, left: x + portPos.in.left});
+                input.setCoords();
+            }else{
+                for (var i = 1; i <= inputCount; i++){
+                    var input = getObject(blockName+'I'+i);
+                    input.set({angle: rotation + 90, top: y + portPos.in[i-1].top, left: x + + portPos.in[i-1].left});
                     input.setCoords();
                 }
-                else if(inputCount > 1){
-                    ip = width/inputCount - (width/inputCount/2) + 7;
-                    for (var i = 1; i <= inputCount; i++){
-                        var input = getObject(blockName+'I'+i);
-                        var position = x + (i*ip);
-                        input.set({angle: rotation + 90, left:position,top:y});
-                        input.setCoords();
-                    }
-                }
-            }
-            if (ports == 'both' || ports == 'out') {
-                var input = getObject(blockName + 'O');
-                var topPos = y+height-10;
-                if(schemeType === 'schema2'){
-                    topPos+=15;
-                }
-                input.set({angle: rotation + 90, left:x+width/2,top:topPos});
-                input.setCoords();
             }
         }
-        if (rotation == 180) {
-            if (ports == 'both' || ports == 'in') {
-                if (inputCount == 1) {
-                    var input = getObject(blockName + 'I');
-                    input.set({angle: rotation + 90, top: y + height / 2 - 3, left: x + width - 5});
+        if (ports == 'both' || ports == 'out') {
+            var input = getObject(blockName + 'O');
+            input.set({angle: rotation + 90, top: y + portPos.out.top, left: x + portPos.out.left});
+            input.setCoords();
+        }
+
+        if(scheme[target.type].BlockType){
+            target._objects.forEach(function (obj) {
+                if(obj.extra === "sumator-first"){
+                    obj.set({left: 5,top:-25});
+                    obj.setCoords();
+                }
+                if(obj.extra === "sumator-second"){
+                    obj.set({left: 5,top:-7});
+                    obj.setCoords();
+                }
+            });
+        }
+    }else{
+        target._objects.forEach(function (obj) {
+            if(obj.extra === "sumator-first"){
+                console.log(obj.top,obj.left);
+                obj.set({left: -18,top:-27.5});
+                obj.setCoords();
+            }
+            if(obj.extra === "sumator-second"){
+                console.log(obj.top,obj.left);
+                obj.set({left: -18,top:-6.5});
+                obj.setCoords();
+            }
+        });
+    }
+    if (rotation == 270) {
+        if (ports == 'both' || ports == 'in') {
+
+            if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
+                var input = getObject(blockName + 'I');
+                input.set({angle: rotation + 90, top: y + portPos.in.top, left: x + portPos.in.left});
+                input.setCoords();
+            }else{
+                for (var i = 1; i <= inputCount; i++){
+                    var input = getObject(blockName+'I'+i);
+                    input.set({angle: rotation + 90, top: y + portPos.in[i-1].top, left: x + + portPos.in[i-1].left});
                     input.setCoords();
                 }
-                else if(inputCount > 1){
-                    ip = height/inputCount - (height/inputCount/2) + 3;
-                    for (var i = 1; i <= inputCount; i++){
-                        var input = getObject(blockName+'I'+i);
-                        var position = y + (i*ip);
-                        input.set({angle: rotation + 90, left: x + width - 5,top:position});
-                        input.setCoords();
-                    }
-                }
-            }
-            if (ports == 'both' || ports == 'out') {
-                var input = getObject(blockName + 'O');
-                input.set({angle: rotation + 90, top: y + height / 2 - 3, left: x - 10});
-                input.setCoords();
             }
         }
-        if (rotation == 270) {
-            if (ports == 'both' || ports == 'in') {
-                if (inputCount == 1) {
-                    var input = getObject(blockName + 'I');
-                    var topPos = y+height-20;
-                    if(schemeType === 'schema2'){
-                        topPos+=15;
-                    }
-                    input.set({angle: rotation + 90, left:x+width/2-5, top:topPos});
+        if (ports == 'both' || ports == 'out') {
+            var input = getObject(blockName + 'O');
+            input.set({angle: rotation + 90, top: y + portPos.out.top, left: x + portPos.out.left});
+            input.setCoords();
+        }
+    }
+    if (rotation == 0) {
+        if (ports == 'both' || ports == 'in') {
+            if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
+                var input = getObject(blockName + 'I');
+                input.set({angle: 90, top: y + portPos.in.top, left: x + portPos.in.left});
+                input.setCoords();
+            }else{
+                for (var i = 1; i <= inputCount; i++){
+                    var input = getObject(blockName+'I'+i);
+                    input.set({angle: 90, top: y + portPos.in[i-1].top, left: x + + portPos.in[i-1].left});
                     input.setCoords();
                 }
-                else if(inputCount > 1){
-                    ip = width/inputCount - (width/inputCount/2) + 4;
-                    var topPos = y+height-20;
-                    if(schemeType === 'schema2'){
-                        topPos+=15;
-                    }
-                    for (var i = 1; i <= inputCount; i++){
-                        var input = getObject(blockName+'I'+i);
-                        var position = x + (i*ip);
-                        input.set({angle: rotation + 90, left: position-14,top:topPos});
-                        input.setCoords();
-                    }
-                }
-            }
-            if (ports == 'both' || ports == 'out') {
-                var input = getObject(blockName + 'O');
-                input.set({angle: rotation + 90, left:x+width/2-5, top:y-15});
-                input.setCoords();
             }
         }
-        if (rotation == 0) {
-            if (ports == 'both' || ports == 'in') {
-                if (inputCount == 1) {
-                    var input = getObject(blockName + 'I');
-                    input.set({angle: 90, left: x + 1, top: y + height / 2 - 15});
-                    input.setCoords();
-                }
-                else if(inputCount > 1){
-                    ip = height/inputCount - (height/inputCount/2) + 3;
-                    for (var i = 1; i <= inputCount; i++){
-                        var input = getObject(blockName+'I'+i);
-                        var position = y + (i*ip);
-                        input.set({angle: rotation + 90, left: x+1,top:position-14});
-                        input.setCoords();
-                    }
-                }
-            }
-            if (ports == 'both' || ports == 'out') {
-                var input = getObject(blockName + 'O');
-                input.set({angle: 90, top: y + height / 2 - 15, left: x + width + 5});
-                input.setCoords();
-            }
+        if (ports == 'both' || ports == 'out') {
+            var input = getObject(blockName + 'O');
+            input.set({angle: 90, top: y + portPos.out.top, left: x + portPos.out.left});
+            input.setCoords();
         }
     }
 
@@ -513,6 +519,7 @@ function deleteBlock(targetBlock, originInputNum){
 }
 
 function redrawBlock(targetBlock, originInputNum){
+
     var x = scheme[targetBlock.type].Position_Array[0];
     var y = scheme[targetBlock.type].Position_Array[1];
     var blockType = targetBlock.BlockType;
@@ -677,10 +684,9 @@ function redrawBlock(targetBlock, originInputNum){
     rotateObject(getObject(blockName),blockRotation);
 }
 
-function vypocetMultiply(){
+function vypocetMultiply() {
     var objPar = blockParameters[changingElement.BlockType];
     if ($('#multiply-citatel').length && $('#multiply-menovatel').length) {
-        console.log(objPar)
 
         var numerator = $('#multiply-citatel').val();
         var denominator = $('#multiply-menovatel').val();
@@ -690,13 +696,8 @@ function vypocetMultiply(){
             if (denominator != '1') {
                 if (denominator.match(/^-?\d+( -?\d+)*$/)) {
                     if (numerator.match(/^-?\d+( -?\d+)*$/)) {
-                        scheme[changingElement.type].extra = [numerator, denominator];
 
-                        changingElement._objects.forEach(function (obj) {
-                            if (obj.text)
-                                obj.set({text: 'f(s)'});
-                            canvas.renderAll();
-                        });
+                        scheme[changingElement.type].extra = [numerator, denominator];
 
                         var numeratorArr;
                         var numOutput = "";
@@ -738,7 +739,7 @@ function vypocetMultiply(){
                             }
                             //console.log(numOutput);
                         }
-                        if(numOutput.substr(numOutput.length-1, numOutput.length) == '+'){
+                        if (numOutput.substr(numOutput.length - 1, numOutput.length) == '+') {
                             numOutput = numOutput.slice(0, -1);
                         }
 
@@ -782,7 +783,7 @@ function vypocetMultiply(){
                                 denOutput += "+";
                             }
                         }
-                        if(denOutput.substr(denOutput.length-1, denOutput.length) == '+'){
+                        if (denOutput.substr(denOutput.length - 1, denOutput.length) == '+') {
                             denOutput = denOutput.slice(0, -1);
                         }
 
@@ -804,11 +805,11 @@ function vypocetMultiply(){
                 }
             } else {
                 if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)/)) {
-                    scheme[changingElement.type].extra = [numerator,denominator];
+                    scheme[changingElement.type].extra = [numerator, denominator];
                     scheme[changingElement.type].tex_result = numerator;
                     changingElement._objects.forEach(function (obj) {
-                        if (obj.text)
-                            obj.set({text: numerator});
+                        // if (obj.text)
+                        //     obj.set({text: numerator});
                         canvas.renderAll();
                     });
                 }
@@ -819,8 +820,21 @@ function vypocetMultiply(){
             }
         }
     }
+
+
     var nieco = document.getElementById('multiply-text')
     var val = scheme[changingElement.type].tex_result;
+
     katex.render(val, nieco);
 
+    img2=null;
+    img=null;
+
+    html2canvas(nieco).then(function(canvas) {
+        img2 = new Image();
+        img = canvas.toDataURL("image/png");
+        img2.src =img;
+        img2.style.width="500px";
+        img = 0;
+    });
 }
