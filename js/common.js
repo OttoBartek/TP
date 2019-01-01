@@ -1,0 +1,3 @@
+reloadPage = () => {
+    location.reload();
+}
