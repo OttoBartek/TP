@@ -111,7 +111,7 @@ window.addBlock = function (blockType, posx, posy) {
             Out: 1
         });
         canvas.add(outPart);
-        /*Pridany out port do schemy*/
+        /*Pridany out port do schemy na ciare*/
         addPort = {[type+'O'] : {
                 "connectedLine": "",
                 "parentBlock":type,
@@ -260,9 +260,9 @@ canvas.on('object:selected', function (e) {
     clearCanvas(); // draw previous object with black borders
 
     selectedElement = e.target;
-    console.log("Element selected:");
+    /*console.log("Element selected:");
     console.log(selectedElement);
-    console.log(scheme[selectedElement.type]);
+    console.log(scheme[selectedElement.type]);*/
 
     if (selectedElement !== null) {
         /*Vymazanie prepajcej ciary*/
@@ -270,15 +270,16 @@ canvas.on('object:selected', function (e) {
             deleteLineHandler(selectedElement);
         } else { // Vybraty port
             var f = checkPorts(selectedElement); // zisti ci je target port a aky je to port
-            if ((f === 2 || f === 3) && scheme[selectedElement.type].full === false) { // OUT alebo pout co je point na ciare
+            if ((f === 2 && scheme[selectedElement.type].full === false) || f === 3) { // OUT alebo pout co je point na ciare
                 //connPortFrom = selectedElement;
+                //console.log(scheme[selectedElement.type]);
                 connPortFrom = scheme[selectedElement.type];
                 if(f === 2) {
                     connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
                 } else if(f === 3) {
-                    connFromBlock = getObject(scheme[selectedElement.parentObject]);
+                    connFromBlock = getObject(selectedElement.type);
                 }
-                console.log("Selected element type");
+               /*console.log("Selected element type");
                 console.log(selectedElement.type);
                 console.log("Scheme");
                 console.log(scheme);
@@ -286,13 +287,13 @@ canvas.on('object:selected', function (e) {
                 console.log("Setting from block");
 
                 console.log("Port from selected:");
-                console.log(connPortFrom);
+                console.log(connPortFrom);*/
 
                 // Vytvorenie tyrkysovej ciary
                 createConnectingCyanLine(selectedElement);
             }
 
-            $.each(selectedElement._objects, function (name, property) {
+           $.each(selectedElement._objects, function (name, property) {
                 if (!property.text) {
                     if (!property.hasOwnProperty('invisible')) {
                         property.set({'stroke': 'red'});
@@ -304,7 +305,7 @@ canvas.on('object:selected', function (e) {
     }
 });
 
-/* Vracia 1 ak je port In, 2 ak Out alebo POut ak je to daco ine tak 0 */
+/* Vracia 1 ak je port In, 2 ak Out, 3 ak POUT, 4 ako TOP, 5 ak Bot ak je to daco ine tak 0 */
 function checkPorts(selectedElement) {
 
     var ret = 0;
@@ -327,7 +328,6 @@ function checkPorts(selectedElement) {
 function createConnectingCyanLine(selected) {
     // zaciatok tyrkysovej ciary
     var startX, startY;
-    console.log(selected);
     startX = selected.left + selected.width;
     startY = selected.top + selected.height;
 
@@ -358,10 +358,14 @@ function clearSelection() {
 * Function finds out if outputs of origin block are empty and if input ports of second block are empty
 * */
 function portsEmpty(blockFrom, blockTo, selectedPort) {
+    /*console.log(blockFrom);
+    console.log(blockTo);
+    console.log(selectedPort);*/
+
     var fromFlag = scheme[blockFrom.type].NumberOfFullOutputs < scheme[blockFrom.type].NumberOfOutputs;
     var toFlag = scheme[blockTo.type].NumberOfFullInputs < scheme[blockTo.type].NumberOfInputs;
     var inputFlag = selectedPort.full;
-    console.log("Port full ? " + (fromFlag && toFlag && !inputFlag));
+    //console.log("Port empty ? " + (fromFlag && toFlag && !inputFlag));
     return (fromFlag && toFlag && !inputFlag);
 }
 
@@ -412,10 +416,11 @@ canvas.on('selection:cleared', function(options) {
 
 /* Handles deleting connecting line when DPoint object is selected or updated */
 function deleteLineHandler(selected) {
-    console.log(selected);
+    //console.log(selected);
+    //console.log(scheme);
     // ak ta ciara ma okruhly POut port na spajanie s ciarou
     // tak sa vymaze aj ta ciara
-    // DPoint oznacuje id ciary DPoint samotny nieje v scheme
+    // DPoint oznacuje id ciary DPoint samotny nieje v scheme iba na canvas
     var line = scheme['line' + selected.DPoint];
     if (line.hasPoint) {
         var point = 'point' + selected.DPoint;
@@ -455,12 +460,14 @@ canvas.on('selection:updated', function(options) {
         } else { // vybraty port
             connToBlock = getObject(scheme[selectedElement.type].parentBlock);
             var f = checkPorts(selectedElement);
-            if (f === 1 && connFromBlock != null) { //port je IN
+            //console.log("creating line");
+            //console.log("From");
+            //console.log(connFromBlock);
+            if ((f === 1) && connFromBlock != null) { //port je IN
                 if (!((connFromBlock && connToBlock) && (connFromBlock !== connToBlock))) {
                     window.alert("Cant connect to the same block!");
                     clearSelection();
                 } else if (portsEmpty(connFromBlock, connToBlock, scheme[selectedElement.type])) {
-
                     clearSelection();
 
                     connPortTo = scheme[selectedElement.type];
@@ -476,7 +483,9 @@ canvas.on('selection:updated', function(options) {
                     var srcStringLastPart = scheme[connFromBlock.type].NumberOfFullOutputs;
                     var dstStringLastPart = connPortTo.portNumber;
                     var typString = "simple";
-                    switch (f) {
+
+                    //console.log(connPortFrom.portName);
+                    switch (checkPorts(getObjectByType(connPortFrom.portName))) {
                         case 3:
                             portString = "point";
                             connTypeString = "point";
@@ -512,6 +521,10 @@ canvas.on('selection:updated', function(options) {
                     scheme[connFromBlock.type].NumberOfFullOutputs += 1;
                     connPortTo.full = true;
                     connPortTo.connectedLine = lineName;
+
+                    /*console.log("Conn port from log");
+                    console.log(connPortFrom);*/
+
                     connPortFrom.full = true;
                     connPortFrom.connectedLine = lineName;
 
@@ -520,6 +533,9 @@ canvas.on('selection:updated', function(options) {
 
                     //var NumIn = scheme[connToBlock.type].NumberOfFullInputs;
                     scheme[connToBlock.type].NumberOfFullInputs += 1;
+
+                    var fromPortOutName = connPortFrom.portName;
+                    if(connPortFrom.portName)
 
 
                     var lines = {
@@ -541,8 +557,28 @@ canvas.on('selection:updated', function(options) {
                     scheme = $.extend(scheme, lines);
                     lineA.sendToBack();
 
+                    /*console.log("Line added");
+                    console.log(scheme);
+
+                    console.log("creating line");
+                    console.log("Conn to block:");
+                    console.log(connToBlock);
+                    console.log(scheme[connToBlock.type]);
+
+                    console.log("Conn from block:");
+                    console.log(connFromBlock);
+                    console.log(scheme[connFromBlock.type]);*/
+
                     scheme[connToBlock.type].connectedLines.push(lineName);
-                    scheme[connFromBlock.type].connectedLines.push(lineName);
+
+                    // rozdielne pre point na ciare a normalny port ak sa bude point na ciare aj primat ciary treba upravit
+                    // aj z druhej strany teda pre connToBlock
+                    if(scheme[connFromBlock.type].parentLine) {
+                        //console.log(scheme[scheme[connFromBlock.type].parentObject]);
+                        scheme[scheme[connFromBlock.type].parentObject].connectedLines.push(lineName);
+                    } else {
+                        scheme[connFromBlock.type].connectedLines.push(lineName);
+                    }
 
                     var deletePointA = createDeletePoint(connFromBlock, connToBlock, order, connPortTo.portNumber);
                     canvas.add(deletePointA);
@@ -559,7 +595,7 @@ canvas.on('selection:updated', function(options) {
                     clearSelection();
                 }
             }
-            else if (f === 2) { // Port je out
+            else if (f === 2 || f === 3) { // Port je out alebo POut
                 if(scheme[selectedElement.type].full === false) {
                     connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
                     connPortFrom = scheme[selectedElement.type];
@@ -735,7 +771,7 @@ canvas.on('mouse:dblclick', function(e) {
                 var linePointA = createConnectionPoint(lineOutObject, lineOrder, fromPort);
                 canvas.add(linePointA);
 
-                pointName = 'point' + lineOrder;
+                var pointName = 'point' + lineOrder;
                 var Points = {
                     [pointName]: {
                         "parentObject":lineOut,
@@ -745,6 +781,7 @@ canvas.on('mouse:dblclick', function(e) {
                         "NumberOfInputs": 0,
                         "NumberOfOutputs": 1,
                         "ZOrder": lineOrder,
+                        "portName": pointName,
                         "objectType":"connection_point",
                         "connectedToBlocks":[],
                         "connectedFromBlocks":[]
@@ -809,13 +846,13 @@ canvas.on('mouse:dblclick', function(e) {
 
             modal.modal();
         }
-        canvas.off('mouse:down');
-        canvas.off('mouse:move');
-        canvas.off('mouse:up');
+       // canvas.off('mouse:down');
+      //  canvas.off('mouse:move');
+//        canvas.off('mouse:up');
     }
-    canvas.off('mouse:down');
-    canvas.off('mouse:move');
-    canvas.off('mouse:up');
+ //   canvas.off('mouse:down');
+ //   canvas.off('mouse:move');
+ //   canvas.off('mouse:up');
 });
 
 
