@@ -225,6 +225,7 @@
             </div>
             <canvas id="main-canvas"></canvas>
         </div>
+        <div id="snackbar">Some text some message..</div>
         <!-- /#page-content-wrapper -->
     </div>
     <!-- /content -->
@@ -244,7 +245,7 @@
 
         //set original position on modal close
         $('.modal').on('hidden.bs.modal', function (e) {
-            $($(this).children()[0]).css("top","0px")
+            $($(this).children()[0]).css("top","0px");
             $($(this).children()[0]).css("left","0px")
         });
 
@@ -258,7 +259,8 @@
         //canvas resizing
         window.onload = function (e) {
             canvasResize();
-            setSchemeType("rlc");
+            var urlParam = window.location.href.split("#");
+            setSchemeType(urlParam[urlParam.length - 1]);
             loadBlocks();
             $("#wrapper").toggleClass("toggled");
             $(function () {
