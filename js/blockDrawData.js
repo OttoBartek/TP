@@ -42,13 +42,13 @@ if(schema == "rlc" || schema == "") {
                     "Text": "Resistor",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 14,
-                        "left": 3,
-                        "fontSize": 12,
+                        "top": 13,
+                        "left": 0,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": true
                     }
-    
+
                 }
             ], "Point":
             [
@@ -88,13 +88,13 @@ if(schema == "rlc" || schema == "") {
                     "Text": "Inductor",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 15,
-                        "left": 1,
-                        "fontSize": 12,
+                        "top": 13,
+                        "left": 0,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": true
                     }
-    
+
                 }
             ], "Capacitor":
             [
@@ -146,7 +146,7 @@ if(schema == "rlc" || schema == "") {
                     "Text": "Capacitor",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 30,
+                        "top": 22,
                         "left": 0,
                         "fontSize": 9,
                         "fill": "black",
@@ -156,11 +156,24 @@ if(schema == "rlc" || schema == "") {
             ], "Uin":
             [
                 {
+                    "type": "path",
+                    "path": "M 0 30 L 10 30",
+                    "data": {
+                        "width": 10,
+                        "height": 30,
+                        "top": 10,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {
                     "type": "circle",
                     "data": {
                         "width": 40,
                         "height": 30,
                         "radius": 11,
+                        "left":10,
                         "fill": "white",
                         "stroke": "black"
                     }
@@ -179,21 +192,45 @@ if(schema == "rlc" || schema == "") {
                     "Text": "Uin",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 22,
-                        "left": 1,
-                        "fontSize": 12,
+                        "top": 23,
+                        "left": 0,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": true
                     }
+                },{
+                "type": "path",
+                "path": "M 32 30 L 42 30",
+                "data": {
+                    "width": 10,
+                    "height": 30,
+                    "top": 10,
+                    "stroke": "black",
+                    "strokeWidth": 1,
+                    "fill": false
                 }
+            }
             ], "Uout":
             [
+                {
+                    "type": "path",
+                    "path": "M 0 30 L 10 30",
+                    "data": {
+                        "width": 10,
+                        "height": 30,
+                        "top": 10,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
                 {
                     "type": "circle",
                     "data": {
                         "width": 40,
                         "height": 30,
                         "radius": 11,
+                        "left":10,
                         "fill": "white",
                         "stroke": "black"
                     }
@@ -203,9 +240,9 @@ if(schema == "rlc" || schema == "") {
                     "Text": "Uout",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 22,
-                        "left": 1,
-                        "fontSize": 12,
+                        "top": 23,
+                        "left": 0,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": true
                     }
@@ -216,15 +253,27 @@ if(schema == "rlc" || schema == "") {
                     "data": {
                         "fontFamily": "Arial",
                         "top": 7,
-                        "left": 7,
-                        "fontSize": 12,
+                        "left": 18,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
                 }
+                ,{
+                "type": "path",
+                "path": "M 32 30 L 42 30",
+                "data": {
+                    "width": 10,
+                    "height": 30,
+                    "top": 10,
+                    "stroke": "black",
+                    "strokeWidth": 1,
+                    "fill": false
+                }
+            }
             ]
     };
-    
+
     var blockParameters = {
         "Resistor":
             [
@@ -306,7 +355,265 @@ if(schema == "rlc" || schema == "") {
                     "baseBlockPoint": true
                 }
             ]
-    };   
+    };
+
+    var portPositions = {
+        "Resistor":
+            {
+                90:{
+                    "in":{
+                        "top":2,
+                        "left":0,
+                    },
+                    "out":{
+                        "top":60,
+                        "left":0,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":11,
+                        "left":49,
+                    },
+                    "out":{
+                        "top":11,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":0,
+                    },
+                    "out":{
+                        "top":-61,
+                        "left":0,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":0,
+                        "left":3,
+                    },
+                    "out":{
+                        "top":0,
+                        "left":60,
+                    }
+                }
+            }
+        , "Inductor":
+            {
+                90:{
+                    "in":{
+                        "top":2,
+                        "left":1,
+                    },
+                    "out":{
+                        "top":54,
+                        "left":1,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":10,
+                        "left":40,
+                    },
+                    "out":{
+                        "top":10,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":-1,
+                    },
+                    "out":{
+                        "top":-55,
+                        "left":-1,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":-1,
+                        "left":2,
+                    },
+                    "out":{
+                        "top":-1,
+                        "left":54,
+                    }
+                }
+            }, "Capacitor":
+            {
+                90:{
+                    "in":{
+                        "top":2,
+                        "left":-5,
+                    },
+                    "out":{
+                        "top":46,
+                        "left":-5,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":16,
+                        "left":33,
+                    },
+                    "out":{
+                        "top":16,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-2,
+                        "left":5,
+                    },
+                    "out":{
+                        "top":-46,
+                        "left":5,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":5,
+                        "left":2,
+                    },
+                    "out":{
+                        "top":5,
+                        "left":46,
+                    }
+                }
+            }, "Uin":
+            {
+                90:{
+                    "in":{
+                        "top":1,
+                        "left":-5,
+                    },
+                    "out":{
+                        "top":53,
+                        "left":-5,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":16,
+                        "left":41,
+                    },
+                    "out":{
+                        "top":16,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":5,
+                    },
+                    "out":{
+                        "top":-53,
+                        "left":5,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":5,
+                        "left":2,
+                    },
+                    "out":{
+                        "top":5,
+                        "left":53,
+                    }
+                }
+            }, "Uout":
+            {
+                90:{
+                    "in":{
+                        "top":1,
+                        "left":-5,
+                    },
+                    "out":{
+                        "top":53,
+                        "left":-5,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":16,
+                        "left":41,
+                    },
+                    "out":{
+                        "top":16,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":5,
+                    },
+                    "out":{
+                        "top":-53,
+                        "left":5,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":5,
+                        "left":2,
+                    },
+                    "out":{
+                        "top":5,
+                        "left":53,
+                    }
+                }
+            }, "Point":
+            {
+                90:{
+                    "in":{
+                        "top":2,
+                        "left":0,
+                    },
+                    "out":{
+                        "top":60,
+                        "left":0,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":11,
+                        "left":49,
+                    },
+                    "out":{
+                        "top":11,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":0,
+                    },
+                    "out":{
+                        "top":-61,
+                        "left":0,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":0,
+                        "left":3,
+                    },
+                    "out":{
+                        "top":0,
+                        "left":60,
+                    }
+                }
+            }
+    };
+
 }
 else if(schema == "algebra") {
     var blockDrawData = {
@@ -326,7 +633,7 @@ else if(schema == "algebra") {
                 "data":{
                     "width":40,
                     "height":40,
-                    "fill":"white",
+                    "fill":false,
                     "stroke":"black"
                 }
             },
@@ -338,226 +645,451 @@ else if(schema == "algebra") {
                     "left":16,
                     "fontSize": 12,
                     "fill": "black",
-                    "changeable":true
+                    "changeable":true,
                 }
+            },
+            {
+                "type": "name",
+                "Text": "Multiply",
+                "data": {
+                    "fontFamily": "Arial",
+                    "top": 43,
+                    "left": 0,
+                    "fontSize": 9,
+                    "fill": "black",
+                    "changeable": true
+                }
+
             }
         ]
         ,"Sumator":
-        [
-            {
-                "type":"rect",
-                "data":{
-                    "width":45,
-                    "height":60,
-                    "fill":false,
-                    "stroke":false,
-                    "invisible":true
+            [
+                {
+                    "type":"rect",
+                    "data":{
+                        "width":45,
+                        "height":60,
+                        "fill":false,
+                        "stroke":false,
+                        "invisible":true
+                    }
+                },
+                {
+                    "type":"rect",
+                    "data":{
+                        "width":40,
+                        "height":40,
+                        "fill":"white",
+                        "stroke":"black"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"+",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":3,
+                        "left":5,
+                        "fontSize": 12,
+                        "fill": "black",
+                        "extra":"sumator-first",
+                        "changeable":false
+                    }
+                },
+                {   "type":"text",
+                    "Text":"+",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":24,
+                        "left":5,
+                        "fontSize": 12,
+                        "fill": "black",
+                        "extra":"sumator-second",
+                        "changeable":false
+                    }
+                },
+                {
+                    "type": "name",
+                    "Text": "Sumator",
+                    "data": {
+                        "fontFamily": "Arial",
+                        "top": 43,
+                        "left": 0,
+                        "fontSize": 9,
+                        "fill": "black",
+                        "changeable": true
+                    }
+
                 }
-            },
-            {
-                "type":"rect",
-                "data":{
-                    "width":40,
-                    "height":40,
-                    "fill":"white",
-                    "stroke":"black"
+            ],"IOin":
+            [
+                {
+                    "type":"rect",
+                    "data":{
+                        "width":45,
+                        "height":60,
+                        "fill":false,
+                        "stroke":false,
+                        "invisible":true
+                    }
+                },
+                {
+                    "type":"rect",
+                    "data":{
+                        "width":40,
+                        "height":40,
+                        "fill":"white",
+                        "stroke":"black"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"Uin",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":16,
+                        "left":12,
+                        "fontSize": 12,
+                        "fill": "black",
+                        "changeable":false
+                    }
+                },
+                {
+                    "type": "name",
+                    "Text": "IOin",
+                    "data": {
+                        "fontFamily": "Arial",
+                        "top": 43,
+                        "left": 0,
+                        "fontSize": 9,
+                        "fill": "black",
+                        "changeable": true
+                    }
+
                 }
-            },
-            {   "type":"text",
-                "Text":"+",
-                "data":{
-                    "fontFamily": "Arial",
-                    "top":8,
-                    "left":5,
-                    "fontSize": 12,
-                    "fill": "black",
-                    "extra":"sumator-first",
-                    "changeable":false
+            ],"IOout":
+            [
+                {
+                    "type":"rect",
+                    "data":{
+                        "width":45,
+                        "height":60,
+                        "fill":false,
+                        "stroke":false,
+                        "invisible":true
+                    }
+                },
+                {
+                    "type":"rect",
+                    "data":{
+                        "width":40,
+                        "height":40,
+                        "fill":"white",
+                        "stroke":"black"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"Uout",
+                    "data":{
+                        "fontFamily": "Arial",
+                        "top":16,
+                        "left":8,
+                        "fontSize": 12,
+                        "fill": "black",
+                        "changeable":false
+                    }
+                },
+                {
+                    "type": "name",
+                    "Text": "IOout",
+                    "data": {
+                        "fontFamily": "Arial",
+                        "top": 43,
+                        "left": 0,
+                        "fontSize": 9,
+                        "fill": "black",
+                        "changeable": true
+                    }
+
                 }
-            },
-            {   "type":"text",
-                "Text":"+",
-                "data":{
-                    "fontFamily": "Arial",
-                    "top":20,
-                    "left":5,
-                    "fontSize": 12,
-                    "fill": "black",
-                    "extra":"sumator-second",
-                    "changeable":false
-                }
-            }
-        ],"IOin":
-        [
-            {
-                "type":"rect",
-                "data":{
-                    "width":45,
-                    "height":60,
-                    "fill":false,
-                    "stroke":false,
-                    "invisible":true
-                }
-            },
-            {
-                "type":"rect",
-                "data":{
-                    "width":40,
-                    "height":40,
-                    "fill":"white",
-                    "stroke":"black"
-                }
-            },
-            {   "type":"text",
-                "Text":"Uin",
-                "data":{
-                    "fontFamily": "Arial",
-                    "top":16,
-                    "left":12,
-                    "fontSize": 12,
-                    "fill": "black",
-                    "changeable":false
-                }
-            }
-        ],"IOout":
-        [
-            {
-                "type":"rect",
-                "data":{
-                    "width":45,
-                    "height":60,
-                    "fill":false,
-                    "stroke":false,
-                    "invisible":true
-                }
-            },
-            {
-                "type":"rect",
-                "data":{
-                    "width":40,
-                    "height":40,
-                    "fill":"white",
-                    "stroke":"black"
-                }
-            },
-            {   "type":"text",
-                "Text":"Uout",
-                "data":{
-                    "fontFamily": "Arial",
-                    "top":16,
-                    "left":8,
-                    "fontSize": 12,
-                    "fill": "black",
-                    "changeable":false
-                }
-            }
-        ]
+            ]
     };
-    
-    var blockParameters = {"Multiply":
-        [
-            {   "io":"both",
-                "NumberOfInputs":1,
-                "NumberOfOutputs":1,
-                "MaxInputs":1,
-                "ports":null,
-                "NumOfTop":0,
-                "NumOfBot":0,
-                "hasExtra":true,
-                "defaultExtra":{0:"F",1:"1"},
-                "BlockType":"Multiply",
-                "specific":true,
-                "title":"Parametre multiply"
-            },
+
+    var blockParameters = {
+        "Multiply":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":1,
+                    "MaxInputs":1,
+                    "ports":null,
+                    "NumOfTop":0,
+                    "NumOfBot":0,
+                    "hasExtra":true,
+                    "defaultExtra":{0:"F",1:"1"},
+                    "BlockType":"Multiply",
+                    "specific":true,
+                    "title":"Parametre multiply"
+                },
+                {
+                    "type":"input",
+                    "data":
+                        {
+                            "title":"Numerator",
+                            "id":"multiply-citatel",
+                            "default_value":"F",
+                            "number":0
+                        }
+                },
+                {
+                    "type":"input",
+                    "data":
+                        {
+                            "title":"Denominator",
+                            "id":"multiply-menovatel",
+                            "default_value":"1",
+                            "number":1
+                        }
+                },
+                {
+                    "type":"text",
+                    "data":
+                        {
+                            "id":"multiply-text",
+                            "title":"Function",
+                            "value":"F"
+                        }
+                }
+            ],"Sumator":
+            [
+                {   "io":"both",
+                    "NumberOfInputs":2,
+                    "NumberOfOutputs":1,
+                    "MaxInputs":1,
+                    "ports":null,
+                    "NumOfTop":0,
+                    "NumOfBot":0,
+                    "BlockType":"Sumator",
+                    "hasExtra":true,
+                    "defaultExtra":["+","+"],
+                    "specific":true,
+                    "title":"Parametre sumator"
+                },
+                {
+                    "type":"input",
+                    "data":
+                        {
+                            "title":"1. input",
+                            "id":"sumator-first",
+                            "default_value":"+",
+                            "number":0
+                        }
+                },
+                {
+                    "type":"input",
+                    "data":
+                        {
+                            "title":"2. input",
+                            "id":"sumator-second",
+                            "default_value":"+",
+                            "number":1
+                        }
+                }
+            ],"IOin":
+            [
+                {   "io":"out",
+                    "NumberOfInputs":0,
+                    "NumberOfOutputs":1,
+                    "MaxInputs":0,
+                    "ports":null,
+                    "NumOfTop":0,
+                    "NumOfBot":0,
+                    "BlockType":"IOin",
+                    "title":"Parametre IOin"
+                }
+            ],"IOout":
+            [
+                {   "io":"in",
+                    "NumberOfInputs":1,
+                    "NumberOfOutputs":0,
+                    "MaxInputs":1,
+                    "ports":null,
+                    "NumOfTop":0,
+                    "NumOfBot":0,
+                    "BlockType":"IOout",
+                    "title":"Parametre IOout"
+                }
+            ]};
+
+    var portPositions = {
+        "Multiply":
             {
-                "type":"input",
-                "data":
-                    {
-                        "title":"Numerator",
-                        "id":"multiply-citatel",
-                        "default_value":"F",
-                        "number":0
+                90:{
+                    "in":{
+                        "top":1,
+                        "left":-15,
+                    },
+                    "out":{
+                        "top":51,
+                        "left":-15,
                     }
+                },
+                180:{
+                    "in":{
+                        "top":25,
+                        "left":40,
+                    },
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":15,
+                    },
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":15,
+                        "left":2,
+                    },
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                },
+                "img":{
+                    "in":{
+                        "top":15,
+                        "left":2,
+                    },
+                    "out":{
+                        "top":15,
+                        "left":121,
+                    }
+                }
             },
+        "Sumator":
             {
-                "type":"input",
-                "data":
-                    {
-                        "title":"Denominator",
-                        "id":"multiply-menovatel",
-                        "default_value":"1",
-                        "number":1
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
                     }
-            },
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            },"IOin":
             {
-                "type":"text",
-                "data":
-                    {
-                        "id":"multiply-text",
-                        "title":"Function",
-                        "value":"F"
+                90:{
+                    "out":{
+                        "top":51,
+                        "left":-15,
                     }
+                },
+                180:{
+                    "out":{
+                        "top":28,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            },"IOout":
+            {
+                90:{
+                    "in":{
+                        "top":1,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":25,
+                        "left":41,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":15,
+                        "left":2,
+                    }
+                }
             }
-        ],"Sumator":
-        [
-            {   "io":"both",
-                "NumberOfInputs":2,
-                "NumberOfOutputs":1,
-                "MaxInputs":1,
-                "ports":null,
-                "NumOfTop":0,
-                "NumOfBot":0,
-                "BlockType":"Sumator",
-                "hasExtra":true,
-                "defaultExtra":["+","+"],
-                "specific":true,
-                "title":"Parametre sumator"
-            },
-            {
-                "type":"input",
-                "data":
-                    {
-                        "title":"1. input",
-                        "id":"sumator-first",
-                        "default_value":"+",
-                        "number":0
-                    }
-            },
-            {
-                "type":"input",
-                "data":
-                    {
-                        "title":"2. input",
-                        "id":"sumator-second",
-                        "default_value":"+",
-                        "number":1
-                    }
-            }
-        ],"IOin":
-        [
-            {   "io":"out",
-                "NumberOfInputs":0,
-                "NumberOfOutputs":1,
-                "MaxInputs":0,
-                "ports":null,
-                "NumOfTop":0,
-                "NumOfBot":0,
-                "BlockType":"IOin",
-                "title":"Parametre IOin"
-            }
-        ],"IOout":
-        [
-            {   "io":"in",
-                "NumberOfInputs":1,
-                "NumberOfOutputs":0,
-                "MaxInputs":1,
-                "ports":null,
-                "NumOfTop":0,
-                "NumOfBot":0,
-                "BlockType":"IOout",
-                "title":"Parametre IOout"
-            }
-        ]};
+    };
+
 }
 else if(schema == "blockSim") {
     var blockDrawData = {
@@ -632,59 +1164,59 @@ else if(schema == "blockSim") {
                 {
                     "type": "circle",
                     "data":
-                    {
-                        "height": 40,
-                        "width": 50,
-                        "radius": 13,
-                        "top": 10,
-                        "left": 5,
-                        "fill": false,
-                        "stroke": false,
-                        "invisible": true
-                    }
+                        {
+                            "height": 40,
+                            "width": 50,
+                            "radius": 13,
+                            "top": 10,
+                            "left": 5,
+                            "fill": false,
+                            "stroke": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "circle",
                     "data":
-                    {
-                        "radius": 10,
-                        "left": 5,
-                        "fill": "white",
-                        "stroke": "black"
-                    }
+                        {
+                            "radius": 10,
+                            "left": 5,
+                            "fill": "white",
+                            "stroke": "black"
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 7 0",
                     "data":
-                    {
-                        "left": 15,
-                        "top": 10,
-                        "stroke": "black"
-                    }
+                        {
+                            "left": 15,
+                            "top": 10,
+                            "stroke": "black"
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 0 7",
                     "data":
-                    {
-                        "left": 15,
-                        "top": 3,
-                        "stroke": "black"
-                    }
+                        {
+                            "left": 15,
+                            "top": 3,
+                            "stroke": "black"
+                        }
                 },
                 {
                     "type": "text",
                     "Text": "Clock",
                     "data":
-                    {
-                        "fontFamily": "Arial",
-                        "top": 20,
-                        "left": 0,
-                        "fontSize": 11,
-                        "fill": "black",
-                        "changeable": false
-                    }
+                        {
+                            "fontFamily": "Arial",
+                            "top": 20,
+                            "left": 0,
+                            "fontSize": 11,
+                            "fill": "black",
+                            "changeable": false
+                        }
                 }
             ], "Constant":
             [
@@ -734,7 +1266,7 @@ else if(schema == "blockSim") {
                 }
             ], "Demux":
             [
-    
+
                 {
                     "type": "text",
                     "Text": "Demux",
@@ -771,7 +1303,7 @@ else if(schema == "blockSim") {
                 }
             ], "Mux":
             [
-    
+
                 {
                     "type": "text",
                     "Text": "Mux",
@@ -1004,33 +1536,33 @@ else if(schema == "blockSim") {
                 {
                     "type": "triangle",
                     "data":
-                    {
-                        "left": 45,
-                        "top": 20,
-                        "strokeWidth": 1,
-                        "width": 30,
-                        "height": 30,
-                        "stroke": false,
-                        "fill": false,
-                        "angle": 90,
-                        "invisible": true
-    
-                    }
+                        {
+                            "left": 45,
+                            "top": 20,
+                            "strokeWidth": 1,
+                            "width": 30,
+                            "height": 30,
+                            "stroke": false,
+                            "fill": false,
+                            "angle": 90,
+                            "invisible": true
+
+                        }
                 },
                 {
                     "type": "triangle",
                     "data":
-                    {
-                        "left": 40,
-                        "top": 0,
-                        "strokeWidth": 1,
-                        "width": 30,
-                        "height": 30,
-                        "stroke": "black",
-                        "fill": "white",
-                        "angle": 90
-    
-                    }
+                        {
+                            "left": 40,
+                            "top": 0,
+                            "strokeWidth": 1,
+                            "width": 30,
+                            "height": 30,
+                            "stroke": "black",
+                            "fill": "white",
+                            "angle": 90
+
+                        }
                 },
                 {
                     "type": "text",
@@ -1094,12 +1626,12 @@ else if(schema == "blockSim") {
                     "type": "path",
                     "path": "M 0 0 L 7 0",
                     "data":
-                    {
-                        "left": 18,
-                        "top": 16,
-                        "stroke": "black",
-                        "invisible": true
-                    }
+                        {
+                            "left": 18,
+                            "top": 16,
+                            "stroke": "black",
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "text",
@@ -1411,12 +1943,12 @@ else if(schema == "blockSim") {
                     "type": "path",
                     "path": "M 0 0 L 10 0",
                     "data":
-                    {
-                        "left": 18,
-                        "top": 16,
-                        "stroke": "black",
-                        "invisible": true
-                    }
+                        {
+                            "left": 18,
+                            "top": 16,
+                            "stroke": "black",
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "text",
@@ -1468,144 +2000,144 @@ else if(schema == "blockSim") {
                     "type": "path",
                     "path": "M 0 13 L 5 0",
                     "data":
-                    {
-                        "left": 8,
-                        "top": 5,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 8,
+                            "top": 5,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 13 L 5 0",
                     "data":
-                    {
-                        "left": 13,
-                        "top": 5,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 13,
+                            "top": 5,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 5 0",
                     "data":
-                    {
-                        "left": 8,
-                        "top": 19,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 8,
+                            "top": 19,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 3 0",
                     "data":
-                    {
-                        "left": 13,
-                        "top": 5,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 13,
+                            "top": 5,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 5 19",
                     "data":
-                    {
-                        "left": 16,
-                        "top": 5,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 16,
+                            "top": 5,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 3 0",
                     "data":
-                    {
-                        "left": 21,
-                        "top": 25,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 21,
+                            "top": 25,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 18 L 5 0",
                     "data":
-                    {
-                        "left": 24,
-                        "top": 6,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 24,
+                            "top": 6,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 13 L 5 0",
                     "data":
-                    {
-                        "left": 8,
-                        "top": 5,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 8,
+                            "top": 5,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 3 0",
                     "data":
-                    {
-                        "left": 18,
-                        "top": 5,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 18,
+                            "top": 5,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 5 19",
                     "data":
-                    {
-                        "left": 21,
-                        "top": 5,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 21,
+                            "top": 5,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 3 0",
                     "data":
-                    {
-                        "left": 26,
-                        "top": 25,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 26,
+                            "top": 25,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "text",
@@ -1669,12 +2201,12 @@ else if(schema == "blockSim") {
                     "type": "path",
                     "path": "M 0 0 L 7 0",
                     "data":
-                    {
-                        "left": 18,
-                        "top": 16,
-                        "stroke": "black",
-                        "invisible": true
-                    }
+                        {
+                            "left": 18,
+                            "top": 16,
+                            "stroke": "black",
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "text",
@@ -1726,14 +2258,14 @@ else if(schema == "blockSim") {
                     "type": "path",
                     "path": "M 0 0 L 13 0 M 13 0 L 13 -20 L 25 -20 ",
                     "data":
-                    {
-                        "left": 10,
-                        "top": 5,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 10,
+                            "top": 5,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "text",
@@ -1773,40 +2305,40 @@ else if(schema == "blockSim") {
                     "type": "path",
                     "path": "M 0 0 L 24 0",
                     "data":
-                    {
-                        "left": 11,
-                        "top": 15,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 11,
+                            "top": 15,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 0 24",
                     "data":
-                    {
-                        "left": 23,
-                        "top": 3,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 23,
+                            "top": 3,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 6 0 L 18 -22 L 24 -22",
                     "data":
-                    {
-                        "left": 11,
-                        "top": 4,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 11,
+                            "top": 4,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "text",
@@ -1857,12 +2389,12 @@ else if(schema == "blockSim") {
                     "type": "path",
                     "path": "M 0 0 L 10 0",
                     "data":
-                    {
-                        "left": 18,
-                        "top": 16,
-                        "stroke": "black",
-                        "invisible": true
-                    }
+                        {
+                            "left": 18,
+                            "top": 16,
+                            "stroke": "black",
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "text",
@@ -1937,12 +2469,12 @@ else if(schema == "blockSim") {
                     "type": "path",
                     "path": "M 0 0 L 25 0",
                     "data":
-                    {
-                        "left": 13,
-                        "top": 15,
-                        "stroke": "black",
-                        "invisible": true
-                    }
+                        {
+                            "left": 13,
+                            "top": 15,
+                            "stroke": "black",
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "text",
@@ -2006,79 +2538,79 @@ else if(schema == "blockSim") {
                     "type": "path",
                     "path": "M 0 0 L 24 0",
                     "data":
-                    {
-                        "left": 3,
-                        "top": 15,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 3,
+                            "top": 15,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 0 24",
                     "data":
-                    {
-                        "left": 15,
-                        "top": 3,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 15,
+                            "top": 3,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 15 0",
                     "data":
-                    {
-                        "left": 9,
-                        "top": 7,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 9,
+                            "top": 7,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 15 0",
                     "data":
-                    {
-                        "left": 5,
-                        "top": 22,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 5,
+                            "top": 22,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 0 15",
                     "data":
-                    {
-                        "left": 9,
-                        "top": 7,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 9,
+                            "top": 7,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "path",
                     "path": "M 0 0 L 0 15",
                     "data":
-                    {
-                        "left": 20,
-                        "top": 7,
-                        "stroke": "black",
-                        "strokeWidth": 1,
-                        "fill": false,
-                        "invisible": true
-                    }
+                        {
+                            "left": 20,
+                            "top": 7,
+                            "stroke": "black",
+                            "strokeWidth": 1,
+                            "fill": false,
+                            "invisible": true
+                        }
                 },
                 {
                     "type": "text",
@@ -2094,7 +2626,7 @@ else if(schema == "blockSim") {
                 }
             ]
     };
-    
+
     var blockParameters = {
         "AnalogInput":
             [
@@ -2116,38 +2648,38 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Sample time",
-                        "id": "analogin-sample",
-                        "default_value": "0.1",
-                        "number": 0
-                    }
+                        {
+                            "title": "Sample time",
+                            "id": "analogin-sample",
+                            "default_value": "0.1",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Input channels",
-                        "id": "analogin-channels",
-                        "default_value": "1",
-                        "number": 1
-                    }
+                        {
+                            "title": "Input channels",
+                            "id": "analogin-channels",
+                            "default_value": "1",
+                            "number": 1
+                        }
                 },
                 {
                     "type": "selectbox",
                     "data":
-                    {
-                        "title": "Input range",
-                        "id": "analogin-range",
-                        "number": 2,
-                        "opt":
-                            [
-                                {
-                                    "value": "1",
-                                    "name": "-10 to 10 V"
-                                }
-                            ]
-                    }
+                        {
+                            "title": "Input range",
+                            "id": "analogin-range",
+                            "number": 2,
+                            "opt":
+                                [
+                                    {
+                                        "value": "1",
+                                        "name": "-10 to 10 V"
+                                    }
+                                ]
+                        }
                 }
             ], "AnalogOutput":
             [
@@ -2169,58 +2701,58 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Sample time",
-                        "id": "analogout-sample",
-                        "default_value": "0.1",
-                        "number": 0
-                    }
+                        {
+                            "title": "Sample time",
+                            "id": "analogout-sample",
+                            "default_value": "0.1",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Output channels",
-                        "id": "analogout-channels",
-                        "default_value": "1",
-                        "number": 1
-                    }
+                        {
+                            "title": "Output channels",
+                            "id": "analogout-channels",
+                            "default_value": "1",
+                            "number": 1
+                        }
                 },
                 {
                     "type": "selectbox",
                     "data":
-                    {
-                        "title": "Output range",
-                        "id": "analogout-range",
-                        "number": 2,
-                        "opt":
-                            [
-                                {
-                                    "value": "1",
-                                    "name": "-10 to 10 V"
-                                }
-                            ]
-                    }
+                        {
+                            "title": "Output range",
+                            "id": "analogout-range",
+                            "number": 2,
+                            "opt":
+                                [
+                                    {
+                                        "value": "1",
+                                        "name": "-10 to 10 V"
+                                    }
+                                ]
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Initial value",
-                        "id": "analogout-initial",
-                        "default_value": "",
-                        "number": 3
-                    }
+                        {
+                            "title": "Initial value",
+                            "id": "analogout-initial",
+                            "default_value": "",
+                            "number": 3
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Final value",
-                        "id": "analogout-final",
-                        "default_value": "",
-                        "number": 4
-                    }
+                        {
+                            "title": "Final value",
+                            "id": "analogout-final",
+                            "default_value": "",
+                            "number": 4
+                        }
                 }
             ], "Clock":
             [
@@ -2242,12 +2774,12 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Decimation",
-                        "id": "clock-decim",
-                        "default_value": "10",
-                        "number": 0
-                    }
+                        {
+                            "title": "Decimation",
+                            "id": "clock-decim",
+                            "default_value": "10",
+                            "number": 0
+                        }
                 }
             ], "Constant":
             [
@@ -2269,12 +2801,12 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Constant value",
-                        "id": "constant-value",
-                        "default_value": "1",
-                        "number": 0
-                    }
+                        {
+                            "title": "Constant value",
+                            "id": "constant-value",
+                            "default_value": "1",
+                            "number": 0
+                        }
                 }
             ], "Demux":
             [
@@ -2326,12 +2858,12 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Coefficient",
-                        "id": "deriv-coef",
-                        "default_value": "inf",
-                        "number": 0
-                    }
+                        {
+                            "title": "Coefficient",
+                            "id": "deriv-coef",
+                            "default_value": "inf",
+                            "number": 0
+                        }
                 }
             ], "DigitalClock":
             [
@@ -2353,12 +2885,12 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Sample time",
-                        "id": "dclock-sample",
-                        "default_value": "1",
-                        "number": 0
-                    }
+                        {
+                            "title": "Sample time",
+                            "id": "dclock-sample",
+                            "default_value": "1",
+                            "number": 0
+                        }
                 }
             ], "Display":
             [
@@ -2380,12 +2912,12 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Decimation",
-                        "id": "display-decim",
-                        "default_value": "1",
-                        "number": 0
-                    }
+                        {
+                            "title": "Decimation",
+                            "id": "display-decim",
+                            "default_value": "1",
+                            "number": 0
+                        }
                 }
             ], "Fcn":
             [
@@ -2407,12 +2939,12 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Expression",
-                        "id": "fcn-expression",
-                        "default_value": "sin(u(1)*exp(2.3*(-u(2))))",
-                        "number": 0
-                    }
+                        {
+                            "title": "Expression",
+                            "id": "fcn-expression",
+                            "default_value": "sin(u(1)*exp(2.3*(-u(2))))",
+                            "number": 0
+                        }
                 }
             ], "Gain":
             [
@@ -2434,12 +2966,12 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Gain",
-                        "id": "gain-value",
-                        "default_value": "1",
-                        "number": 0
-                    }
+                        {
+                            "title": "Gain",
+                            "id": "gain-value",
+                            "default_value": "1",
+                            "number": 0
+                        }
                 }
             ], "Integrator":
             [
@@ -2461,42 +2993,42 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Initial condition",
-                        "id": "integrator-initial",
-                        "default_value": "0",
-                        "number": 0
-                    }
+                        {
+                            "title": "Initial condition",
+                            "id": "integrator-initial",
+                            "default_value": "0",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "checkbox",
                     "data":
-                    {
-                        "title": " Limit output",
-                        "id": "integ-limit",
-                        "value": "false",
-                        "number": 1
-                    }
+                        {
+                            "title": " Limit output",
+                            "id": "integ-limit",
+                            "value": "false",
+                            "number": 1
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Upper saturation limit",
-                        "id": "integrator-upper",
-                        "default_value": "inf",
-                        "number": 2
-                    }
+                        {
+                            "title": "Upper saturation limit",
+                            "id": "integrator-upper",
+                            "default_value": "inf",
+                            "number": 2
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Lower saturation limit",
-                        "id": "integrator-lower",
-                        "default_value": "-inf",
-                        "number": 3
-                    }
+                        {
+                            "title": "Lower saturation limit",
+                            "id": "integrator-lower",
+                            "default_value": "-inf",
+                            "number": 3
+                        }
                 }
             ], "Product":
             [
@@ -2548,52 +3080,52 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "A",
-                        "id": "state-a",
-                        "default_value": "1",
-                        "number": 0
-                    }
+                        {
+                            "title": "A",
+                            "id": "state-a",
+                            "default_value": "1",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "B",
-                        "id": "state-b",
-                        "default_value": "1",
-                        "number": 1
-                    }
+                        {
+                            "title": "B",
+                            "id": "state-b",
+                            "default_value": "1",
+                            "number": 1
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "C",
-                        "id": "state-c",
-                        "default_value": "1",
-                        "number": 2
-                    }
+                        {
+                            "title": "C",
+                            "id": "state-c",
+                            "default_value": "1",
+                            "number": 2
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "D",
-                        "id": "state-d",
-                        "default_value": "1",
-                        "number": 3
-                    }
+                        {
+                            "title": "D",
+                            "id": "state-d",
+                            "default_value": "1",
+                            "number": 3
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Initial conditions",
-                        "id": "state-initial",
-                        "default_value": "0",
-                        "number": 4
-                    }
+                        {
+                            "title": "Initial conditions",
+                            "id": "state-initial",
+                            "default_value": "0",
+                            "number": 4
+                        }
                 }
             ], "Sum":
             [
@@ -2615,12 +3147,12 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "List of signs",
-                        "id": "sum-signs",
-                        "default_value": "|++",
-                        "number": 0
-                    }
+                        {
+                            "title": "List of signs",
+                            "id": "sum-signs",
+                            "default_value": "|++",
+                            "number": 0
+                        }
                 }
             ], "SimOut":
             [
@@ -2642,60 +3174,60 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Variable name",
-                        "id": "works-name",
-                        "default_value": "simout",
-                        "number": 0
-                    }
+                        {
+                            "title": "Variable name",
+                            "id": "works-name",
+                            "default_value": "simout",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Limit data points to last",
-                        "id": "works-limit",
-                        "default_value": "inf",
-                        "number": 1
-                    }
+                        {
+                            "title": "Limit data points to last",
+                            "id": "works-limit",
+                            "default_value": "inf",
+                            "number": 1
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Decimation",
-                        "id": "works-decim",
-                        "default_value": "1",
-                        "number": 2
-                    }
+                        {
+                            "title": "Decimation",
+                            "id": "works-decim",
+                            "default_value": "1",
+                            "number": 2
+                        }
                 },
                 {
                     "type": "selectbox",
                     "data":
-                    {
-                        "title": "Output range",
-                        "id": "analogout-range",
-                        "number": 3,
-                        "opt":
-                            [
-                                {
-                                    "value": "strucwtime",
-                                    "name": "Structure with time"
-                                },
-                                {
-                                    "value": "struc",
-                                    "name": "Structure"
-                                },
-                                {
-                                    "value": "arr",
-                                    "name": "Array"
-                                },
-                                {
-                                    "value": "timeseries",
-                                    "name": "Timeseries"
-                                }
-                            ]
-                    }
+                        {
+                            "title": "Output range",
+                            "id": "analogout-range",
+                            "number": 3,
+                            "opt":
+                                [
+                                    {
+                                        "value": "strucwtime",
+                                        "name": "Structure with time"
+                                    },
+                                    {
+                                        "value": "struc",
+                                        "name": "Structure"
+                                    },
+                                    {
+                                        "value": "arr",
+                                        "name": "Array"
+                                    },
+                                    {
+                                        "value": "timeseries",
+                                        "name": "Timeseries"
+                                    }
+                                ]
+                        }
                 }
             ], "TransferFcn":
             [
@@ -2717,22 +3249,22 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Numerator",
-                        "id": "transfer-numer",
-                        "default_value": "[1]",
-                        "number": 0
-                    }
+                        {
+                            "title": "Numerator",
+                            "id": "transfer-numer",
+                            "default_value": "[1]",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Denominator",
-                        "id": "transfer-denom",
-                        "default_value": "[1 1]",
-                        "number": 1
-                    }
+                        {
+                            "title": "Denominator",
+                            "id": "transfer-denom",
+                            "default_value": "[1 1]",
+                            "number": 1
+                        }
                 }
             ], "TransportDelay":
             [
@@ -2754,22 +3286,22 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Time delay",
-                        "id": "transdelay-time",
-                        "default_value": "1",
-                        "number": 0
-                    }
+                        {
+                            "title": "Time delay",
+                            "id": "transdelay-time",
+                            "default_value": "1",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Initial output",
-                        "id": "transdelay-output",
-                        "default_value": "0",
-                        "number": 1
-                    }
+                        {
+                            "title": "Initial output",
+                            "id": "transdelay-output",
+                            "default_value": "0",
+                            "number": 1
+                        }
                 }
             ], "UnitDelay":
             [
@@ -2791,22 +3323,22 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Delay length",
-                        "id": "delay-length",
-                        "default_value": "1",
-                        "number": 0
-                    }
+                        {
+                            "title": "Delay length",
+                            "id": "delay-length",
+                            "default_value": "1",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Initial condition",
-                        "id": "delay-initial",
-                        "default_value": "0",
-                        "number": 1
-                    }
+                        {
+                            "title": "Initial condition",
+                            "id": "delay-initial",
+                            "default_value": "0",
+                            "number": 1
+                        }
                 }
             ], "Step":
             [
@@ -2828,32 +3360,32 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Step time",
-                        "id": "step-time",
-                        "default_value": "1",
-                        "number": 0
-                    }
+                        {
+                            "title": "Step time",
+                            "id": "step-time",
+                            "default_value": "1",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Initial value",
-                        "id": "step-initial",
-                        "default_value": "0",
-                        "number": 1
-                    }
+                        {
+                            "title": "Initial value",
+                            "id": "step-initial",
+                            "default_value": "0",
+                            "number": 1
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Final value",
-                        "id": "step-final",
-                        "default_value": "1",
-                        "number": 2
-                    }
+                        {
+                            "title": "Final value",
+                            "id": "step-final",
+                            "default_value": "1",
+                            "number": 2
+                        }
                 }
             ], "Saturation":
             [
@@ -2875,22 +3407,22 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Upper limit",
-                        "id": "saturation-upper",
-                        "default_value": "0.5",
-                        "number": 0
-                    }
+                        {
+                            "title": "Upper limit",
+                            "id": "saturation-upper",
+                            "default_value": "0.5",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Lower limit",
-                        "id": "saturation-lower",
-                        "default_value": "-0.5",
-                        "number": 1
-                    }
+                        {
+                            "title": "Lower limit",
+                            "id": "saturation-lower",
+                            "default_value": "-0.5",
+                            "number": 1
+                        }
                 }
             ], "DiscreteTime":
             [
@@ -2912,62 +3444,62 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Gain",
-                        "id": "discretetime-gain",
-                        "default_value": "1.0",
-                        "number": 0
-                    }
+                        {
+                            "title": "Gain",
+                            "id": "discretetime-gain",
+                            "default_value": "1.0",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Initial condition",
-                        "id": "discretetime-initial",
-                        "default_value": "0",
-                        "number": 1
-                    }
+                        {
+                            "title": "Initial condition",
+                            "id": "discretetime-initial",
+                            "default_value": "0",
+                            "number": 1
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Sample Time",
-                        "id": "discretetime-sample",
-                        "default_value": "1",
-                        "number": 2
-                    }
+                        {
+                            "title": "Sample Time",
+                            "id": "discretetime-sample",
+                            "default_value": "1",
+                            "number": 2
+                        }
                 },
                 {
                     "type": "checkbox",
                     "data":
-                    {
-                        "title": " Limit output",
-                        "id": "integ-limit",
-                        "value": "false",
-                        "number": 3
-                    }
+                        {
+                            "title": " Limit output",
+                            "id": "integ-limit",
+                            "value": "false",
+                            "number": 3
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Upper saturation limit",
-                        "id": "discretetime-upper",
-                        "default_value": "inf",
-                        "number": 4
-                    }
+                        {
+                            "title": "Upper saturation limit",
+                            "id": "discretetime-upper",
+                            "default_value": "inf",
+                            "number": 4
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Lower saturation limit",
-                        "id": "discretetime-lolwer",
-                        "default_value": "-inf",
-                        "number": 5
-                    }
+                        {
+                            "title": "Lower saturation limit",
+                            "id": "discretetime-lolwer",
+                            "default_value": "-inf",
+                            "number": 5
+                        }
                 }
             ], "DiscreteTransfer":
             [
@@ -2989,32 +3521,32 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Numerator",
-                        "id": "distrans-num",
-                        "default_value": "[1]",
-                        "number": 0
-                    }
+                        {
+                            "title": "Numerator",
+                            "id": "distrans-num",
+                            "default_value": "[1]",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Denominator",
-                        "id": "distrans-denom",
-                        "default_value": "[1 0.5]",
-                        "number": 1
-                    }
+                        {
+                            "title": "Denominator",
+                            "id": "distrans-denom",
+                            "default_value": "[1 0.5]",
+                            "number": 1
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Initial states",
-                        "id": "distrans-initial",
-                        "default_value": "0",
-                        "number": 2
-                    }
+                        {
+                            "title": "Initial states",
+                            "id": "distrans-initial",
+                            "default_value": "0",
+                            "number": 2
+                        }
                 }
             ], "Relay":
             [
@@ -3036,44 +3568,1434 @@ else if(schema == "blockSim") {
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Switch on point",
-                        "id": "relay-switchon",
-                        "default_value": "eps",
-                        "number": 0
-                    }
+                        {
+                            "title": "Switch on point",
+                            "id": "relay-switchon",
+                            "default_value": "eps",
+                            "number": 0
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Switch off point",
-                        "id": "relay-switchoff",
-                        "default_value": "eps",
-                        "number": 1
-                    }
+                        {
+                            "title": "Switch off point",
+                            "id": "relay-switchoff",
+                            "default_value": "eps",
+                            "number": 1
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Output when on",
-                        "id": "relay-on",
-                        "default_value": "1",
-                        "number": 2
-                    }
+                        {
+                            "title": "Output when on",
+                            "id": "relay-on",
+                            "default_value": "1",
+                            "number": 2
+                        }
                 },
                 {
                     "type": "input",
                     "data":
-                    {
-                        "title": "Output when off",
-                        "id": "relay-off",
-                        "default_value": "0",
-                        "number": 3
-                    }
+                        {
+                            "title": "Output when off",
+                            "id": "relay-off",
+                            "default_value": "0",
+                            "number": 3
+                        }
                 }
             ]
+    };
+
+    var portPositions = {
+        "AnalogInput":
+            {
+                90:{
+                    "out":{
+                        "top":61,
+                        "left":-10,
+                    }
+                },
+                180:{
+                    "out":{
+                        "top":22,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "out":{
+                        "top":-61,
+                        "left":11,
+                    }
+                },
+                0:{
+                    "out":{
+                        "top":10,
+                        "left":61,
+                    }
+                }
+            }, "AnalogOutput":
+            {
+                90:{
+                    "in":{
+                        "top":1,
+                        "left":-10,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":22,
+                        "left":50,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":11,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":10,
+                        "left":1,
+                    }
+                }
+            }, "Clock":
+            {
+                90:{
+                    "out":{
+                        "top":40,
+                        "left":-5,
+                    }
+                },
+                180:{
+                    "out":{
+                        "top":15,
+                        "left":-9,
+                    }
+                },
+                270:{
+                    "out":{
+                        "top":-40,
+                        "left":5,
+                    }
+                },
+                0:{
+                    "out":{
+                        "top":5,
+                        "left":40,
+                    }
+                }
+            }, "Constant":
+            {
+                90:{
+                    "out":{
+                        "top":50,
+                        "left":-10,
+                    }
+                },
+                180:{
+                    "out":{
+                        "top":22,
+                        "left":0,
+                    }
+                },
+                270:{
+                    "out":{
+                        "top":-50,
+                        "left":11,
+                    }
+                },
+                0:{
+                    "out":{
+                        "top":10,
+                        "left":49,
+                    }
+                }
+            }, "Demux":
+            {
+                90:{
+                    "in":{
+                        "top":16,
+                        "left":-10,
+                    },
+                    "out":{
+                        "top":32,
+                        "left":-10,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":20,
+                        "left":20,
+                    },
+                    "out":{
+                        "top":20,
+                        "left":5,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-15,
+                        "left":10,
+                    },
+                    "out":{
+                        "top":-32,
+                        "left":10,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":10,
+                        "left":17,
+                    },
+                    "out":{
+                        "top":10,
+                        "left":32,
+                    }
+                }
+            }, "Mux":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Derivative":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "DigitalClock":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Display":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Fcn":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Gain":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Integrator":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Product":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Scope":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "StateSpace":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Sum":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "SimOut":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "TransferFcn":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "TransportDelay":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "UnitDelay":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Step":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Saturation":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "DiscreteTime":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "DiscreteTransfer":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }, "Relay":
+            {
+                90:{
+                    "in":[{
+                        "top":1,
+                        "left":-5,
+                    },
+                        {
+                            "top":1,
+                            "left":-25,
+                        }
+                    ],
+                    "out":{
+                        "top":51,
+                        "left":-15,
+                    }
+                },
+                180:{
+                    "in":[{
+                        "top":18,
+                        "left":40,
+                    },
+                        {
+                            "top":36,
+                            "left":40,
+                        }
+                    ],
+                    "out":{
+                        "top":25,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":[{
+                        "top":0,
+                        "left":4,
+                    },
+                        {
+                            "top":0,
+                            "left":25,
+                        }
+                    ],
+                    "out":{
+                        "top":-51,
+                        "left":15,
+                    }
+                },
+                0:{
+                    "in":[{
+                        "top":5,
+                        "left":2,
+                    },
+                        {
+                            "top":25,
+                            "left":2,
+                        }
+                    ],
+                    "out":{
+                        "top":15,
+                        "left":51,
+                    }
+                }
+            }
     };
 }
 
@@ -3100,4 +5022,4 @@ window.prepBlocks = function (typeBlock) {
     var block = new fabric.Group(blockGroup);
     cx.add(block); cx.bringForward(block);
     block.evented = block.selectable = false;
-}; 
+};
