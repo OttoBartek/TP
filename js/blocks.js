@@ -684,7 +684,10 @@ function redrawBlock(targetBlock, originInputNum){
     rotateObject(getObject(blockName),blockRotation);
 }
 
-function vypocetMultiply() {
+function vypocetMultiply(){
+    $("#multiply-citatel").removeClass("is-invalid")
+    $("#multiply-menovatel").removeClass("is-invalid")
+    $("#block-error").html("");
     var objPar = blockParameters[changingElement.BlockType];
     if ($('#multiply-citatel').length && $('#multiply-menovatel').length) {
 
@@ -796,11 +799,13 @@ function vypocetMultiply() {
                             }
                         });
                     } else {
-                        // window.alert("Invalid numerator!");
+                        $("#multiply-citatel").addClass("is-invalid")
+                        $("#block-error").html("Invalid numerator!");
                         return;
                     }
                 } else {
-                    // window.alert("Invalid denominator!");
+                    $("#multiply-menovatel").addClass("is-invalid")
+                    $("#block-error").html("Invalid denominator!");
                     return;
                 }
             } else {
@@ -814,7 +819,8 @@ function vypocetMultiply() {
                     });
                 }
                 else {
-                    // window.alert("Invalid numerator!");
+                    $("#multiply-citatel").addClass("is-invalid")
+                    $("#block-error").html("Invalid numerator!");
                     return;
                 }
             }

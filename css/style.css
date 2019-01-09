@@ -131,6 +131,25 @@ li span{
   text-decoration: none;
   color: #37474F;
 }
+.panel2color {
+
+  background-color: #BDBDBD;
+
+}
+.panel2 {
+
+  float: left;
+  position: relative;
+  width: 33.333%;
+    padding: 0 0 0 6.6%;
+  margin: 0;
+
+}
+.panel2:hover {
+  background-color: #BDBDBD;
+}
+
+
 
 .sidebar-nav li a:hover {
   text-decoration: none;

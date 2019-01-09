@@ -18,8 +18,19 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles-->
     <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">-->
     <!--custom-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/regular.css" integrity="sha384-z3ccjLyn+akM2DtvRQCXJwvT5bGZsspS4uptQKNXNg778nyzvdMqiGcqHVGiAUyY" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    ￼
+    <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+    ￼
+
+    <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/regular.js" integrity="sha384-XrvTJeiQ46fxxPrZP6fay5yejA2FV4G1XsS8E4Piz6Fz+7FaEFTw7A7GR972irVV" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/fontawesome.js" integrity="sha384-bNOdVeWbABef8Lh4uZ8c3lJXVlHdf8W5hh1OpJ4dGyqIEhMmcnJrosjQ36Kniaqm" crossorigin="anonymous"></script>
+    <script src="./js/common.js"></script>
+    <script src="./js/blockDrawData.js"></script>
     <script>
         var blockDrawData = {
             "Resistor":
@@ -797,11 +808,11 @@
                     </a>
                     <div class="collapse" id="types">
                         <div class="card card-body">
-                            <a class="dropdown-item" href="index.html" data-toggle="tooltip" title="Resistor - Inductance - Capacitor structures"
+                            <a class="dropdown-item" onclick="reloadPage()" href="#rlc" data-toggle="tooltip" title="Resistor - Inductance - Capacitor structures"
                                 data-placement="top">RLC</a>
-                            <a class="dropdown-item" href="algebra.html" data-toggle="tooltip" title="Simplification of block diagrams"
+                            <a class="dropdown-item" onclick="reloadPage()" href="#algebra" data-toggle="tooltip" title="Simplification of block diagrams"
                                 data-placement="top">Block algebra</a>
-                            <a class="dropdown-item" href="simulation.html" data-toggle="tooltip" title="Building of block schemes for simulation"
+                            <a class="dropdown-item" onclick="reloadPage()" href="#blockSim" data-toggle="tooltip" title="Building of block schemes for simulation"
                                 data-placement="top">BlockSim</a>
                         </div>
                     </div>
@@ -813,11 +824,11 @@
                     </a>
                     <div class="collapse" id="setting">
                         <div class="card card-body">
-                                <a class="dropdown-item setting-item" href="#" onclick="newScheme()"><i class="fa fa-refresh drop" aria-hidden="true"></i>
+                                <a class="dropdown-item setting-item" href="#" onclick="newScheme()"><i class="fas fa-sync-alt" aria-hidden="true"></i>
                                     New scheme</a>
-                                <a class="dropdown-item setting-item" href="#" onclick="saveScheme()"><i class="fa fa-download drop" aria-hidden="true"></i>
+                                <a class="dropdown-item setting-item" href="#" onclick="saveScheme()"><i class="fas fa-download" aria-hidden="true"></i>
                                     Save scheme</a>
-                                <a class="dropdown-item setting-item" href="#" onclick="loadModal()"><i class="fa fa-upload drop" aria-hidden="true"></i>
+                                <a class="dropdown-item setting-item" href="#" onclick="loadModal()"><i class="fas fa-upload" aria-hidden="true"></i>
                                     Load scheme</a>
                         </div>
                     </div>
@@ -829,6 +840,14 @@
                     <a href="#" onclick="getOutput()"><i class="fa fa-check" aria-hidden="true"></i> Solve</a>
                 </li>
                 <hr>
+                <li>
+
+                    <div id="mouse" class="panel2" onclick="status_normal_mod()"><i class="fas fa-mouse-pointer"></i></div>
+                    <div id="trash" class="panel2" onclick="status_remove()"><i class="far fa-trash-alt" ></i></div>
+                    <div id="minus" class="panel2" onclick="status_connect()"><i class="fas fa-minus"></i></div>
+
+
+                 </li>
                 <li>
                     <span>Blocks</span>
                     <div id="block-container">
@@ -845,6 +864,7 @@
             </div>
             <canvas id="main-canvas"></canvas>
         </div>
+        <div id="snackbar">Some text some message..</div>
         <!-- /#page-content-wrapper -->
     </div>
     <!-- /content -->
@@ -864,7 +884,7 @@
 
         //set original position on modal close
         $('.modal').on('hidden.bs.modal', function (e) {
-            $($(this).children()[0]).css("top","0px")
+            $($(this).children()[0]).css("top","0px");
             $($(this).children()[0]).css("left","0px")
         });
 
@@ -878,7 +898,8 @@
         //canvas resizing
         window.onload = function (e) {
             canvasResize();
-            setSchemeType("rlc");
+            var urlParam = window.location.href.split("#");
+            setSchemeType(urlParam[urlParam.length - 1]);
             loadBlocks();
             $("#wrapper").toggleClass("toggled");
             $(function () {
