@@ -1,6 +1,7 @@
-var url = window.location.href;
-var schema = url.split('#')[1];
-if(schema == "rlc" || schema == "") {
+var cookie = document.cookie;
+var schema = cookie.split('=')[1];
+
+if(schema == "rlc" || schema == "" || schema == undefined) {
     var blockDrawData = {
         "Resistor":
             [
