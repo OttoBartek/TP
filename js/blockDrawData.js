@@ -1,5 +1,10 @@
-var url = window.location.href;
-var schema = url.split('#')[1];
+var cookie = document.cookie;
+var schema = cookie.split('=')[1];
+
+if(schema == '' || schema == undefined) {
+    var url = window.location.href;
+    schema = url.split('#')[1];
+}
 if(schema == "rlc" || schema == "") {
     var blockDrawData = {
         "Resistor":
