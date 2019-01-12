@@ -271,7 +271,7 @@ canvas.on('object:selected', function (e) {
             deleteLineHandler(selectedElement);
         } else { // Vybraty port
             var f = checkPorts(selectedElement); // zisti ci je target port a aky je to port
-            if ((f === 2 && scheme[selectedElement.type].full === false) || f === 3) { // OUT alebo pout co je point na ciare
+            if ((f === 2 && scheme[selectedElement.type].full === false) || f === 3 || isParentBlockPoint(selectedElement)) { // OUT alebo pout co je point na ciare
                 //connPortFrom = selectedElement;
                 //console.log(scheme[selectedElement.type]);
                 connPortFrom = scheme[selectedElement.type];
@@ -305,6 +305,20 @@ canvas.on('object:selected', function (e) {
         }
     }
 });
+
+/* Vracia true ak je parent portu z canvasu Point inak vrati false*/
+function isParentBlockPoint(element) {
+    if(element.BlockType) {
+        return false // ak je element blok a nie port vrati false
+    }
+    return getObject(scheme[element.type].parentBlock).BlockType === "Point";
+}
+
+/* Vracia true ak ma block z canvasu v scheme BlockType point inak false
+*  Point je gulicka blok pouzivany iba v RLC scheme a platia pre neho ine pravidla ...*/
+function isBlockTypePoint(block) {
+    return scheme[block.type].BlockType === "Point";
+}
 
 /* Vracia 1 ak je port In, 2 ak Out, 3 ak POUT, 4 ako TOP, 5 ak Bot ak je to daco ine tak 0 */
 function checkPorts(selectedElement) {
@@ -366,6 +380,7 @@ function portsEmpty(blockFrom, blockTo, selectedPort) {
     var fromFlag = scheme[blockFrom.type].NumberOfFullOutputs < scheme[blockFrom.type].NumberOfOutputs;
     var toFlag = scheme[blockTo.type].NumberOfFullInputs < scheme[blockTo.type].NumberOfInputs;
     var inputFlag = selectedPort.full;
+
     //console.log("Port empty ? " + (fromFlag && toFlag && !inputFlag));
     return (fromFlag && toFlag && !inputFlag);
 }
@@ -518,22 +533,27 @@ canvas.on('selection:updated', function(options) {
                     //data prep
                     scheme[connToBlock.type].inLine = lineName;
                     scheme[connFromBlock.type].outLine = lineName;
-                    //var NumOut = scheme[connFromBlock.type].NumberOfFullOutputs;
-                    scheme[connFromBlock.type].NumberOfFullOutputs += 1;
-                    connPortTo.full = true;
+
+                    scheme[connToBlock.type].NumberOfFullInputs += 1;
+                    // ak nieje point nastavuje sa full pre port
+                    // taktiez ak je point a ma 3 zaplnene vstupy
+                    if(!isBlockTypePoint(connToBlock) || (isBlockTypePoint(connToBlock) && scheme[connToBlock.type].NumberOfFullInputs >= 3)) {
+                        connPortTo.full = true;
+                    }
                     connPortTo.connectedLine = lineName;
 
                     /*console.log("Conn port from log");
                     console.log(connPortFrom);*/
 
-                    connPortFrom.full = true;
+                    // podobne ako vyssie
+                    scheme[connFromBlock.type].NumberOfFullOutputs += 1;
+                    if(!isBlockTypePoint(connFromBlock) || (isBlockTypePoint(connToBlock) && scheme[connFromBlock.type].NumberOfFullOutputs >= 9)) {
+                        connPortFrom.full = true;
+                    }
                     connPortFrom.connectedLine = lineName;
 
                     //console.log("SELECTED ELEMENT");
                     //console.log(scheme[selectedElement.type]);
-
-                    //var NumIn = scheme[connToBlock.type].NumberOfFullInputs;
-                    scheme[connToBlock.type].NumberOfFullInputs += 1;
 
                     var fromPortOutName = connPortFrom.portName;
                     if(connPortFrom.portName)
@@ -596,16 +616,14 @@ canvas.on('selection:updated', function(options) {
                     clearSelection();
                 }
             }
-            else if (f === 2 || f === 3) { // Port je out alebo POut
-                if(scheme[selectedElement.type].full === false) {
-                    connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
-                    connPortFrom = scheme[selectedElement.type];
-                    if (connLine == null) {
-                        // Vytvorenie tyrkysovej ciary
-                        createConnectingCyanLine(selectedElement);
-                    } else {
-                        clearSelection();
-                    }
+            else if ((f === 2 && scheme[selectedElement.type].full === false) || f === 3 || isParentBlockPoint(selectedElement)) { // Port je out alebo POut
+                connFromBlock = getObject(scheme[selectedElement.type].parentBlock);
+                connPortFrom = scheme[selectedElement.type];
+                if (connLine == null) {
+                    // Vytvorenie tyrkysovej ciary
+                    createConnectingCyanLine(selectedElement);
+                } else {
+                    clearSelection();
                 }
             }
         }
