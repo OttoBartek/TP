@@ -256,6 +256,10 @@ function drawBlockFromScheme(targetBlock){
     }
 
     rotateObject(getObject(blockName),blockRotation);
+
+    if(blockType == "Multiply"){
+        drawequation(getObject(blockName),scheme[type].extra[0].split(" "),scheme[type].extra[1].split(" "))
+    }
 }
 
 function setSchemeType(type){

@@ -2,20 +2,20 @@ var img2=null;
 var img = null;
 
 function changeBlock(){
-    //console.log(changingElement.type);
 
     var type = changingElement.type;
 
     //zmena mena bloku
     var newName = $('#block-name').val();
-    // if(newName !== scheme[changingElement.type].VisibleName){
-    //     scheme[changingElement.type].VisibleName = newName;
-    //     changingElement._objects.forEach(function(obj){
-    //         if(obj.text && obj.changeable)
-    //             obj.set({text:newName});
-    //         canvas.renderAll();
-    //     });
-    // }
+    if(newName !== scheme[changingElement.type].VisibleName){
+        scheme[changingElement.type].VisibleName = newName;
+        changingElement._objects.forEach(function(obj){
+            if(obj.text && obj.changeable)
+                obj.set({text:newName});
+            canvas.renderAll();
+        });
+    }
+
     //zmena poctu portov
     if($('#input-number').length) {
         var inputNum = $('#input-number').val();
@@ -41,7 +41,9 @@ function changeBlock(){
     }
 
     var objPar = blockParameters[changingElement.BlockType];
-    if(schemeType === 'schema1') {
+
+    if(schemeType === 'algebra') {
+
         if ($('#sumator-first').length) {
             var val = $('#sumator-first').val();
             var tmp = scheme[changingElement.type].extra[1];
@@ -77,21 +79,20 @@ function changeBlock(){
         }
 
         if ($('#multiply-citatel').length && $('#multiply-menovatel').length) {
+
             var numerator = $('#multiply-citatel').val();
             var denominator = $('#multiply-menovatel').val();
 
             if (scheme[changingElement.type].extra[0] != numerator || scheme[changingElement.type].extra[1] != denominator) {
+
+                console.log("tu som");
+
                 if (denominator != '1') {
+
                     if (denominator.match(/^-?\d+( -?\d+)*$/)) {
                         if (numerator.match(/^-?\d+( -?\d+)*$/)) {
 
                             scheme[changingElement.type].extra = [numerator, denominator];
-
-                            changingElement._objects.forEach(function (obj) {
-                                if (obj.text)
-                                    obj.set({text: 'f(s)'});
-                                canvas.renderAll();
-                            });
 
                             var numeratorArr;
                             var numOutput = "";
@@ -101,7 +102,7 @@ function changeBlock(){
                             for (var i = 0; i < numeratorArr.length; i++) {
                                 if (parseInt(numeratorArr[i]) === 1) {
                                     if (exponent > 1) {
-                                        numOutput += "s^" + exponent;
+                                        numOutput += "s^{" + exponent+"}";
                                         exponent--;
                                     }
                                     else if (exponent === 1) {
@@ -114,7 +115,7 @@ function changeBlock(){
                                 }
                                 else if (parseInt(numeratorArr[i]) > 1) {
                                     if (exponent > 1) {
-                                        numOutput += numeratorArr[i] + "s^" + exponent;
+                                        numOutput += numeratorArr[i] + "s^{" + exponent+"}";
                                         exponent--;
                                     }
                                     else if (exponent === 1) {
@@ -142,10 +143,12 @@ function changeBlock(){
                             denArray = denominator.split(" ");
                             exponent = denArray.length - 1;
 
+                            console.log(denArray);
+
                             for (var j = 0; j < denArray.length; j++) {
                                 if (parseInt(denArray[j]) === 1) {
                                     if (exponent > 1) {
-                                        denOutput += "s^" + exponent;
+                                        denOutput += "s^{" + exponent+"}";
                                         exponent--;
                                     }
                                     else if (exponent === 1) {
@@ -158,7 +161,7 @@ function changeBlock(){
                                 }
                                 else if (parseInt(denArray[j]) > 1) {
                                     if (exponent > 1) {
-                                        denOutput += denArray[j] + "s^" + exponent;
+                                        denOutput += denArray[j] + "s^{" + exponent+"}";
                                         exponent--;
                                     }
                                     else if (exponent === 1) {
@@ -201,11 +204,6 @@ function changeBlock(){
                     if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)/)) {
                         scheme[changingElement.type].extra = [numerator,denominator];
                         scheme[changingElement.type].tex_result = numerator;
-                        changingElement._objects.forEach(function (obj) {
-                            if (obj.text)
-                                obj.set({text: numerator});
-                            canvas.renderAll();
-                        });
                     }
                     else {
                         window.alert("Invalid numerator!");
@@ -213,6 +211,8 @@ function changeBlock(){
                     }
                 }
             }
+
+            drawequation(changingElement,numerator.split(" "),denominator.split(" "));
         }
     }
     else {
@@ -249,64 +249,250 @@ function changeBlock(){
         scheme[changingElement.type].extra = resultArr;
     }
 
-    canvas.forEachObject(function(obj) {
-        console.log(obj);
-        if(obj != undefined){
-            if(obj.type == changingElement.type + 'IMG') {
-                canvas.remove(obj);
-            }
-        }
-    });
-
-    if(img!=null){
-
-        var change = changingElement;
-
-        changingElement._objects.forEach(function(obj){
-            if(obj.text && obj.changeable)
-                obj.set({text:""});
-            canvas.renderAll();
-        });
-
-        if(img2==null){
-            setTimeout(function(){
-
-
-                fabric.Image.fromURL(img2.src, function(img) {
-
-                    var oImg = img.set({ left: change.left+1, top: change.top+5,width:110,hasControls: false, hasBorders: false,lockMovementX: true, lockMovementY: true,type: type + 'IMG',}).scale(0.6);
-                    canvas.add(oImg);
-                    canvas.sendToBack(oImg);
-
-                    change = null;
-                });
-
-            }, 500);
-
-        }else{
-            fabric.Image.fromURL(img2.src, function(img) {
-
-                var oImg = img.set({ left: change.left+1, top: change.top+5,width:110,hasControls: false, hasBorders: false,lockMovementX: true, lockMovementY: true,type: type + 'IMG',}).scale(0.6);
-                canvas.add(oImg);
-                canvas.sendToBack(oImg);
-
-                change = null;
-            });
-        }
-
-        // changingElement.set({width:110})
-        // change._objects[1].set({width:110})
-        // change._objects[0].set({width:110})
-    //
-    //     var portPos = portPositions[change.BlockType]["img"];
-    //
-    //     var input = getObject(change.type + 'O');
-    //     input.set({angle: 90, top: change.top + portPos.out.top, left: change.left + portPos.out.left});
-    //     input.setCoords();
-    }
+    rotateObject(changingElement,0);
 
     $('#exampleModal').modal('hide');
     changingElement = null;
+}
+
+function drawequation(block,numerator,denominator){
+
+    var charWidth = 6.5;
+    var expWidth = 4.5;
+    var paddingEquation = 10;
+    var paddingLine = 5;
+
+    var width = 0;
+    var left = 0;
+    var text = "";
+    var textLeft = 0;
+
+    var strDen = "";
+    var strNum = "";
+
+    var denLength = 0;
+    var numLength = 0;
+
+    scheme[block.type].equationWidth = 0;
+
+    if(denominator.length <= 3){
+        for(i=0; i<denominator.length; i++){
+
+            if(denominator[i] === "0"){
+                continue;
+            }
+
+            if(denominator[i]!="1"|| i==denominator.length - 1)
+                strDen+=denominator[i];
+
+            if(i!=denominator.length - 1 && denominator.length>1){
+                strDen+="s + ";
+            }
+        }
+
+        for(i=0; i<numerator.length; i++){
+
+            if(numerator[i] === "0"){
+                continue;
+            }
+
+            if(numerator[i]!="1" || i==numerator.length - 1)
+                strNum+=numerator[i];
+
+            if(i!=numerator.length - 1 && numerator.length>1){
+                strNum+="s + ";
+            }
+        }
+    }
+
+    denLength = strDen.length;
+    numLength = strNum.length;
+
+    if(denominator.length > 3 || (denominator.length == 1 && denominator[0] == 1 && numerator[0].length > 5) || denLength > 14 || numLength>14){
+
+        width = 40;
+        left = width/2 + 0.5;
+        text = "f(s)";
+        textLeft = (width/2 - (text.length*charWidth)/2) - width/2;
+
+        console.log(width/2 - (text.length*charWidth)/2);
+
+        block.set({width:width});
+        block._objects[1].set({width:width,left:-left})
+        block._objects[0].set({width:width,left:-left})
+
+        block._objects.forEach(function(obj){
+
+            if(obj.text === scheme[block.type].VisibleName){
+                obj.set({left:-left});
+            }
+
+            if(obj.extra != undefined){
+                if(obj.extra === "F"){
+                    console.log(obj.left);
+                    obj.set({text:text,fill:"black", left:textLeft});
+                }
+                else if(obj.extra === "numerator-3"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "numerator-2"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "numerator-equation"){
+                    obj.set({text:"s",fill:false,left:0});
+                }
+                else if(obj.extra === "equation-line"){
+                    obj.set({fill:false,left:0,width:0,height:0});
+                }
+                else if(obj.extra === "denominator-3"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "denominator-2"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "denominator-equation"){
+                    obj.set({text:"s",fill:false,left:0});
+                }
+            }
+        });
+    }else if(denominator.length == 1 && denominator[0] === "1"){
+
+        width = 40;
+        left = width/2 + 0.5;
+        text = numerator[0];
+        textLeft = (width/2 - (text.length*charWidth)/2) - width/2;
+
+        console.log(width/2 - (text.length*charWidth)/2);
+
+        block.set({width:width});
+        block._objects[1].set({width:width,left:-left})
+        block._objects[0].set({width:width,left:-left})
+
+        block._objects.forEach(function(obj){
+
+            if(obj.text === scheme[block.type].VisibleName){
+                obj.set({left:-left});
+            }
+
+            if(obj.extra != undefined){
+                if(obj.extra === "F"){
+                    console.log(obj.left);
+                    obj.set({text:text,fill:"black", left:textLeft});
+                }
+                else if(obj.extra === "numerator-3"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "numerator-2"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "numerator-equation"){
+                    obj.set({text:"s",fill:false,left:0});
+                }
+                else if(obj.extra === "equation-line"){
+                    obj.set({fill:false,left:0,width:0,height:0});
+                }
+                else if(obj.extra === "denominator-3"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "denominator-2"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "denominator-equation"){
+                    obj.set({text:"s",fill:false,left:0});
+                }
+            }
+        });
+    }else{
+
+        var maxChar = Math.max(denLength,numLength);
+
+        width = charWidth*maxChar+2*paddingEquation;
+        left = width/2 + 0.5;
+
+        scheme[block.type].equationWidth = width-40;
+
+        var leftDen = 0;
+        var leftNum = 0;
+
+        if(denLength > numLength){
+            leftDen = -left+paddingEquation;
+            leftNum = -left+paddingEquation+(denLength*charWidth-numLength*charWidth)/2;
+        }else{
+            leftDen = -left+paddingEquation+(numLength*charWidth-denLength*charWidth)/2;
+            leftNum = -left+paddingEquation;
+        }
+
+        var leftLine = -left+paddingLine;
+        var widthLine = width-2*paddingLine;
+
+        block.set({width:width});
+        block._objects[1].set({width:width,left:-left})
+        block._objects[0].set({width:width,left:-left})
+
+        block._objects.forEach(function(obj){
+
+            if(obj.text === scheme[block.type].VisibleName){
+                obj.set({left:-left});
+            }
+
+            if(obj.extra != undefined){
+                if(obj.extra === "F"){
+                    console.log(obj.left);
+                    obj.set({text:"F",fill:false, left:0});
+                }
+                else if(obj.extra === "numerator-3"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "numerator-2"){
+                    if(numerator.length > 2){
+                        if(numerator[0] === "1")
+                            obj.set({fill:"black",left:leftNum+(((numerator[0]).length)*charWidth)});
+                        else if(numerator[0] === "0")
+                            obj.set({fill:false,left:0});
+                        else
+                            obj.set({fill:"black",left:leftNum+(((numerator[0]).length+1)*charWidth)});
+                    }else{
+                        obj.set({fill:false,left:0});
+                    }
+                }
+                else if(obj.extra === "numerator-equation"){
+                    obj.set({text:strNum,fill:"black",left:leftNum});
+                }
+                else if(obj.extra === "equation-line"){
+                    obj.set({fill:"black",left:leftLine,width:widthLine,height:0.1});
+                    canvas.bringToFront();
+                    canvas.setActiveObject(block)
+                    canvas.discardActiveObject();
+                    canvas.remove(obj);
+                    canvas.add(obj);
+                }
+                else if(obj.extra === "denominator-3"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "denominator-2"){
+                    if(denominator.length > 2){
+                        if(denominator[0] === "1")
+                            obj.set({fill:"black",left:leftDen+(((denominator[0]).length)*charWidth)});
+                        else if(denominator[0] === "0")
+                            obj.set({fill:false,left:0});
+                        else
+                            obj.set({fill:"black",left:leftDen+(((denominator[0]).length+1)*charWidth)});
+                    }else{
+                        obj.set({fill:false,left:0});
+                    }
+                }
+                else if(obj.extra === "denominator-equation"){
+                    obj.set({text:strDen,fill:"black",left:leftDen});
+                }
+            }
+        });
+    }
+
+    canvas.renderAll();
+
+    canvas.remove(block);
+
+    canvas.add(block);
 }
 
 function rotateObject(target, rotateBy){
@@ -329,6 +515,10 @@ function rotateObject(target, rotateBy){
 
     var portPos = portPositions[target.BlockType][rotation];
 
+    console.log("rot");
+
+    var equationWidth = scheme[target.type].equationWidth;
+
     if (rotation == 90) {
         if (ports == 'both' || ports == 'in') {
             if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
@@ -345,7 +535,7 @@ function rotateObject(target, rotateBy){
         }
         if (ports == 'both' || ports == 'out') {
             var input = getObject(blockName + 'O');
-            input.set({angle: rotation + 90, top: y + portPos.out.top, left: x + portPos.out.left});
+            input.set({angle: rotation + 90, top: y + portPos.out.top+equationWidth, left: x + portPos.out.left});
             input.setCoords();
         }
     }
@@ -355,7 +545,7 @@ function rotateObject(target, rotateBy){
         if (ports == 'both' || ports == 'in') {
             if (inputCount == 1 || scheme[target.type].BlockType === 'Point') {
                 var input = getObject(blockName + 'I');
-                input.set({angle: rotation + 90, top: y + portPos.in.top, left: x + portPos.in.left});
+                input.set({angle: rotation + 90, top: y + portPos.in.top, left: x + portPos.in.left+equationWidth});
                 input.setCoords();
             }else{
                 for (var i = 1; i <= inputCount; i++){
@@ -474,7 +664,7 @@ function rotateObject(target, rotateBy){
         }
         if (ports == 'both' || ports == 'out') {
             var input = getObject(blockName + 'O');
-            input.set({angle: rotation + 90, top: y + portPos.out.top, left: x + portPos.out.left});
+            input.set({angle: rotation + 90, top: y + portPos.out.top-equationWidth, left: x + portPos.out.left});
             input.setCoords();
         }
     }
@@ -494,7 +684,7 @@ function rotateObject(target, rotateBy){
         }
         if (ports == 'both' || ports == 'out') {
             var input = getObject(blockName + 'O');
-            input.set({angle: 90, top: y + portPos.out.top, left: x + portPos.out.left});
+            input.set({angle: 90, top: y + portPos.out.top, left: x + portPos.out.left+equationWidth});
             input.setCoords();
         }
     }
@@ -799,9 +989,6 @@ function vypocetMultiply(){
             if (denominator != '1') {
                 if (denominator.match(/^-?\d+( -?\d+)*$/)) {
                     if (numerator.match(/^-?\d+( -?\d+)*$/)) {
-
-                        scheme[changingElement.type].extra = [numerator, denominator];
-
                         var numeratorArr;
                         var numOutput = "";
                         numeratorArr = numerator.split(" ");
@@ -810,7 +997,7 @@ function vypocetMultiply(){
                         for (var i = 0; i < numeratorArr.length; i++) {
                             if (parseInt(numeratorArr[i]) === 1) {
                                 if (exponent > 1) {
-                                    numOutput += "s^" + exponent;
+                                    numOutput += "s^{" + exponent+"}";
                                     exponent--;
                                 }
                                 else if (exponent === 1) {
@@ -823,7 +1010,7 @@ function vypocetMultiply(){
                             }
                             else if (parseInt(numeratorArr[i]) > 1) {
                                 if (exponent > 1) {
-                                    numOutput += numeratorArr[i] + "s^" + exponent;
+                                    numOutput += numeratorArr[i] + "s^{" + exponent+"}";
                                     exponent--;
                                 }
                                 else if (exponent === 1) {
@@ -854,7 +1041,7 @@ function vypocetMultiply(){
                         for (var j = 0; j < denArray.length; j++) {
                             if (parseInt(denArray[j]) === 1) {
                                 if (exponent > 1) {
-                                    denOutput += "s^" + exponent;
+                                    denOutput += "s^{" + exponent+"}";
                                     exponent--;
                                 }
                                 else if (exponent === 1) {
@@ -867,7 +1054,7 @@ function vypocetMultiply(){
                             }
                             else if (parseInt(denArray[j]) > 1) {
                                 if (exponent > 1) {
-                                    denOutput += denArray[j] + "s^" + exponent;
+                                    denOutput += denArray[j] + "s^{" + exponent+"}";
                                     exponent--;
                                 }
                                 else if (exponent === 1) {
@@ -891,13 +1078,6 @@ function vypocetMultiply(){
                         }
 
                         var resultTex = '\\dfrac{' + numOutput + '}{' + denOutput + '}';
-
-                        $.each(objPar, function (i, subPar) {
-                            //console.log(objPar);
-                            if (subPar.type == 'text') {
-                                scheme[changingElement.type].tex_result = resultTex;
-                            }
-                        });
                     } else {
                         $("#multiply-citatel").addClass("is-invalid")
                         $("#block-error").html("Invalid numerator!");
@@ -910,13 +1090,6 @@ function vypocetMultiply(){
                 }
             } else {
                 if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)/)) {
-                    scheme[changingElement.type].extra = [numerator, denominator];
-                    scheme[changingElement.type].tex_result = numerator;
-                    changingElement._objects.forEach(function (obj) {
-                        // if (obj.text)
-                        //     obj.set({text: numerator});
-                        canvas.renderAll();
-                    });
                 }
                 else {
                     $("#multiply-citatel").addClass("is-invalid")
@@ -926,21 +1099,4 @@ function vypocetMultiply(){
             }
         }
     }
-
-
-    var nieco = document.getElementById('multiply-text')
-    var val = scheme[changingElement.type].tex_result;
-
-    katex.render(val, nieco);
-
-    img2=null;
-    img=null;
-
-    html2canvas(nieco).then(function(canvas) {
-        img2 = new Image();
-        img = canvas.toDataURL("image/png");
-        img2.src =img;
-        img2.style.width="500px";
-        img = 0;
-    });
 }

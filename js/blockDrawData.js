@@ -709,12 +709,91 @@ else if(schema == "algebra") {
             {   "type":"text",
                 "Text":"F",
                 "data":{
-                    "fontFamily": "Arial",
-                    "top":16,
-                    "left":16,
+                    "fontFamily": "Consolas",
+                    "top":13,
+                    "left":16.75,
                     "fontSize": 12,
                     "fill": "black",
-                    "changeable":true,
+                    "changeable":false,
+                    "extra":"F"
+                }
+            },
+            {   "type":"text",
+                "Text":"3",
+                "data":{
+                    "fontFamily": "Consolas",
+                    "top":3,
+                    "left":0,
+                    "fontSize": 8,
+                    "fill": false,
+                    "extra":"numerator-3"
+                }
+            },
+            {   "type":"text",
+                "Text":"2",
+                "data":{
+                    "fontFamily": "Consolas",
+                    "top":3,
+                    "left":0,
+                    "fontSize": 8,
+                    "fill": false,
+                    "extra":"numerator-2"
+                }
+            },
+            {   "type":"text",
+                "Text":"s",
+                "data":{
+                    "fontFamily": "Consolas",
+                    "top":4,
+                    "left":0,
+                    "fontSize": 12,
+                    "fill": false,
+                    "extra":"numerator-equation"
+                }
+            },
+            {
+                "type":"rect",
+                "data":{
+                    "width":0,
+                    "height":0,
+                    "fill":false,
+                    "stroke":false,
+                    "extra":"equation-line",
+                    "top":20
+                }
+            },
+            {   "type":"text",
+                "Text":"3",
+                "data":{
+                    "fontFamily": "Consolas",
+                    "top":21,
+                    "left":0,
+                    "fontSize": 8,
+                    "fill": false,
+                    "extra":"denominator-3"
+                }
+            },
+            {   "type":"text",
+                "Text":"2",
+                "data":{
+                    "fontFamily": "Consolas",
+                    "top":21,
+                    "left":0,
+                    "fontSize": 8,
+                    "fill": false,
+                    "extra":"denominator-2"
+                }
+            },
+            {   "type":"text",
+                "Text":"s",
+                "data":{
+                    "fontFamily": "Consolas",
+                    "top":22,
+                    "left":0,
+                    "fontSize": 12,
+                    "fill": false,
+                    "extra":"denominator-equation",
+                    "width": 101
                 }
             },
             {
@@ -1034,16 +1113,6 @@ else if(schema == "algebra") {
                         "left":53,
                     }
                 },
-                "img":{
-                    "in":{
-                        "top":15,
-                        "left":2,
-                    },
-                    "out":{
-                        "top":15,
-                        "left":121,
-                    }
-                }
             },
         "Sumator":
             {
