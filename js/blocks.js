@@ -338,7 +338,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: rotation + 90, top: y + portPos.in[i-1].top, left: x + + portPos.in[i-1].left});
+                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -360,7 +360,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: rotation + 90, top: y + portPos.in[i-1].top, left: x + + portPos.in[i-1].left});
+                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -371,7 +371,7 @@ function rotateObject(target, rotateBy){
             input.setCoords();
         }
 
-        if(scheme[target.type].BlockType){
+        if(scheme[target.type].BlockType ==="Sumator"){
             target._objects.forEach(function (obj) {
                 if(obj.extra === "sumator-first"){
                     obj.set({left: 5,top:-25});
@@ -383,19 +383,79 @@ function rotateObject(target, rotateBy){
                 }
             });
         }
-    }else{
-        target._objects.forEach(function (obj) {
-            if(obj.extra === "sumator-first"){
-                console.log(obj.top,obj.left);
-                obj.set({left: -18,top:-27.5});
-                obj.setCoords();
-            }
-            if(obj.extra === "sumator-second"){
-                console.log(obj.top,obj.left);
-                obj.set({left: -18,top:-6.5});
-                obj.setCoords();
-            }
-        });
+        if(scheme[target.type].BlockType =="Mux") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==1 || obj.name === 2 || obj.name === 3 || obj.name === 4){
+                    console.log(obj)
+                    obj.set({left: 0});
+
+                }
+                if(obj.name === "out"){
+                    console.log(obj)
+                    obj.set({left: -15});
+                    // obj.setCoords();
+                }
+            });
+        }
+        if(scheme[target.type].BlockType =="Product") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==1 || obj.name === 2 || obj.name === 3 || obj.name === 4){
+                    console.log(obj)
+                    obj.set({left: 25});
+
+                }
+                if(obj.name === "out"){
+                    console.log(obj)
+                    obj.set({left: -40});
+                    // obj.setCoords();
+                }
+            });
+        }
+
+        }else{
+            if(scheme[target.type].BlockType ==="Sumator"){
+                target._objects.forEach(function (obj) {
+
+
+                if(obj.extra === "sumator-first"){
+
+                    obj.set({left: -18,top:-27.5});
+                    obj.setCoords();
+                }
+                if(obj.extra === "sumator-second"){
+
+                    obj.set({left: -18,top:-6.5});
+                    obj.setCoords();
+                }
+            });
+        }
+
+        if(scheme[target.type].BlockType =="Mux") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==1 ||obj.name === 2 || obj.name === 3 || obj.name === 4){
+                    console.log(obj)
+                    obj.set({left: -18});
+
+                }
+                if(obj.name === "out"){
+                    console.log(obj)
+                    obj.set({left: 2});
+                }
+            });
+        }
+        if(scheme[target.type].BlockType =="Product") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==1 ||obj.name === 2 || obj.name === 3 || obj.name === 4){
+                    console.log(obj)
+                    obj.set({left: -40.5});
+
+                }
+                if(obj.name === "out"){
+                    console.log(obj)
+                    obj.set({left: 24.5});
+                }
+            });
+        }
     }
     if (rotation == 270) {
         if (ports == 'both' || ports == 'in') {
@@ -407,7 +467,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: rotation + 90, top: y + portPos.in[i-1].top, left: x + + portPos.in[i-1].left});
+                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -427,7 +487,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: 90, top: y + portPos.in[i-1].top, left: x + + portPos.in[i-1].left});
+                    input.set({angle: 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -540,8 +600,28 @@ function redrawBlock(targetBlock, originInputNum){
     $.each(blockData, function(i,part) {
         if(part.type === 'rect')
             blockGroup[i] = new fabric.Rect(part.data);
-        else if(part.type === 'path')
+        else if(part.type === 'path'){
+
+            if(blockType==="Mux") {
+                if (numberOfInputs == part.data.name || part.data.name==="out") {
+                    part.data.invisible = false;
+                    part.data.stroke = "black";
+                } else {
+                    part.data.invisible = true;
+                    part.data.stroke = false;
+                }
+            }
+            if(blockType==="Product") {
+                if (numberOfInputs == part.data.name || part.data.name==="out") {
+                    part.data.invisible = false;
+                    part.data.stroke = "black";
+                } else {
+                    part.data.invisible = true;
+                    part.data.stroke = false;
+                }
+            }
             blockGroup[i] = new fabric.Path(part.path, part.data);
+        }
         else if(part.type === 'triangle')
             blockGroup[i] = new fabric.Triangle(part.data);
         else if(part.type === 'circle')
@@ -556,69 +636,89 @@ function redrawBlock(targetBlock, originInputNum){
 
     var io = data[blockType][0].io;
     var ports = data[blockType][0].ports;
+    console.log(blockGroup)
     var block = new fabric.Group(blockGroup, {baseBlock:1, type: type, left: x, top: y, io: io, ports: ports, numberOfInputs: numberOfInputs, ZOrder: blockOrder, "BlockType" : blockType});
     block.hasBorders = block.hasControls = false;
     canvas.add(block);
 
     var addPort;
-
+    var portPos = portPositions[blockType][0];
     if(io === 'out' || io === 'both') {
+
         var outPart = new fabric.Triangle({
-            left: x + block.width + 5, top: y + block.height/2-15,
+            left: x + portPos.out.left, top: y + portPos.out.top,
             angle:90,
             lockMovementX: true, lockMovementY: true,
-            width: 10, height: 10, fill: 'black',
+            width: portWidth, height: portHeight, fill: 'black',
             hoverCursor: 'pointer',
-            hasControls: false, hasBorders: false,
+            hasControls: false, hasBorders: portBorders,
             type: type + 'O',
+            padding: portPadding,
             Out: 1
         });
         canvas.add(outPart);
+        /*Pridany out port do schemy na ciare*/
+        addPort = {[type+'O'] : {
+                "connectedLine": "",
+                "parentBlock":type,
+                "portName":type+'O',
+                "portNumber":1,
+                "full":false
+            }
+        };
+        scheme = $.extend(scheme, addPort);
+
     }
     if (io === 'in' || io === 'both') {
+        var inPart;
+        console.log(numberOfInputs)
         if (numberOfInputs === 1 || blockType === 'Point') {
+            console.log(portPos.in)
             var inPart = new fabric.Triangle({
-                left: x + 1, top: y + block.height / 2 - 15,
+                left: x + portPos.in.left, top: y + portPos.in.top,
                 angle: 90,
                 lockMovementX: true, lockMovementY: true,
-                width: 10, height: 10, fill: 'black',
+                width: portWidth, height: portHeight, fill: 'black',
                 hoverCursor: 'pointer',
-                hasControls: false, hasBorders: false,
+                hasControls: false, hasBorders: portBorders,
                 type: type + 'I',
+                padding: portPadding,
                 In: 1
             });
             canvas.add(inPart);
             addPort = {[type+'I'] : {
-                "parentBlock":type,
-                "portName":type+'I',
-                "portNumber":1,
-                "full":false
-            }
+                    "connectedLine": "",
+                    "parentBlock":type,
+                    "portName":type+'I',
+                    "portNumber":1,
+                    "full":false
+                }
             };
             scheme = $.extend(scheme, addPort);
         } else if (numberOfInputs > 1) {
-            inPosition = block.height/numberOfInputs - (block.height/numberOfInputs/2) + 3;
             for (var i = 1; i <= numberOfInputs; i++) {
-                var position = y + (i * inPosition) - 14;
+                console.log(portPos)
                 var inPart = new fabric.Triangle({
-                    left: x + 1, top: position,
+                    left: x + portPos.in[numberOfInputs][i-1].left, top: y + portPos.in[numberOfInputs][i-1].top,
                     angle: 90,
                     lockMovementX: true, lockMovementY: true,
-                    width: 10, height: 10, fill: 'black',
+                    width: portWidth, height: portHeight, fill: 'black',
                     hoverCursor: 'pointer',
-                    hasControls: false, hasBorders: false,
+                    hasControls: false, hasBorders: portBorders,
                     type: type + 'I' + i,
+                    padding: portPadding,
                     In: 1
                 });
 
                 canvas.add(inPart);
 
                 addPort = {[type+'I'+i] : {
-                    "parentBlock":type,
-                    "portName":type+'I'+i,
-                    "portNumber":i,
-                    "full":false
-                }
+                        "connectedLine": "",
+                        "parentBlock":type,
+                        "portName":type+'I'+i,
+                        "portNumber":i,
+                        "full":false
+                    }
                 };
                 scheme = $.extend(scheme, addPort);
             }

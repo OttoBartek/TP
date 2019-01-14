@@ -32,6 +32,18 @@ if(schema == "rlc" || schema == "") {
                     }
                 },
                 {
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 50,
+                        "height": 25,
+                        "left": 0,
+                        "fill": false,
+                        "stroke": false,
+                        "invisible": true
+                    }
+                },
+                {
                     "type": "path",
                     "path": "M 0 5 L 10 5",
                     "data": {
@@ -58,23 +70,38 @@ if(schema == "rlc" || schema == "") {
             ], "Point":
             [
                 {
-                    "type": "circle",
+                    "type": "path",
+                    "path": "M 0 0 L 40 0",
                     "data": {
                         "width": 40,
-                        "height": 20,
-                        "radius": 5,
-                        "fill": "black"
+                        "height": 30,
+                        "left": 0,
+                        "top": 5,
+                        "stroke": "black",
+                        "strokeWidth": 1,
+                        "fill": false
+                    }
+                },
+                {
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 40,
+                        "height": 10,
+                        "fill": false,
+                        "invisible": true
                     }
                 },
                 {
                     "type": "circle",
                     "data": {
-                        "radius": 8,
-                        "fill": false,
-                        "top": 12,
-                        "invisible": true
+                        "width": 40,
+                        "height": 20,
+                        "radius": 5,
+                        "left": 15,
+                        "fill": "black"
                     }
-                }
+                },
             ], "Inductor":
             [
                 {
@@ -100,12 +127,23 @@ if(schema == "rlc" || schema == "") {
                         "changeable": true
                     }
 
-                }
+                },
+                {
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 44,
+                        "height": 25,
+                        "fill": false,
+                        // "stroke": "blue"
+                        "invisible": true
+                    }
+                },
             ], "Capacitor":
             [
                 {
                     "type": "path",
-                    "path": "M 0 0 L 15 0",
+                    "path": "M 0 0 L 20 0",
                     "data": {
                         "width": 40,
                         "height": 30,
@@ -119,7 +157,7 @@ if(schema == "rlc" || schema == "") {
                     "type": "path",
                     "path": "M 0 0 L 0 20",
                     "data": {
-                        "left": 15,
+                        "left": 20,
                         "stroke": "black",
                         "strokeWidth": 1,
                         "fill": false
@@ -129,7 +167,7 @@ if(schema == "rlc" || schema == "") {
                     "type": "path",
                     "path": "M 0 0 L 0 20",
                     "data": {
-                        "left": 20,
+                        "left": 25,
                         "stroke": "black",
                         "strokeWidth": 1,
                         "fill": false
@@ -137,13 +175,24 @@ if(schema == "rlc" || schema == "") {
                 },
                 {
                     "type": "path",
-                    "path": "M 0 0 L 15 0",
+                    "path": "M 0 0 L 20 0",
                     "data": {
                         "top": 10,
-                        "left": 20,
+                        "left": 25,
                         "stroke": "black",
                         "strokeWidth": 1,
                         "fill": false
+                    }
+                },
+                {
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 45,
+                        "height": 35,
+                        "fill": false,
+                        // "stroke": "blue"
+                        "invisible": true
                     }
                 },
                 {
@@ -184,11 +233,13 @@ if(schema == "rlc" || schema == "") {
                     }
                 },
                 {
-                    "type": "circle",
+                    "type": "rect",
                     "data": {
-                        "radius": 14,
+                        "name": "bound",
+                        "width": 42,
+                        "height": 35,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
@@ -238,6 +289,17 @@ if(schema == "rlc" || schema == "") {
                         "left":10,
                         "fill": "white",
                         "stroke": "black"
+                    }
+                },
+                {
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 42,
+                        "height": 35,
+                        "fill": false,
+                        // "stroke": "blue"
+                        "invisible": true
                     }
                 },
                 {
@@ -368,11 +430,11 @@ if(schema == "rlc" || schema == "") {
                 90:{
                     "in":{
                         "top":2,
-                        "left":0,
+                        "left":1,
                     },
                     "out":{
                         "top":60,
-                        "left":0,
+                        "left":1,
                     }
                 },
                 180:{
@@ -388,20 +450,20 @@ if(schema == "rlc" || schema == "") {
                 270:{
                     "in":{
                         "top":-1,
-                        "left":0,
+                        "left":-0.5,
                     },
                     "out":{
                         "top":-61,
-                        "left":0,
+                        "left":-0.5,
                     }
                 },
                 0:{
                     "in":{
-                        "top":0,
-                        "left":3,
+                        "top":-0.5,
+                        "left":1,
                     },
                     "out":{
-                        "top":0,
+                        "top":-1,
                         "left":60,
                     }
                 }
@@ -410,42 +472,42 @@ if(schema == "rlc" || schema == "") {
             {
                 90:{
                     "in":{
-                        "top":2,
-                        "left":1,
+                        "top":5,
+                        "left":-14,
                     },
                     "out":{
-                        "top":54,
-                        "left":1,
+                        "top":58,
+                        "left":-14,
                     }
                 },
                 180:{
                     "in":{
-                        "top":10,
-                        "left":40,
+                        "top":25,
+                        "left":46,
                     },
                     "out":{
-                        "top":10,
-                        "left":-10,
+                        "top":25,
+                        "left":-8,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-1,
-                        "left":-1,
+                        "top":-5,
+                        "left":14,
                     },
                     "out":{
-                        "top":-55,
-                        "left":-1,
+                        "top":-58,
+                        "left":14,
                     }
                 },
                 0:{
                     "in":{
-                        "top":-1,
-                        "left":2,
+                        "top":14,
+                        "left":5,
                     },
                     "out":{
-                        "top":-1,
-                        "left":54,
+                        "top":14,
+                        "left":58,
                     }
                 }
             }, "Capacitor":
@@ -482,138 +544,138 @@ if(schema == "rlc" || schema == "") {
                 },
                 0:{
                     "in":{
-                        "top":5,
-                        "left":2,
+                        "top":13,
+                        "left":5,
                     },
                     "out":{
-                        "top":5,
-                        "left":46,
+                        "top":13,
+                        "left":48,
                     }
                 }
             }, "Uin":
             {
                 90:{
                     "in":{
-                        "top":1,
-                        "left":-5,
+                        "top":5,
+                        "left":-13,
                     },
                     "out":{
-                        "top":53,
-                        "left":-5,
+                        "top":56,
+                        "left":-13,
                     }
                 },
                 180:{
                     "in":{
-                        "top":16,
-                        "left":41,
+                        "top":24,
+                        "left":45,
                     },
                     "out":{
-                        "top":16,
-                        "left":-10,
+                        "top":24,
+                        "left":-7,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-1,
-                        "left":5,
+                        "top":-5,
+                        "left":13,
                     },
                     "out":{
-                        "top":-53,
-                        "left":5,
+                        "top":-56,
+                        "left":13,
                     }
                 },
                 0:{
                     "in":{
-                        "top":5,
-                        "left":2,
+                        "top":12.5,
+                        "left":5,
                     },
                     "out":{
-                        "top":5,
-                        "left":53,
+                        "top":12.5,
+                        "left":56,
                     }
                 }
             }, "Uout":
             {
                 90:{
                     "in":{
-                        "top":1,
-                        "left":-5,
+                        "top":5,
+                        "left":-13,
                     },
                     "out":{
-                        "top":53,
-                        "left":-5,
+                        "top":56,
+                        "left":-13,
                     }
                 },
                 180:{
                     "in":{
-                        "top":16,
-                        "left":41,
+                        "top":24,
+                        "left":45,
                     },
                     "out":{
-                        "top":16,
-                        "left":-10,
+                        "top":24,
+                        "left":-7,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-1,
-                        "left":5,
+                        "top":-5,
+                        "left":13,
                     },
                     "out":{
-                        "top":-53,
-                        "left":5,
+                        "top":-56,
+                        "left":13,
                     }
                 },
                 0:{
                     "in":{
-                        "top":5,
-                        "left":2,
+                        "top":12.5,
+                        "left":5,
                     },
                     "out":{
-                        "top":5,
-                        "left":53,
+                        "top":12.5,
+                        "left":56,
                     }
                 }
             }, "Point":
             {
                 90:{
                     "in":{
-                        "top":2,
-                        "left":0,
+                        "top":6,
+                        "left":-10.5,
                     },
                     "out":{
-                        "top":60,
-                        "left":0,
+                        "top":55,
+                        "left":-10.5,
                     }
                 },
                 180:{
                     "in":{
-                        "top":11,
-                        "left":49,
+                        "top":21.5,
+                        "left":43,
                     },
                     "out":{
-                        "top":11,
-                        "left":-10,
+                        "top":21.5,
+                        "left":-5,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-1,
-                        "left":0,
+                        "top":-7.5,
+                        "left":10.5,
                     },
                     "out":{
-                        "top":-61,
-                        "left":0,
+                        "top":-54.5,
+                        "left":10.5,
                     }
                 },
                 0:{
                     "in":{
-                        "top":0,
-                        "left":3,
+                        "top":10.5,
+                        "left":6,
                     },
                     "out":{
-                        "top":0,
-                        "left":60,
+                        "top":10,
+                        "left":55,
                     }
                 }
             }
@@ -624,18 +686,20 @@ else if(schema == "algebra") {
     var blockDrawData = {
         "Multiply":[
             {
-                "type":"rect",
-                "data":{
-                    "width":45,
-                    "height":60,
-                    "fill":false,
-                    "stroke":false,
-                    "invisible":true
+                "type": "rect",
+                "data": {
+                    "name": "bound",
+                    "width": 40,
+                    "height": 55,
+                    "fill": false,
+                    // "stroke": "blue"
+                    "invisible": true
                 }
             },
             {
                 "type":"rect",
                 "data":{
+                    "name": "element",
                     "width":40,
                     "height":40,
                     "fill":false,
@@ -670,13 +734,14 @@ else if(schema == "algebra") {
         ,"Sumator":
             [
                 {
-                    "type":"rect",
-                    "data":{
-                        "width":45,
-                        "height":60,
-                        "fill":false,
-                        "stroke":false,
-                        "invisible":true
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 40,
+                        "height": 55,
+                        "fill": false,
+                        // "stroke": "blue"
+                        "invisible": true
                     }
                 },
                 {
@@ -728,13 +793,14 @@ else if(schema == "algebra") {
             ],"IOin":
             [
                 {
-                    "type":"rect",
-                    "data":{
-                        "width":45,
-                        "height":60,
-                        "fill":false,
-                        "stroke":false,
-                        "invisible":true
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 40,
+                        "height": 55,
+                        "fill": false,
+                        // "stroke": "blue"
+                        "invisible": true
                     }
                 },
                 {
@@ -773,13 +839,14 @@ else if(schema == "algebra") {
             ],"IOout":
             [
                 {
-                    "type":"rect",
-                    "data":{
-                        "width":45,
-                        "height":60,
-                        "fill":false,
-                        "stroke":false,
-                        "invisible":true
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 40,
+                        "height": 55,
+                        "fill": false,
+                        // "stroke": "blue"
+                        "invisible": true
                     }
                 },
                 {
@@ -929,42 +996,42 @@ else if(schema == "algebra") {
             {
                 90:{
                     "in":{
-                        "top":1,
-                        "left":-15,
+                        "top":3,
+                        "left":-10,
                     },
                     "out":{
-                        "top":51,
-                        "left":-15,
+                        "top":53,
+                        "left":-10,
                     }
                 },
                 180:{
                     "in":{
-                        "top":25,
-                        "left":40,
+                        "top":20,
+                        "left":43,
                     },
                     "out":{
-                        "top":25,
-                        "left":-10,
+                        "top":20,
+                        "left":-8,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-1,
-                        "left":15,
+                        "top":-3,
+                        "left":10,
                     },
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":-53,
+                        "left":10,
                     }
                 },
                 0:{
                     "in":{
-                        "top":15,
+                        "top":10,
                         "left":2,
                     },
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":10,
+                        "left":53,
                     }
                 },
                 "img":{
@@ -981,114 +1048,114 @@ else if(schema == "algebra") {
         "Sumator":
             {
                 90:{
-                    "in":[{
+                    "in":{2:[{
                         "top":1,
-                        "left":-5,
+                        "left":0,
                     },
                         {
                             "top":1,
-                            "left":-25,
+                            "left":-20,
                         }
-                    ],
+                    ]},
                     "out":{
-                        "top":51,
-                        "left":-15,
-                    }
-                },
-                180:{
-                    "in":[{
-                        "top":18,
-                        "left":40,
-                    },
-                        {
-                            "top":36,
-                            "left":40,
-                        }
-                    ],
-                    "out":{
-                        "top":25,
+                        "top":53,
                         "left":-10,
                     }
                 },
-                270:{
-                    "in":[{
-                        "top":0,
-                        "left":4,
+                180:{
+                    "in":{2:[{
+                        "top":13,
+                        "left":41,
                     },
                         {
-                            "top":0,
-                            "left":25,
+                            "top":31,
+                            "left":41,
                         }
-                    ],
+                    ]},
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":20,
+                        "left":-9,
+                    }
+                },
+                270:{
+                    "in":{2:[{
+                        "top":-2,
+                        "left":0,
+                    },
+                        {
+                            "top":-2,
+                            "left":20,
+                        }
+                    ]},
+                    "out":{
+                        "top":-54,
+                        "left":10,
                     }
                 },
                 0:{
-                    "in":[{
-                        "top":5,
+                    "in":{2:[{
+                        "top":0,
                         "left":2,
                     },
                         {
-                            "top":25,
+                            "top":20,
                             "left":2,
                         }
-                    ],
+                    ]},
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":10,
+                        "left":53,
                     }
                 }
             },"IOin":
             {
                 90:{
                     "out":{
-                        "top":51,
-                        "left":-15,
+                        "top":53,
+                        "left":-10,
                     }
                 },
                 180:{
                     "out":{
-                        "top":28,
-                        "left":-10,
+                        "top":23,
+                        "left":-8,
                     }
                 },
                 270:{
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":-53,
+                        "left":10,
                     }
                 },
                 0:{
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":10,
+                        "left":53,
                     }
                 }
             },"IOout":
             {
                 90:{
                     "in":{
-                        "top":1,
-                        "left":-15,
+                        "top":2,
+                        "left":-10,
                     }
                 },
                 180:{
                     "in":{
-                        "top":25,
-                        "left":41,
+                        "top":20,
+                        "left":42,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-1,
-                        "left":15,
+                        "top":-3,
+                        "left":10,
                     }
                 },
                 0:{
                     "in":{
-                        "top":15,
+                        "top":10,
                         "left":2,
                     }
                 }
@@ -1103,10 +1170,11 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 55,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 50,
+                        "height": 30,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
@@ -1136,10 +1204,11 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 55,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 50,
+                        "height": 30,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
@@ -1170,39 +1239,38 @@ else if(schema == "blockSim") {
                     "type": "circle",
                     "data":
                         {
-                            "height": 40,
-                            "width": 50,
-                            "radius": 13,
-                            "top": 10,
-                            "left": 5,
-                            "fill": false,
-                            "stroke": false,
-                            "invisible": true
-                        }
-                },
-                {
-                    "type": "circle",
-                    "data":
-                        {
-                            "radius": 10,
-                            "left": 5,
+                            "width": 30,
+                            "height": 30,
+                            "radius": 15,
+                            "left": 0,
                             "fill": "white",
                             "stroke": "black"
                         }
                 },
                 {
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 30,
+                        "height": 41,
+                        "fill": false,
+                        // "stroke": "blue"
+                        "invisible": true
+                    }
+                },
+                {
                     "type": "path",
-                    "path": "M 0 0 L 7 0",
+                    "path": "M 0 0 L 10 0",
                     "data":
                         {
                             "left": 15,
-                            "top": 10,
+                            "top": 16,
                             "stroke": "black"
                         }
                 },
                 {
                     "type": "path",
-                    "path": "M 0 0 L 0 7",
+                    "path": "M 0 0 L 0 13",
                     "data":
                         {
                             "left": 15,
@@ -1211,14 +1279,14 @@ else if(schema == "blockSim") {
                         }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Clock",
                     "data":
                         {
                             "fontFamily": "Arial",
-                            "top": 20,
+                            "top": 31,
                             "left": 0,
-                            "fontSize": 11,
+                            "fontSize": 9,
                             "fill": "black",
                             "changeable": false
                         }
@@ -1228,19 +1296,20 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 45,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 42,
+                        "height": 41,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
                 {
                     "type": "rect",
                     "data": {
-                        "width": 30,
+                        "width": 42,
                         "height": 30,
-                        "left": 8,
+                        "left": 0,
                         "fill": "white",
                         "stroke": "black"
                     }
@@ -1258,13 +1327,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Constant",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 30,
+                        "top": 33,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1273,15 +1342,15 @@ else if(schema == "blockSim") {
             [
 
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Demux",
                     "data": {
                         "width": 10,
-                        "height": 40,
+                        "height": 45,
                         "fontFamily": "Arial",
-                        "top": 30,
+                        "top": 45,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1289,18 +1358,39 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 5,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 35,
+                        "height": 55,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "left": 0,
+                            "top": 20,
+                            "stroke": "black"
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "left": 20,
+                            "top": 20,
+                            "stroke": "black"
+                        }
                 },
                 {
                     "type": "rect",
                     "data": {
                         "width": 5,
-                        "height": 30,
+                        "height": 45,
                         "left": 15,
                         "fill": "white",
                         "stroke": "black"
@@ -1310,15 +1400,14 @@ else if(schema == "blockSim") {
             [
 
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Mux",
                     "data": {
-                        "width": 10,
-                        "height": 40,
                         "fontFamily": "Arial",
-                        "top": 30,
+                        "height": 45,
+                        "top": 45,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1326,19 +1415,151 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 5,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 35,
+                        "height": 55,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 1,
+                            "left": 0,
+                            "top": 22.5,
+                            "stroke": false,
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 2,
+                            "left": 0,
+                            "top": 11,
+                            "stroke": "black",
+                            // "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 2,
+                            "left": 0,
+                            "top": 34,
+                            "stroke": "black",
+                            // "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 3,
+                            "left": 0,
+                            "top": 7.5,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 3,
+                            "left": 0,
+                            "top": 22.5,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 3,
+                            "left": 0,
+                            "top": 37.5,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 4,
+                            "left": 0,
+                            "top": 0,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 4,
+                            "left": 0,
+                            "top": 15,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 4,
+                            "left": 0,
+                            "top": 30,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 4,
+                            "left": 0,
+                            "top": 45,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name":"out",
+                            "left": 20,
+                            "top": 22.5,
+                            "stroke": "black"
+                        }
                 },
                 {
                     "type": "rect",
                     "data": {
                         "width": 5,
-                        "height": 30,
-                        "left": 6,
+                        "height": 45,
+                        "left": 15,
                         "fill": "white",
                         "stroke": "black"
                     }
@@ -1348,19 +1569,20 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 35,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 50,
+                        "height": 45,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
                 {
                     "type": "rect",
                     "data": {
-                        "width": 30,
+                        "width": 50,
                         "height": 30,
-                        "left": 8,
+                        "left": 0,
                         "fill": "white",
                         "stroke": "black"
                     }
@@ -1378,13 +1600,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Derivative",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 30,
+                        "top": 33,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1394,19 +1616,20 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 55,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 52,
+                        "height": 45,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
                 {
                     "type": "rect",
                     "data": {
-                        "width": 50,
+                        "width": 52,
                         "height": 30,
-                        "left": 4,
+                        "left": 0,
                         "fill": "white",
                         "stroke": "black"
                     }
@@ -1424,13 +1647,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Digital clock",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 30,
+                        "top": 35,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1440,10 +1663,11 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 55,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 50,
+                        "height": 45,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
@@ -1480,13 +1704,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Display",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 30,
+                        "top": 33,
                         "left": 8,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1496,10 +1720,11 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 55,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 50,
+                        "height": 45,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
@@ -1525,13 +1750,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Fcn",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 30,
+                        "top": 33,
                         "left": 15,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1539,26 +1764,21 @@ else if(schema == "blockSim") {
             ], "Gain":
             [
                 {
-                    "type": "triangle",
-                    "data":
-                        {
-                            "left": 45,
-                            "top": 20,
-                            "strokeWidth": 1,
-                            "width": 30,
-                            "height": 30,
-                            "stroke": false,
-                            "fill": false,
-                            "angle": 90,
-                            "invisible": true
-
-                        }
+                    "type": "rect",
+                    "data": {
+                        "name": "bound",
+                        "width": 30,
+                        "height": 42,
+                        "fill": false,
+                        // "stroke": "blue"
+                        "invisible": true
+                    }
                 },
                 {
                     "type": "triangle",
                     "data":
                         {
-                            "left": 40,
+                            "left": 31,
                             "top": 0,
                             "strokeWidth": 1,
                             "width": 30,
@@ -1575,20 +1795,20 @@ else if(schema == "blockSim") {
                     "data": {
                         "fontFamily": "Arial",
                         "top": 10,
-                        "left": 15,
+                        "left": 5,
                         "fontSize": 11,
                         "fill": "black",
                         "changeable": false
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Gain",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 30,
-                        "left": 10,
-                        "fontSize": 11,
+                        "top": 33,
+                        "left": 0,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1598,19 +1818,20 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 45,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 42,
+                        "height": 42,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
                 {
                     "type": "rect",
                     "data": {
-                        "width": 30,
+                        "width": 42,
                         "height": 30,
-                        "left": 8,
+                        "left": 0,
                         "fill": "white",
                         "stroke": "black"
                     }
@@ -1651,13 +1872,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Integrator",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1667,10 +1888,11 @@ else if(schema == "blockSim") {
                 {
                     "type": "rect",
                     "data": {
-                        "width": 55,
-                        "height": 40,
+                        "name": "bound",
+                        "width": 50,
+                        "height": 60,
                         "fill": false,
-                        "stroke": false,
+                        // "stroke": "blue"
                         "invisible": true
                     }
                 },
@@ -1678,7 +1900,7 @@ else if(schema == "blockSim") {
                     "type": "rect",
                     "data": {
                         "width": 50,
-                        "height": 30,
+                        "height": 45,
                         "fill": "white",
                         "stroke": "black"
                     }
@@ -1696,16 +1918,147 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Product",
                     "data": {
                         "fontFamily": "Arial",
-                        "top": 30,
-                        "left": 5,
-                        "fontSize": 11,
+                        "top": 48,
+                        "left": 0,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 1,
+                            "left": -15,
+                            "top": 22.5,
+                            "stroke": false,
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 2,
+                            "left": -15,
+                            "top": 11,
+                            "stroke": "black",
+                            // "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 2,
+                            "left": -15,
+                            "top": 34,
+                            "stroke": "black",
+                            // "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 3,
+                            "left": -15,
+                            "top": 7.5,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 3,
+                            "left": -15,
+                            "top": 22.5,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 3,
+                            "left": -15,
+                            "top": 37.5,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 4,
+                            "left": -15,
+                            "top": 0,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 4,
+                            "left": -15,
+                            "top": 15,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 4,
+                            "left": -15,
+                            "top": 30,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name": 4,
+                            "left": -15,
+                            "top": 45,
+                            // "stroke": "green",
+                            "invisible": true
+                        }
+                },
+                {
+                    "type": "path",
+                    "path": "M 0 0 L 15 0",
+                    "data":
+                        {
+                            "name":"out",
+                            "left": 50,
+                            "top": 22.5,
+                            "stroke": "black"
+                        }
                 }
             ], "Scope":
             [
@@ -1740,13 +2093,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Scope",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 35,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1798,13 +2151,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "State-Space",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1855,13 +2208,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Sum",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 3,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1900,13 +2253,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Workspace",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -1968,13 +2321,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "TransferFcn",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -2151,19 +2504,19 @@ else if(schema == "blockSim") {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Delay",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 40,
                         "left": 6,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -2226,13 +2579,13 @@ else if(schema == "blockSim") {
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Unit Delay",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -2273,13 +2626,13 @@ else if(schema == "blockSim") {
                         }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Step",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 10,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -2346,13 +2699,13 @@ else if(schema == "blockSim") {
                         }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Saturation",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -2420,19 +2773,19 @@ else if(schema == "blockSim") {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Integrator",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 40,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -2500,19 +2853,19 @@ else if(schema == "blockSim") {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 7,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "TransferFcn",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 40,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -2618,13 +2971,13 @@ else if(schema == "blockSim") {
                         }
                 },
                 {
-                    "type": "text",
+                    "type": "name",
                     "Text": "Relay",
                     "data": {
                         "fontFamily": "Arial",
                         "top": 30,
                         "left": 0,
-                        "fontSize": 11,
+                        "fontSize": 9,
                         "fill": "black",
                         "changeable": false
                     }
@@ -3039,7 +3392,7 @@ else if(schema == "blockSim") {
             [
                 {
                     "io": "both",
-                    "NumberOfInputs": 2,
+                    "NumberOfInputs": 4,
                     "NumberOfOutputs": 1,
                     "MaxInputs": 4,
                     "ports": null,
@@ -3618,66 +3971,66 @@ else if(schema == "blockSim") {
             {
                 90:{
                     "out":{
-                        "top":61,
-                        "left":-10,
+                        "top":58,
+                        "left":-15,
                     }
                 },
                 180:{
                     "out":{
-                        "top":22,
-                        "left":-10,
+                        "top":25,
+                        "left":-13,
                     }
                 },
                 270:{
                     "out":{
-                        "top":-61,
-                        "left":11,
+                        "top":-58,
+                        "left":15,
                     }
                 },
                 0:{
                     "out":{
-                        "top":10,
-                        "left":61,
+                        "top":15,
+                        "left":58,
                     }
                 }
             }, "AnalogOutput":
             {
                 90:{
                     "in":{
-                        "top":1,
-                        "left":-10,
+                        "top":-2,
+                        "left":-15,
                     }
                 },
                 180:{
                     "in":{
-                        "top":22,
-                        "left":50,
+                        "top":25,
+                        "left":48,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-1,
-                        "left":11,
+                        "top":3,
+                        "left":15,
                     }
                 },
                 0:{
                     "in":{
-                        "top":10,
-                        "left":1,
+                        "top":15,
+                        "left":-2,
                     }
                 }
             }, "Clock":
             {
                 90:{
                     "out":{
-                        "top":40,
-                        "left":-5,
+                        "top":46,
+                        "left":-12,
                     }
                 },
                 180:{
                     "out":{
-                        "top":15,
-                        "left":-9,
+                        "top":23,
+                        "left":3,
                     }
                 },
                 270:{
@@ -3688,8 +4041,8 @@ else if(schema == "blockSim") {
                 },
                 0:{
                     "out":{
-                        "top":5,
-                        "left":40,
+                        "top":11,
+                        "left":46,
                     }
                 }
             }, "Constant":
@@ -3763,497 +4116,601 @@ else if(schema == "blockSim") {
             }, "Mux":
             {
                 90:{
-                    "in":[{
-                        "top":1,
-                        "left":-5,
-                    },
-                        {
+                    "in":{"top":2,
+                        "left":-17,
+                        2:[{
                             "top":1,
-                            "left":-25,
-                        }
-                    ],
+                            "left":-5.5,
+                        },
+                            {
+                                "top":1,
+                                "left":-28.5,
+                            }
+                        ],
+                        3:[{
+                            "top":2.5,
+                            "left":-2.5,
+                        },
+                            {
+                                "top":2.5,
+                                "left":-17.5,
+                            },
+                            {
+                                "top":2.5,
+                                "left":-32.5,
+                            },
+                        ],
+                        4:[{
+                            "top":3,
+                            "left":6,
+                        },
+                            {
+                                "top":2,
+                                "left":-9.5,
+                            },
+                            {
+                                "top":2,
+                                "left":-24.5,
+                            },
+                            {
+                                "top":2,
+                                "left":-39.5,
+                            },
+                        ]},
                     "out":{
-                        "top":51,
-                        "left":-15,
+                        "top":45,
+                        "left":-17,
                     }
                 },
                 180:{
-                    "in":[{
-                        "top":18,
-                        "left":40,
-                    },
-                        {
-                            "top":36,
-                            "left":40,
-                        }
-                    ],
+                    "in":{"top":28,
+                        "left":32,
+                        2:[{
+                            "top":16.5,
+                            "left":32,
+                        },
+                            {
+                                "top":39,
+                                "left":32,
+                            }
+                        ],
+                        3:[{
+                            "top":43.5,
+                            "left":32.5,
+                        },
+                            {
+                                "top":28.5,
+                                "left":32.5,
+                            },
+                            {
+                                "top":13.5,
+                                "left":32.5,
+                            },
+                        ],
+                        4:[{
+                            "top":50,
+                            "left":32,
+                        },
+                            {
+                                "top":35,
+                                "left":32,
+                            },
+                            {
+                                "top":20,
+                                "left":32,
+                            },
+                            {
+                                "top":5,
+                                "left":32,
+                            },
+                        ]},
                     "out":{
-                        "top":25,
-                        "left":-10,
+                        "top":28,
+                        "left":-8,
                     }
                 },
                 270:{
-                    "in":[{
-                        "top":0,
-                        "left":4,
-                    },
-                        {
-                            "top":0,
-                            "left":25,
-                        }
-                    ],
+                    "in":{"top":-1,
+                        "left":17,
+                        2:[{
+                            "top":-1,
+                            "left":5.5,
+                        },
+                            {
+                                "top":-1,
+                                "left":28.5,
+                            }
+                        ],
+                        3:[{
+                            "top":-6,
+                            "left":2.5,
+                        },
+                            {
+                                "top":-6,
+                                "left":18,
+                            },
+                            {
+                                "top":-6,
+                                "left":32.5,
+                            },
+                        ],
+                        4:[{
+                            "top":-1,
+                            "left":-6,
+                        },
+                            {
+                                "top":-1,
+                                "left":9.5,
+                            },
+                            {
+                                "top":-1,
+                                "left":24.5,
+                            },
+                            {
+                                "top":-1,
+                                "left":38.5,
+                            },
+                        ]},
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":-46,
+                        "left":17,
                     }
                 },
                 0:{
-                    "in":[{
-                        "top":5,
+                    "in":{"top":17,
+                        "left":2,
+                    2:[{
+                        "top":6,
+                        "left":2,
+                    },
+                    {
+                        "top":28,
+                        "left":2,
+                    }
+                    ],
+                    3:[{
+                        "top":2.5,
                         "left":2,
                     },
                         {
-                            "top":25,
+                            "top":17.5,
                             "left":2,
-                        }
+                        },
+                        {
+                            "top":32.5,
+                            "left":2,
+                        },
                     ],
+                    4:[{
+                        "top":-6,
+                        "left":2,
+                    },
+                        {
+                            "top":9,
+                            "left":2,
+                        },
+                        {
+                            "top":24,
+                            "left":2,
+                        },
+                        {
+                            "top":39,
+                            "left":2,
+                        },
+                    ]},
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":17.5,
+                        "left":46,
                     }
                 }
             }, "Derivative":
             {
                 90:{
-                    "in":[{
-                        "top":1,
-                        "left":-5,
+                    "in":{
+                        "top":0,
+                        "left":-10,
                     },
-                        {
-                            "top":1,
-                            "left":-25,
-                        }
-                    ],
                     "out":{
-                        "top":51,
-                        "left":-15,
+                        "top":61,
+                        "left":-10,
                     }
                 },
                 180:{
-                    "in":[{
-                        "top":18,
-                        "left":40,
+                    "in":{
+                        "top":20,
+                        "left":51,
                     },
-                        {
-                            "top":36,
-                            "left":40,
-                        }
-                    ],
                     "out":{
-                        "top":25,
+                        "top":20,
                         "left":-10,
                     }
                 },
                 270:{
-                    "in":[{
+                    "in":{
                         "top":0,
-                        "left":4,
+                        "left":10,
                     },
-                        {
-                            "top":0,
-                            "left":25,
-                        }
-                    ],
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":-61,
+                        "left":10,
                     }
                 },
                 0:{
-                    "in":[{
-                        "top":5,
-                        "left":2,
+                    "in":{
+                        "top":10,
+                        "left":0,
                     },
-                        {
-                            "top":25,
-                            "left":2,
-                        }
-                    ],
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":10,
+                        "left":61,
                     }
                 }
             }, "DigitalClock":
             {
                 90:{
-                    "in":[{
-                        "top":1,
-                        "left":-5,
-                    },
-                        {
-                            "top":1,
-                            "left":-25,
-                        }
-                    ],
                     "out":{
-                        "top":51,
-                        "left":-15,
-                    }
-                },
-                180:{
-                    "in":[{
-                        "top":18,
-                        "left":40,
-                    },
-                        {
-                            "top":36,
-                            "left":40,
-                        }
-                    ],
-                    "out":{
-                        "top":25,
+                        "top":63,
                         "left":-10,
                     }
                 },
-                270:{
-                    "in":[{
-                        "top":0,
-                        "left":4,
-                    },
-                        {
-                            "top":0,
-                            "left":25,
-                        }
-                    ],
+                180:{
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":20,
+                        "left":-11,
+                    }
+                },
+                270:{
+                    "out":{
+                        "top":-63,
+                        "left":10,
                     }
                 },
                 0:{
-                    "in":[{
-                        "top":5,
-                        "left":2,
-                    },
-                        {
-                            "top":25,
-                            "left":2,
-                        }
-                    ],
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":10,
+                        "left":63,
                     }
                 }
             }, "Display":
             {
                 90:{
-                    "in":[{
+                    "in":{
                         "top":1,
                         "left":-5,
-                    },
-                        {
-                            "top":1,
-                            "left":-25,
-                        }
-                    ],
-                    "out":{
-                        "top":51,
-                        "left":-15,
                     }
                 },
                 180:{
-                    "in":[{
-                        "top":18,
-                        "left":40,
-                    },
-                        {
-                            "top":36,
-                            "left":40,
-                        }
-                    ],
-                    "out":{
-                        "top":25,
-                        "left":-10,
+                    "in":{
+                        "top":15,
+                        "left":51,
                     }
                 },
                 270:{
-                    "in":[{
-                        "top":0,
-                        "left":4,
-                    },
-                        {
-                            "top":0,
-                            "left":25,
-                        }
-                    ],
-                    "out":{
-                        "top":-51,
-                        "left":15,
+                    "in":{
+                        "top":1,
+                        "left":5,
                     }
                 },
                 0:{
-                    "in":[{
+                    "in":{
                         "top":5,
-                        "left":2,
-                    },
-                        {
-                            "top":25,
-                            "left":2,
-                        }
-                    ],
-                    "out":{
-                        "top":15,
-                        "left":51,
+                        "left":0,
                     }
                 }
             }, "Fcn":
             {
                 90:{
-                    "in":[{
-                        "top":1,
-                        "left":-5,
+                    "in":{
+                        "top":0,
+                        "left":-10,
                     },
-                        {
-                            "top":1,
-                            "left":-25,
-                        }
-                    ],
                     "out":{
-                        "top":51,
-                        "left":-15,
+                        "top":61,
+                        "left":-10,
                     }
                 },
                 180:{
-                    "in":[{
-                        "top":18,
-                        "left":40,
+                    "in":{
+                        "top":20,
+                        "left":51,
                     },
-                        {
-                            "top":36,
-                            "left":40,
-                        }
-                    ],
                     "out":{
-                        "top":25,
+                        "top":20,
                         "left":-10,
                     }
                 },
                 270:{
-                    "in":[{
+                    "in":{
                         "top":0,
-                        "left":4,
+                        "left":10,
                     },
-                        {
-                            "top":0,
-                            "left":25,
-                        }
-                    ],
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":-61,
+                        "left":10,
                     }
                 },
                 0:{
-                    "in":[{
-                        "top":5,
-                        "left":2,
+                    "in":{
+                        "top":10,
+                        "left":0,
                     },
-                        {
-                            "top":25,
-                            "left":2,
-                        }
-                    ],
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":10,
+                        "left":61,
                     }
                 }
             }, "Gain":
             {
                 90:{
-                    "in":[{
-                        "top":1,
-                        "left":-5,
+                    "in":{
+                        "top":0,
+                        "left":-10,
                     },
-                        {
-                            "top":1,
-                            "left":-25,
-                        }
-                    ],
                     "out":{
-                        "top":51,
-                        "left":-15,
+                        "top":41,
+                        "left":-10,
                     }
                 },
                 180:{
-                    "in":[{
-                        "top":18,
-                        "left":40,
+                    "in":{
+                        "top":20,
+                        "left":31,
                     },
-                        {
-                            "top":36,
-                            "left":40,
-                        }
-                    ],
                     "out":{
-                        "top":25,
+                        "top":20,
                         "left":-10,
                     }
                 },
                 270:{
-                    "in":[{
+                    "in":{
                         "top":0,
-                        "left":4,
+                        "left":10,
                     },
-                        {
-                            "top":0,
-                            "left":25,
-                        }
-                    ],
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":-41,
+                        "left":10,
                     }
                 },
                 0:{
-                    "in":[{
-                        "top":5,
-                        "left":2,
+                    "in":{
+                        "top":10,
+                        "left":0,
                     },
-                        {
-                            "top":25,
-                            "left":2,
-                        }
-                    ],
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":10,
+                        "left":41,
                     }
                 }
             }, "Integrator":
             {
                 90:{
-                    "in":[{
-                        "top":1,
-                        "left":-5,
+                    "in":{
+                        "top":0,
+                        "left":-10,
                     },
-                        {
-                            "top":1,
-                            "left":-25,
-                        }
-                    ],
                     "out":{
-                        "top":51,
-                        "left":-15,
+                        "top":52,
+                        "left":-10,
                     }
                 },
                 180:{
-                    "in":[{
-                        "top":18,
-                        "left":40,
+                    "in":{
+                        "top":20,
+                        "left":42,
                     },
-                        {
-                            "top":36,
-                            "left":40,
-                        }
-                    ],
                     "out":{
-                        "top":25,
+                        "top":20,
                         "left":-10,
                     }
                 },
                 270:{
-                    "in":[{
+                    "in":{
                         "top":0,
-                        "left":4,
+                        "left":10,
                     },
-                        {
-                            "top":0,
-                            "left":25,
-                        }
-                    ],
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":-52,
+                        "left":10,
                     }
                 },
                 0:{
-                    "in":[{
-                        "top":5,
-                        "left":2,
+                    "in":{
+                        "top":10,
+                        "left":0,
                     },
-                        {
-                            "top":25,
-                            "left":2,
-                        }
-                    ],
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":10,
+                        "left":52,
                     }
                 }
             }, "Product":
             {
                 90:{
-                    "in":[{
-                        "top":1,
-                        "left":-5,
-                    },
-                        {
+                    "in":{"top":2,
+                        "left":-17,
+                        2:[{
                             "top":1,
-                            "left":-25,
-                        }
-                    ],
+                            "left":-5.5,
+                        },
+                            {
+                                "top":1,
+                                "left":-28.5,
+                            }
+                        ],
+                        3:[{
+                            "top":2.5,
+                            "left":-2.5,
+                        },
+                            {
+                                "top":2.5,
+                                "left":-17.5,
+                            },
+                            {
+                                "top":2.5,
+                                "left":-32.5,
+                            },
+                        ],
+                        4:[{
+                            "top":-14,
+                            "left":5.5,
+                        },
+                            {
+                                "top":-14,
+                                "left":-9.5,
+                            },
+                            {
+                                "top":-14,
+                                "left":-24.5,
+                            },
+                            {
+                                "top":-14,
+                                "left":-39.5,
+                            },
+                        ]},
                     "out":{
-                        "top":51,
-                        "left":-15,
+                        "top":70,
+                        "left":-17,
                     }
                 },
                 180:{
-                    "in":[{
-                        "top":18,
-                        "left":40,
-                    },
-                        {
-                            "top":36,
-                            "left":40,
-                        }
-                    ],
+                    "in":{"top":28,
+                        "left":32,
+                        2:[{
+                            "top":16.5,
+                            "left":32,
+                        },
+                            {
+                                "top":39,
+                                "left":32,
+                            }
+                        ],
+                        3:[{
+                            "top":43.5,
+                            "left":32.5,
+                        },
+                            {
+                                "top":28.5,
+                                "left":32.5,
+                            },
+                            {
+                                "top":13.5,
+                                "left":32.5,
+                            },
+                        ],
+                        4:[{
+                            "top":50.5,
+                            "left":64,
+                        },
+                            {
+                                "top":35.5,
+                                "left":64,
+                            },
+                            {
+                                "top":20.5,
+                                "left":64,
+                            },
+                            {
+                                "top":5.5,
+                                "left":64,
+                            },
+                        ]},
                     "out":{
-                        "top":25,
-                        "left":-10,
+                        "top":28,
+                        "left":-25,
                     }
                 },
                 270:{
-                    "in":[{
-                        "top":0,
-                        "left":4,
-                    },
-                        {
-                            "top":0,
-                            "left":25,
-                        }
-                    ],
+                    "in":{"top":-1,
+                        "left":17,
+                        2:[{
+                            "top":-1,
+                            "left":5.5,
+                        },
+                            {
+                                "top":-1,
+                                "left":28.5,
+                            }
+                        ],
+                        3:[{
+                            "top":-6,
+                            "left":2.5,
+                        },
+                            {
+                                "top":-6,
+                                "left":18,
+                            },
+                            {
+                                "top":-6,
+                                "left":32.5,
+                            },
+                        ],
+                        4:[{
+                            "top":14,
+                            "left":-6,
+                        },
+                            {
+                                "top":14,
+                                "left":9.5,
+                            },
+                            {
+                                "top":14,
+                                "left":24.5,
+                            },
+                            {
+                                "top":14,
+                                "left":38.5,
+                            },
+                        ]},
                     "out":{
-                        "top":-51,
-                        "left":15,
+                        "top":-76,
+                        "left":17,
                     }
                 },
                 0:{
-                    "in":[{
-                        "top":5,
+                    "in":{"top":17,
                         "left":2,
-                    },
-                        {
-                            "top":25,
+                        2:[{
+                            "top":6,
                             "left":2,
-                        }
-                    ],
+                        },
+                            {
+                                "top":28,
+                                "left":2,
+                            }
+                        ],
+                        3:[{
+                            "top":2.5,
+                            "left":2,
+                        },
+                            {
+                                "top":17.5,
+                                "left":2,
+                            },
+                            {
+                                "top":32.5,
+                                "left":2,
+                            },
+                        ],
+                        4:[{
+                            "top":-6,
+                            "left":-14,
+                        },
+                            {
+                                "top":9,
+                                "left":-14,
+                            },
+                            {
+                                "top":24,
+                                "left":-14,
+                            },
+                            {
+                                "top":39,
+                                "left":-14,
+                            },
+                        ]},
                     "out":{
-                        "top":15,
-                        "left":51,
+                        "top":17.5,
+                        "left":76,
                     }
                 }
             }, "Scope":

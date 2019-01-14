@@ -40,12 +40,46 @@ window.addBlock = function (blockType, posx, posy) {
     var type = blockType + number[blockType];
     var partBlock = [];
     var portPos = portPositions[blockType][0];
+    var biggestW = 0;
+    var biggestH = 0;
 
     $.each(objBlock, function(i,subBlock) {
-        if(subBlock.type === 'rect')
+        if(subBlock.type === 'rect'){
             partBlock[i] = new fabric.Rect(subBlock.data);
-        else if(subBlock.type === 'path')
+            if(subBlock.data["name"]==="bound")
+            {
+                biggestW = subBlock.data.width;
+                biggestH = subBlock.data.height;
+
+            }
+
+        }
+
+        else if(subBlock.type === 'path'){
+
+            if(blockType==="Mux") {
+                console.log(parBlock[0]["NumberOfInputs"])
+                if (parBlock[0]["NumberOfInputs"] == subBlock.data.name || subBlock.data.name==="out") {
+                    subBlock.data.invisible = false;
+                    subBlock.data.stroke = "black";
+                } else {
+                    subBlock.data.invisible = true;
+                    subBlock.data.stroke = false;
+                }
+            }
+
+            if(blockType==="Product") {
+                console.log(parBlock[0]["NumberOfInputs"])
+                if (parBlock[0]["NumberOfInputs"] == subBlock.data.name || subBlock.data.name==="out") {
+                    subBlock.data.invisible = false;
+                    subBlock.data.stroke = "black";
+                } else {
+                    subBlock.data.invisible = true;
+                    subBlock.data.stroke = false;
+                }
+            }
             partBlock[i] = new fabric.Path(subBlock.path, subBlock.data);
+        }
         else if(subBlock.type === 'triangle')
             partBlock[i] = new fabric.Triangle(subBlock.data);
         else if(subBlock.type === 'circle')
@@ -74,9 +108,8 @@ window.addBlock = function (blockType, posx, posy) {
 
     var groupxDiff = 10;
     var groupyDiff = 10;
-    var groupWidth = 50;
-    var groupHeight = 50;
-
+    var groupWidth = biggestW;
+    var groupHeight = biggestH;
     var block = new fabric.Group(partBlock, {
         baseBlock:1,
         type: type,
@@ -90,6 +123,7 @@ window.addBlock = function (blockType, posx, posy) {
         ZOrder: counter,
         "BlockType" : blockType
     });
+
 
     /*TESTOVANIE Block borders*/
     block.hasBorders = block.hasControls = false;
@@ -149,8 +183,9 @@ window.addBlock = function (blockType, posx, posy) {
             scheme = $.extend(scheme, addPort);
         } else if (numberOfInputs > 1) {
             for (var i = 1; i <= numberOfInputs; i++) {
+                console.log(portPos)
                 var inPart = new fabric.Triangle({
-                    left: posx + portPos.in[i-1].left, top: posy + portPos.in[i-1].top,
+                    left: posx + portPos.in[numberOfInputs][i-1].left, top: posy + portPos.in[numberOfInputs][i-1].top,
                     angle: 90,
                     lockMovementX: true, lockMovementY: true,
                     width: portWidth, height: portHeight, fill: 'black',
@@ -709,8 +744,8 @@ canvas.on('object:moving', function(e) {
                 for(var i = 1; i <= selectedElement.numberOfInputs; i++) {
                     canvas.forEachObject(function (obj) {
                         if (obj.type === selectedElement.type + 'I' + i) {
-                            obj.left = cornerLXT + portPos.in[i-1].left;
-                            obj.top = cornerLYT + portPos.in[i-1].top;;
+                            obj.left = cornerLXT + portPos.in[selectedElement.numberOfInputs][i-1].left;
+                            obj.top = cornerLYT + portPos.in[selectedElement.numberOfInputs][i-1].top;;
                             obj.setCoords();
                         }
                     });
