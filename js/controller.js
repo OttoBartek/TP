@@ -74,7 +74,7 @@ window.addBlock = function (blockType, posx, posy) {
 
     var groupxDiff = 10;
     var groupyDiff = 10;
-    var groupWidth = 50;
+    var groupWidth = 40;
     var groupHeight = 50;
 
     var block = new fabric.Group(partBlock, {
@@ -88,7 +88,8 @@ window.addBlock = function (blockType, posx, posy) {
         ports: ports,
         numberOfInputs: numberOfInputs,
         ZOrder: counter,
-        "BlockType" : blockType
+        "BlockType" : blockType,
+
     });
 
     /*TESTOVANIE Block borders*/
@@ -233,7 +234,8 @@ window.addBlock = function (blockType, posx, posy) {
             "extra":extraData,
             "attributes":attributes,
             "connectedToBlocks":[],
-            "connectedFromBlocks":[]
+            "connectedFromBlocks":[],
+            "equationWidth":0
         }
     };
 
@@ -296,7 +298,7 @@ canvas.on('object:selected', function (e) {
 
            $.each(selectedElement._objects, function (name, property) {
                 if (!property.text) {
-                    if (!property.hasOwnProperty('invisible')) {
+                    if (!property.hasOwnProperty('invisible') && property.extra != "equation-line") {
                         property.set({'stroke': 'red'});
                     }
                 }
@@ -835,7 +837,7 @@ canvas.on('mouse:dblclick', function(e) {
 
             $('.modal-title').text('Block settings: '+scheme[e.target.type].VisibleName);
             formData = '<div class="form-group"><label for="block-name" class="col-form-label">Block name:</label>';
-            formData += '<input type="text" class="form-control" id="block-name" value="'+scheme[e.target.type].VisibleName+'"'+((schemeType === 'schema2') ? 'disabled':'')+'></div>';
+            formData += '<input type="text" class="form-control" id="block-name" value="'+scheme[e.target.type].VisibleName+'"'+((schemeType === 'blockSim') ? 'disabled':'')+'></div>';
             if(scheme[e.target.type].MaxInputs > 1){
                 formData += '<div class="form-group"><label for="input-number" class="col-form-label">Number of inputs (max. '+scheme[e.target.type].MaxInputs+'):</label>';
                 formData += '<input type="text" class="form-control" id="input-number" value="'+scheme[e.target.type].NumberOfInputs+'"></div>';
@@ -1371,7 +1373,7 @@ function createLine(beginBlock, endBlock, beginOrder, endOrder, typeConnection, 
                 startX = fX - 5;
                 startY = fY + fWidth;
             }
-            else if(schemeType === 'schema2'){
+            else if(schemeType === 'blockSim'){
                 startX = fX + fWidth/2-5;
                 startY = fY + fHeight - 4;
             }
@@ -1442,7 +1444,7 @@ function createLine(beginBlock, endBlock, beginOrder, endOrder, typeConnection, 
                 //var stopX = tX+tWidth/2 - 20;
                 stopX = tX+tHeight/2-10;
                 stopY = tY + tHeight/2 - 8;
-            }else if(schemeType === 'schema2'){
+            }else if(schemeType === 'blockSim'){
                 stopX = tX+tWidth/2;
                 stopY = tY+tHeight;
             }
@@ -1476,7 +1478,7 @@ function createLine(beginBlock, endBlock, beginOrder, endOrder, typeConnection, 
         else if(scheme[endBlock.type].Rotation === 270){
             ip = tWidth/inCount - (tWidth/inCount/2) + 5;
             var topPos = tY+tHeight-13;
-            if(schemeType === 'schema2'){
+            if(schemeType === 'blockSim'){
                 topPos += 15;
             }
             position = tX + (inPort*ip);
@@ -1574,7 +1576,7 @@ function createConnectionPoint(beginBlock, lineOrder, fromPort) {
         else if(scheme[beginBlock.type].Rotation === 90){
             x1 = beginBlock.left + beginBlock.width/2 - 10;
             y1 = beginBlock.top + beginBlock.height - 3;
-            if(schemeType === 'schema2'){
+            if(schemeType === 'blockSim'){
                 y1 = beginBlock.top + beginBlock.height + 10;
             }
         }
@@ -1641,7 +1643,7 @@ function redrawLine(movedBlock, originPort){
                         startX = fX - 5;
                         startY = fY + fWidth;
                     }
-                    else if(schemeType === 'schema2'){
+                    else if(schemeType === 'blockSim'){
                         startX = fX + fWidth/2-5;
                         startY = fY + fHeight - 4;
                     }
@@ -1699,7 +1701,7 @@ function redrawLine(movedBlock, originPort){
                         if(schemeType === 'rlc'){
                             stopX = tX+tHeight/2-10;
                             stopY = tY + tHeight/2 - 8;
-                        }else if(schemeType === 'schema2'){
+                        }else if(schemeType === 'blockSim'){
                             stopX = tX+tWidth/2;
                             stopY = tY+tHeight;
                         }
@@ -1745,7 +1747,7 @@ function redrawLine(movedBlock, originPort){
                     else if(scheme[movedBlock.type].Rotation === 270) {
                         ip = tWidth/inCount - (tWidth/inCount/2) + 5;
                         var topPos = tY+tHeight-13;
-                        if(schemeType === 'schema2'){
+                        if(schemeType === 'blockSim'){
                             topPos += 15;
                         }
                         for (var i = 1; i <= inCount; i++) {

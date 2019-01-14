@@ -100,11 +100,11 @@ function getOutput(){
         }
     }
 
-    if(schemeType === 'schema1'){
+    if(schemeType === 'algebra'){
         getDiagramResponse();
     }
 
-    if(schemeType === 'schema2'){
+    if(schemeType === 'blockSim'){
         exportScheme();
     }
 }
