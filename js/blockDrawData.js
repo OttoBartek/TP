@@ -675,9 +675,6 @@ var blockParameters = {
 
 changeSchema = (type) => {
     cleanScheme();
-    blockDrawData = {}
-    blockParameters = {}
-    portPositions = {}
 
     if(type == "rlc") {
         blockDrawData = {
@@ -6205,6 +6202,10 @@ changeSchema = (type) => {
     clearCanvas();
     resetGlobals();
     loadBlocks();
+
+    $.each(Object.keys(blockDrawData),function(i,nameBlock){
+        number[nameBlock] = 0;
+    });
 }
 
 window.prepBlocks = function (typeBlock) {
