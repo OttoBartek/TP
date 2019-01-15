@@ -515,8 +515,6 @@ function rotateObject(target, rotateBy){
 
     var portPos = portPositions[target.BlockType][rotation];
 
-    console.log("rot");
-
     var equationWidth = scheme[target.type].equationWidth;
 
     if (rotation == 90) {
