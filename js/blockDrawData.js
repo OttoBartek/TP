@@ -1,3 +1,4 @@
+var schemeType = "rlc"
 var blockDrawData = {
     "Resistor":
         [
@@ -672,10 +673,8 @@ var blockParameters = {
                 }
             }
     };
-
 changeSchema = (type) => {
     cleanScheme();
-
     if(type == "rlc") {
         blockDrawData = {
             "Resistor":
@@ -6198,6 +6197,7 @@ changeSchema = (type) => {
                 }
         };
     }
+    schemeType = type
     data = blockParameters;
     clearCanvas();
     resetGlobals();

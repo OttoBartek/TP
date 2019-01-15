@@ -268,8 +268,6 @@
         //canvas resizing
         window.onload = function (e) {
             canvasResize();
-            var urlParam = window.location.href.split("#");
-            setSchemeType(urlParam[urlParam.length - 1]);
             loadBlocks();
             $("#wrapper").toggleClass("toggled");
             $(function () {

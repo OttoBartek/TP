@@ -89,135 +89,6 @@ function changeBlock(){
             var numerator = $('#multiply-citatel').val();
             var denominator = $('#multiply-menovatel').val();
 
-            if (scheme[changingElement.type].extra[0] != numerator || scheme[changingElement.type].extra[1] != denominator) {
-
-                console.log("tu som");
-
-                if (denominator != '1') {
-
-                    if (denominator.match(/^-?\d+( -?\d+)*$/)) {
-                        if (numerator.match(/^-?\d+( -?\d+)*$/)) {
-
-                            scheme[changingElement.type].extra = [numerator, denominator];
-
-                            var numeratorArr;
-                            var numOutput = "";
-                            numeratorArr = numerator.split(" ");
-                            var exponent = numeratorArr.length - 1;
-
-                            for (var i = 0; i < numeratorArr.length; i++) {
-                                if (parseInt(numeratorArr[i]) === 1) {
-                                    if (exponent > 1) {
-                                        numOutput += "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        numOutput += "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        numOutput += numeratorArr[i];
-                                    }
-                                }
-                                else if (parseInt(numeratorArr[i]) > 1) {
-                                    if (exponent > 1) {
-                                        numOutput += numeratorArr[i] + "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        numOutput += numeratorArr[i] + "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        numOutput += numeratorArr[i];
-                                    }
-                                } else {
-                                    exponent--;
-                                }
-
-                                if (i < numeratorArr.length - 1 && numeratorArr[i] !== '0') {
-                                    numOutput += "+";
-                                }
-                                //console.log(numOutput);
-                            }
-                            if(numOutput.substr(numOutput.length-1, numOutput.length) == '+'){
-                                numOutput = numOutput.slice(0, -1);
-                            }
-
-                            var denArray;
-                            var denOutput = "";
-                            denArray = denominator.split(" ");
-                            exponent = denArray.length - 1;
-
-                            console.log(denArray);
-
-                            for (var j = 0; j < denArray.length; j++) {
-                                if (parseInt(denArray[j]) === 1) {
-                                    if (exponent > 1) {
-                                        denOutput += "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        denOutput += "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        denOutput += denArray[j];
-                                    }
-                                }
-                                else if (parseInt(denArray[j]) > 1) {
-                                    if (exponent > 1) {
-                                        denOutput += denArray[j] + "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        denOutput += denArray[j] + "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        denOutput += denArray[j];
-                                    }
-                                }
-                                else {
-                                    exponent--;
-                                }
-
-                                if (j < denArray.length - 1 && denArray[j] !== '0') {
-                                    denOutput += "+";
-                                }
-                            }
-                            if(denOutput.substr(denOutput.length-1, denOutput.length) == '+'){
-                                denOutput = denOutput.slice(0, -1);
-                            }
-
-                            var resultTex = '\\dfrac{' + numOutput + '}{' + denOutput + '}';
-
-                            $.each(objPar, function (i, subPar) {
-                                //console.log(objPar);
-                                if (subPar.type == 'text') {
-                                    scheme[changingElement.type].tex_result = resultTex;
-                                }
-                            });
-                        } else {
-                            window.alert("Invalid numerator!");
-                            return;
-                        }
-                    } else {
-                        window.alert("Invalid denominator!");
-                        return;
-                    }
-                } else {
-                    if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)/)) {
-                        scheme[changingElement.type].extra = [numerator,denominator];
-                        scheme[changingElement.type].tex_result = numerator;
-                    }
-                    else {
-                        window.alert("Invalid numerator!");
-                        return;
-                    }
-                }
-            }
-
             drawequation(changingElement,numerator.split(" "),denominator.split(" "));
         }
     }
@@ -1086,6 +957,12 @@ function vypocetMultiply(){
                         }
 
                         var resultTex = '\\dfrac{' + numOutput + '}{' + denOutput + '}';
+                        $.each(objPar, function (i, subPar) {
+                            //console.log(objPar);
+                            if (subPar.type == 'text') {
+                                scheme[changingElement.type].tex_result = resultTex;
+                            }
+                        });
                     } else {
                         $("#multiply-citatel").addClass("is-invalid")
                         $("#block-error").html("Invalid numerator!");
@@ -1098,6 +975,8 @@ function vypocetMultiply(){
                 }
             } else {
                 if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)/)) {
+                    scheme[changingElement.type].extra = [numerator,denominator];
+                    scheme[changingElement.type].tex_result = numerator;
                 }
                 else {
                     $("#multiply-citatel").addClass("is-invalid")
@@ -1107,4 +986,8 @@ function vypocetMultiply(){
             }
         }
     }
+    var nieco = document.getElementById('multiply-text')
+    var val = scheme[changingElement.type].tex_result;
+    katex.render(val, nieco);
+
 }
