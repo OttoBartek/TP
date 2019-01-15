@@ -1015,7 +1015,7 @@ changeSchema = (type) => {
                 ]
         };
 
-        var blockParameters = {
+         blockParameters = {
             "Resistor":
                 [
                     {
@@ -1098,7 +1098,7 @@ changeSchema = (type) => {
                 ]
         };
 
-        var portPositions = {
+        portPositions = {
             "Resistor":
                 {
                     90:{
@@ -1637,7 +1637,7 @@ changeSchema = (type) => {
                 ]
         };
 
-        var blockParameters = {
+        blockParameters = {
             "Multiply":
                 [
                     {   "io":"both",
@@ -1743,7 +1743,7 @@ changeSchema = (type) => {
                     }
                 ]};
 
-        var portPositions = {
+        portPositions = {
             "Multiply":
                 {
                     90:{
@@ -3726,7 +3726,7 @@ changeSchema = (type) => {
                 ]
         };
 
-        var blockParameters = {
+        blockParameters = {
             "AnalogInput":
                 [
                     {
@@ -4707,7 +4707,7 @@ changeSchema = (type) => {
                 ]
         };
 
-        var portPositions = {
+        portPositions = {
             "AnalogInput":
                 {
                     90:{
