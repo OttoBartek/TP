@@ -30,7 +30,6 @@ var rectControls = false;
 var inPosition, movingInPosition;
 
 window.addBlock = function (blockType, posx, posy) {
-
     posx -=posCanvas;
     counter++;
     number[blockType]++;
@@ -824,6 +823,7 @@ canvas.on('mouse:over', function(e) {
 var changingElement = null;
 
 canvas.on('mouse:dblclick', function(e) {
+
     //console.log(e.target);
     if(e.target !== undefined) {
         if (e.target.type.substr(0, 4) === 'line') {
@@ -863,12 +863,12 @@ canvas.on('mouse:dblclick', function(e) {
             }
         }
         else if(e.target.baseBlock){
+
             var formData;
             changingElement = e.target;
             //console.log(changingElement);
             var objPar = blockParameters[e.target.BlockType];
             var elementID, element, inputValue = null;
-
 
             $('.modal-title').text('Block settings: '+scheme[e.target.type].VisibleName);
             formData = '<div class="form-group"><label for="block-name" class="col-form-label">Block name:</label>';

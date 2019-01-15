@@ -5,6 +5,8 @@ function changeBlock(){
 
     var type = changingElement.type;
 
+    console.log(scheme);
+
     //zmena mena bloku
     var newName = $('#block-name').val();
     if(newName !== scheme[changingElement.type].VisibleName){
@@ -19,6 +21,7 @@ function changeBlock(){
     //zmena poctu portov
     if($('#input-number').length) {
         var inputNum = $('#input-number').val();
+
         //ak je nieco pripojene na dany blok
         if(scheme[changingElement.type].NumberOfFullInputs > 0 || scheme[changingElement.type].BotFull || scheme[changingElement.type].TopFull || scheme[changingElement.type].NumberOfFullOutputs > 0) {
             window.alert("Disconnect all lines to change the number of inputs.");
@@ -31,6 +34,9 @@ function changeBlock(){
                     //console.log('changing num of IN from ' + scheme[changingElement.type].NumberOfInputs + ' to ' + inputNum);
                     originIn = scheme[changingElement.type].NumberOfInputs;
                     scheme[changingElement.type].NumberOfInputs = parseInt(inputNum);
+
+
+
                     redrawBlock(changingElement, originIn);
                 }
                 else {
@@ -496,6 +502,7 @@ function drawequation(block,numerator,denominator){
 }
 
 function rotateObject(target, rotateBy){
+    console.log(scheme,target)
     var inputCount = scheme[target.type].NumberOfInputs;
     var rotation = scheme[target.type].Rotation;
     var ports = scheme[target.type].io;
@@ -677,7 +684,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
+                    input.set({angle: 90, top: y + portPos.in[inputCount][i-1].top, left: x + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -686,7 +693,10 @@ function rotateObject(target, rotateBy){
             var input = getObject(blockName + 'O');
             input.set({angle: 90, top: y + portPos.out.top, left: x + portPos.out.left+equationWidth});
             input.setCoords();
+            console.log(equationWidth)
+
         }
+
     }
 
     canvas.renderAll();
@@ -782,11 +792,11 @@ function redrawBlock(targetBlock, originInputNum){
     var blockRotation = scheme[blockName].Rotation;
 
     var blockData = blockDrawData[blockType];
-    var type = blockType + blockOrder;
+    // var type = blockType + blockOrder;
+    var type = blockName;
     var blockGroup = [];
 
     deleteBlock(targetBlock, originInputNum);
-
     $.each(blockData, function(i,part) {
         if(part.type === 'rect')
             blockGroup[i] = new fabric.Rect(part.data);
@@ -822,7 +832,7 @@ function redrawBlock(targetBlock, originInputNum){
             blockGroup[i] = new fabric.IText(visibleName, part.data);
     });
 
-    //console.log(type);
+    // console.log(blockGroup);
 
     var io = data[blockType][0].io;
     var ports = data[blockType][0].ports;
@@ -857,7 +867,6 @@ function redrawBlock(targetBlock, originInputNum){
             }
         };
         scheme = $.extend(scheme, addPort);
-
     }
     if (io === 'in' || io === 'both') {
         var inPart;
@@ -967,7 +976,8 @@ function redrawBlock(targetBlock, originInputNum){
         "attributes":attr,
         "connectedToBlocks":[],
         "connectedFromBlocks":[],
-        "connectedLines":[]
+        "connectedLines":[],
+        "equationWidth":0
     }
     };
     scheme = $.extend(scheme, addObj);

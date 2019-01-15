@@ -472,42 +472,42 @@ if(schema == "rlc" || schema == "") {
             {
                 90:{
                     "in":{
-                        "top":5,
-                        "left":-14,
+                        "top":2,
+                        "left":-2.5,
                     },
                     "out":{
-                        "top":58,
-                        "left":-14,
+                        "top":55,
+                        "left":-2.5,
                     }
                 },
                 180:{
                     "in":{
-                        "top":25,
-                        "left":46,
+                        "top":14.5,
+                        "left":44,
                     },
                     "out":{
-                        "top":25,
-                        "left":-8,
+                        "top":14.5,
+                        "left":-10.5,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-5,
-                        "left":14,
+                        "top":-2,
+                        "left":2.5,
                     },
                     "out":{
-                        "top":-58,
-                        "left":14,
+                        "top":-56,
+                        "left":2.5,
                     }
                 },
                 0:{
                     "in":{
-                        "top":14,
-                        "left":5,
+                        "top":2.5,
+                        "left":0.5,
                     },
                     "out":{
-                        "top":14,
-                        "left":58,
+                        "top":2.5,
+                        "left":55.5,
                     }
                 }
             }, "Capacitor":
@@ -515,17 +515,17 @@ if(schema == "rlc" || schema == "") {
                 90:{
                     "in":{
                         "top":2,
-                        "left":-5,
+                        "left":-4.5,
                     },
                     "out":{
-                        "top":46,
-                        "left":-5,
+                        "top":56,
+                        "left":-4.5,
                     }
                 },
                 180:{
                     "in":{
                         "top":16,
-                        "left":33,
+                        "left":43,
                     },
                     "out":{
                         "top":16,
@@ -538,144 +538,144 @@ if(schema == "rlc" || schema == "") {
                         "left":5,
                     },
                     "out":{
-                        "top":-46,
+                        "top":-56,
                         "left":5,
                     }
                 },
                 0:{
                     "in":{
-                        "top":13,
-                        "left":5,
+                        "top":4.5,
+                        "left":1,
                     },
                     "out":{
-                        "top":13,
-                        "left":48,
+                        "top":4.5,
+                        "left":55,
                     }
                 }
             }, "Uin":
             {
                 90:{
                     "in":{
-                        "top":5,
-                        "left":-13,
+                        "top":1,
+                        "left":-4.5,
                     },
                     "out":{
-                        "top":56,
-                        "left":-13,
+                        "top":53,
+                        "left":-4.5,
                     }
                 },
                 180:{
                     "in":{
-                        "top":24,
-                        "left":45,
+                        "top":15.5,
+                        "left":41,
                     },
                     "out":{
-                        "top":24,
-                        "left":-7,
+                        "top":15.5,
+                        "left":-11,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-5,
-                        "left":13,
+                        "top":-1,
+                        "left":4.5,
                     },
                     "out":{
-                        "top":-56,
-                        "left":13,
+                        "top":-53,
+                        "left":4.5,
                     }
                 },
                 0:{
                     "in":{
-                        "top":12.5,
-                        "left":5,
+                        "top":4.5,
+                        "left":1,
                     },
                     "out":{
-                        "top":12.5,
-                        "left":56,
+                        "top":4.5,
+                        "left":53.5,
                     }
                 }
             }, "Uout":
             {
                 90:{
                     "in":{
-                        "top":5,
-                        "left":-13,
+                        "top":1,
+                        "left":-4.5,
                     },
                     "out":{
-                        "top":56,
-                        "left":-13,
+                        "top":53,
+                        "left":-4.5,
                     }
                 },
                 180:{
                     "in":{
-                        "top":24,
-                        "left":45,
+                        "top":15.5,
+                        "left":41,
                     },
                     "out":{
-                        "top":24,
-                        "left":-7,
+                        "top":15.5,
+                        "left":-11,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-5,
-                        "left":13,
+                        "top":-1,
+                        "left":4.5,
                     },
                     "out":{
-                        "top":-56,
-                        "left":13,
+                        "top":-53,
+                        "left":4.5,
                     }
                 },
                 0:{
                     "in":{
-                        "top":12.5,
-                        "left":5,
+                        "top":4.5,
+                        "left":1,
                     },
                     "out":{
-                        "top":12.5,
-                        "left":56,
+                        "top":4.5,
+                        "left":53.5,
                     }
                 }
             }, "Point":
             {
                 90:{
                     "in":{
-                        "top":6,
-                        "left":-10.5,
+                        "top":2,
+                        "left":0.5,
                     },
                     "out":{
-                        "top":55,
-                        "left":-10.5,
+                        "top":50,
+                        "left":0.5,
                     }
                 },
                 180:{
                     "in":{
-                        "top":21.5,
-                        "left":43,
+                        "top":10.5,
+                        "left":39,
                     },
                     "out":{
-                        "top":21.5,
-                        "left":-5,
+                        "top":10.5,
+                        "left":-10,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-7.5,
-                        "left":10.5,
+                        "top":-0.5,
+                        "left":-0.5,
                     },
                     "out":{
-                        "top":-54.5,
-                        "left":10.5,
+                        "top":-50,
+                        "left":0,
                     }
                 },
                 0:{
                     "in":{
-                        "top":10.5,
+                        "top":0,
                         "left":6,
                     },
                     "out":{
-                        "top":10,
-                        "left":55,
+                        "top":0,
+                        "left":50,
                     }
                 }
             }
@@ -1075,42 +1075,42 @@ else if(schema == "algebra") {
             {
                 90:{
                     "in":{
-                        "top":3,
-                        "left":-10,
+                        "top":1,
+                        "left":-12,
                     },
                     "out":{
-                        "top":53,
-                        "left":-10,
+                        "top":51,
+                        "left":-12,
                     }
                 },
                 180:{
                     "in":{
-                        "top":20,
-                        "left":43,
+                        "top":22,
+                        "left":41,
                     },
                     "out":{
-                        "top":20,
-                        "left":-8,
+                        "top":22,
+                        "left":-10,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-3,
-                        "left":10,
+                        "top":-1,
+                        "left":12,
                     },
                     "out":{
-                        "top":-53,
-                        "left":10,
+                        "top":-51,
+                        "left":12,
                     }
                 },
                 0:{
                     "in":{
-                        "top":10,
-                        "left":2,
+                        "top":12,
+                        "left":0,
                     },
                     "out":{
-                        "top":10,
-                        "left":53,
+                        "top":12,
+                        "left":51,
                     }
                 },
             },
@@ -1118,17 +1118,17 @@ else if(schema == "algebra") {
             {
                 90:{
                     "in":{2:[{
-                        "top":1,
-                        "left":0,
+                        "top":-1,
+                        "left":-2,
                     },
                         {
-                            "top":1,
-                            "left":-20,
+                            "top":-1,
+                            "left":-22,
                         }
                     ]},
                     "out":{
-                        "top":53,
-                        "left":-10,
+                        "top":51,
+                        "left":-12,
                     }
                 },
                 180:{
@@ -1142,90 +1142,90 @@ else if(schema == "algebra") {
                         }
                     ]},
                     "out":{
-                        "top":20,
-                        "left":-9,
+                        "top":22,
+                        "left":-11,
                     }
                 },
                 270:{
-                    "in":{2:[{
-                        "top":-2,
-                        "left":0,
-                    },
-                        {
-                            "top":-2,
-                            "left":20,
-                        }
-                    ]},
-                    "out":{
-                        "top":-54,
-                        "left":10,
-                    }
-                },
-                0:{
                     "in":{2:[{
                         "top":0,
                         "left":2,
                     },
                         {
-                            "top":20,
-                            "left":2,
+                            "top":0,
+                            "left":22,
                         }
                     ]},
                     "out":{
-                        "top":10,
-                        "left":53,
+                        "top":-52,
+                        "left":12,
+                    }
+                },
+                0:{
+                    "in":{2:[{
+                        "top":2,
+                        "left":0,
+                    },
+                        {
+                            "top":22,
+                            "left":0,
+                        }
+                    ]},
+                    "out":{
+                        "top":12,
+                        "left":51,
                     }
                 }
             },"IOin":
             {
                 90:{
                     "out":{
-                        "top":53,
-                        "left":-10,
+                        "top":51,
+                        "left":-12,
                     }
                 },
                 180:{
                     "out":{
-                        "top":23,
-                        "left":-8,
+                        "top":25,
+                        "left":-10,
                     }
                 },
                 270:{
                     "out":{
-                        "top":-53,
-                        "left":10,
+                        "top":-51,
+                        "left":12,
                     }
                 },
                 0:{
                     "out":{
-                        "top":10,
-                        "left":53,
+                        "top":12,
+                        "left":51,
                     }
                 }
             },"IOout":
             {
                 90:{
                     "in":{
-                        "top":2,
-                        "left":-10,
+                        "top":0,
+                        "left":-12,
                     }
                 },
                 180:{
                     "in":{
-                        "top":20,
-                        "left":42,
+                        "top":22,
+                        "left":40,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-3,
-                        "left":10,
+                        "top":-1,
+                        "left":12,
                     }
                 },
                 0:{
                     "in":{
-                        "top":10,
-                        "left":2,
+                        "top":12,
+                        "left":0,
                     }
                 }
             }
@@ -3461,7 +3461,7 @@ else if(schema == "blockSim") {
             [
                 {
                     "io": "both",
-                    "NumberOfInputs": 4,
+                    "NumberOfInputs": 2,
                     "NumberOfOutputs": 1,
                     "MaxInputs": 4,
                     "ports": null,
@@ -4040,146 +4040,146 @@ else if(schema == "blockSim") {
             {
                 90:{
                     "out":{
-                        "top":58,
-                        "left":-15,
+                        "top":62,
+                        "left":-10,
                     }
                 },
                 180:{
                     "out":{
-                        "top":25,
-                        "left":-13,
+                        "top":20,
+                        "left":-11,
                     }
                 },
                 270:{
                     "out":{
-                        "top":-58,
-                        "left":15,
+                        "top":-60,
+                        "left":10,
                     }
                 },
                 0:{
                     "out":{
-                        "top":15,
-                        "left":58,
+                        "top":10,
+                        "left":62,
                     }
                 }
             }, "AnalogOutput":
             {
                 90:{
                     "in":{
-                        "top":-2,
-                        "left":-15,
+                        "top":0,
+                        "left":-10,
                     }
                 },
                 180:{
                     "in":{
-                        "top":25,
-                        "left":48,
+                        "top":20,
+                        "left":50,
                     }
                 },
                 270:{
                     "in":{
-                        "top":3,
-                        "left":15,
+                        "top":1,
+                        "left":10,
                     }
                 },
                 0:{
                     "in":{
-                        "top":15,
-                        "left":-2,
+                        "top":10,
+                        "left":0,
                     }
                 }
             }, "Clock":
             {
                 90:{
                     "out":{
-                        "top":46,
+                        "top":42,
                         "left":-12,
                     }
                 },
                 180:{
                     "out":{
-                        "top":23,
-                        "left":3,
+                        "top":21,
+                        "left":-12,
                     }
                 },
                 270:{
                     "out":{
-                        "top":-40,
-                        "left":5,
+                        "top":-42,
+                        "left":10,
                     }
                 },
                 0:{
                     "out":{
                         "top":11,
-                        "left":46,
+                        "left":42,
                     }
                 }
             }, "Constant":
             {
                 90:{
                     "out":{
-                        "top":50,
-                        "left":-10,
+                        "top":53,
+                        "left":-8,
                     }
                 },
                 180:{
                     "out":{
-                        "top":22,
-                        "left":0,
+                        "top":20,
+                        "left":-10,
                     }
                 },
                 270:{
                     "out":{
-                        "top":-50,
-                        "left":11,
+                        "top":-53,
+                        "left":10,
                     }
                 },
                 0:{
                     "out":{
-                        "top":10,
-                        "left":49,
+                        "top":8,
+                        "left":54,
                     }
                 }
             }, "Demux":
             {
                 90:{
                     "in":{
-                        "top":16,
-                        "left":-10,
+                        "top":1,
+                        "left":-14.5,
                     },
                     "out":{
-                        "top":32,
-                        "left":-10,
+                        "top":45,
+                        "left":-14.5,
                     }
                 },
                 180:{
                     "in":{
-                        "top":20,
-                        "left":20,
+                        "top":25.5,
+                        "left":34,
                     },
                     "out":{
-                        "top":20,
-                        "left":5,
+                        "top":25.5,
+                        "left":-10,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-15,
-                        "left":10,
+                        "top":-1,
+                        "left":14.5,
                     },
                     "out":{
-                        "top":-32,
-                        "left":10,
+                        "top":-45,
+                        "left":14.5,
                     }
                 },
                 0:{
                     "in":{
-                        "top":10,
-                        "left":17,
+                        "top":14.5,
+                        "left":2,
                     },
                     "out":{
-                        "top":10,
-                        "left":32,
+                        "top":14.5,
+                        "left":45,
                     }
                 }
             }, "Mux":
@@ -4341,14 +4341,14 @@ else if(schema == "blockSim") {
                         "top":2.5,
                         "left":2,
                     },
-                        {
-                            "top":17.5,
-                            "left":2,
-                        },
-                        {
-                            "top":32.5,
-                            "left":2,
-                        },
+                    {
+                        "top":17.5,
+                        "left":2,
+                    },
+                    {
+                        "top":32.5,
+                        "left":2,
+                    },
                     ],
                     4:[{
                         "top":-6,
