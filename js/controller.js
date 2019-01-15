@@ -2038,7 +2038,7 @@ document.addEventListener('keydown', (event) => {
     }
     //object movement with arrow keys
     //move left
-    if(keyCode === '37'){
+    if(keyCode === 37){
         if(selectedElement){
             if(selectedElement.baseBlock){
                 selectedElement.set({left:selectedElement.left-1});
@@ -2049,7 +2049,7 @@ document.addEventListener('keydown', (event) => {
         }
     }
     //move right
-    if(keyCode === '39'){
+    if(keyCode === 39){
         if(selectedElement){
             if(selectedElement.baseBlock){
                 selectedElement.set({left:selectedElement.left+1});
@@ -2060,7 +2060,7 @@ document.addEventListener('keydown', (event) => {
         }
     }
     //move up
-    if(keyCode === '38'){
+    if(keyCode === 38){
         if(selectedElement){
             if(selectedElement.baseBlock){
                 selectedElement.set({top:selectedElement.top-1});
@@ -2071,7 +2071,7 @@ document.addEventListener('keydown', (event) => {
         }
     }
     //move down
-    if(keyCode === '40'){
+    if(keyCode === 40){
         if(selectedElement){
             if(selectedElement.baseBlock){
                 selectedElement.set({top:selectedElement.top+1});

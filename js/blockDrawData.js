@@ -675,9 +675,6 @@ var portPositions = {
 
 changeSchema = (type) => {
     cleanScheme();
-    blockDrawData = {}
-    blockParameters = {}
-    portPositions = {}
 
     if(type == "rlc") {
         blockDrawData = {
