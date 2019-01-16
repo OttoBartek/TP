@@ -323,7 +323,7 @@ canvas.on('object:selected', function (e) {
         }
     }
 
-    console.log(connFromBlock);
+    // console.log(connFromBlock);
 
 });
 
@@ -521,7 +521,7 @@ canvas.on('selection:updated', function(options) {
 
             connToBlock = getObject(scheme[selectedElement.type].parentBlock);
 
-            console.log(connFromBlock,connToBlock);
+            // console.log(connFromBlock,connToBlock);
 
             var f = checkPorts(selectedElement);
             if ((f === 1) && connFromBlock != null) { //port je IN
@@ -855,7 +855,7 @@ canvas.on('mouse:dblclick', function(e) {
 
             $('.modal-title').text('Block settings: '+scheme[e.target.type].VisibleName);
             formData = '<div class="form-group"><label for="block-name" class="col-form-label">Block name:</label>';
-            formData += '<input type="text" class="form-control" id="block-name" value="'+scheme[e.target.type].VisibleName+'"'+((schemeType === 'blockSim') ? 'disabled':'')+'></div>';
+            formData += '<input type="text" class="form-control" id="block-name" value="'+scheme[e.target.type].VisibleName+'"'+((schemeType === 'blockSim') ? '':'')+'></div>';
             if(scheme[e.target.type].MaxInputs > 1){
                 formData += '<div class="form-group"><label for="input-number" class="col-form-label">Number of inputs (max. '+scheme[e.target.type].MaxInputs+'):</label>';
                 formData += '<script>    $("#input-number").on("keyup", function() {let value = $("#input-number").val();let splitValue = value.split(".")[0];if(splitValue.length == 0 || splitValue.length == undefined) {splitValue = splitValue.split(",")[0];}$("#input-number").val(splitValue); });</script>'

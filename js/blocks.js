@@ -5,7 +5,7 @@ function changeBlock(){
 
     var type = changingElement.type;
 
-    console.log(scheme);
+    // console.log(scheme);
 
     //zmena mena bloku
     var newName = $('#block-name').val();
@@ -366,7 +366,7 @@ function drawequation(block,numerator,denominator){
 }
 
 function rotateObject(target, rotateBy){
-    console.log(scheme,target)
+    // console.log(scheme,target)
     var inputCount = scheme[target.type].NumberOfInputs;
     var rotation = scheme[target.type].Rotation;
     var ports = scheme[target.type].io;
@@ -467,6 +467,16 @@ function rotateObject(target, rotateBy){
             });
         }
 
+        if(scheme[target.type].BlockType =="Sum") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==="symbol"){
+                    // console.log(obj.left) //-12.5
+                    obj.set({left: 5});
+
+                }
+            });
+        }
+
         }else{
             if(scheme[target.type].BlockType ==="Sumator"){
                 target._objects.forEach(function (obj) {
@@ -498,12 +508,22 @@ function rotateObject(target, rotateBy){
         }
         if(scheme[target.type].BlockType =="Product") {
             target._objects.forEach(function (obj) {
+
                 if(obj.name==1 ||obj.name === 2 || obj.name === 3 || obj.name === 4){
                     obj.set({left: -40.5});
 
                 }
                 if(obj.name === "out"){
                     obj.set({left: 24.5});
+                }
+            });
+        }
+        if(scheme[target.type].BlockType =="Sum") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==="symbol"){
+                    // console.log(obj.left) //-12.5
+                    obj.set({left: -12.5});
+
                 }
             });
         }
@@ -547,7 +567,6 @@ function rotateObject(target, rotateBy){
             var input = getObject(blockName + 'O');
             input.set({angle: 90, top: y + portPos.out.top, left: x + portPos.out.left+equationWidth});
             input.setCoords();
-            console.log(equationWidth)
 
         }
 
@@ -941,6 +960,7 @@ function vypocetMultiply(){
                         $.each(objPar, function (i, subPar) {
                             //console.log(objPar);
                             if (subPar.type == 'text') {
+                                scheme[changingElement.type].extra = [numerator,denominator];
                                 scheme[changingElement.type].tex_result = resultTex;
                             }
                         });

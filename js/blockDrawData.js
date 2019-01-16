@@ -2623,21 +2623,37 @@ changeSchema = (type) => {
                 ], "Product":
                 [
                     {
+                        "type": "name",
+                        "Text": "Product",
+                        "data": {
+                            "fontFamily": "Arial",
+                            "top": 48,
+                            "left": 0,
+                            "fontSize": 9,
+                            "fill": "black",
+                            "width": 80,
+                            "height": 60,
+                            "changeable": false
+                        }
+                    },
+                    {
                         "type": "rect",
                         "data": {
                             "name": "bound",
-                            "width": 50,
+                            "width": 80,
                             "height": 60,
                             "fill": false,
                             // "stroke": "blue"
                             "invisible": true
                         }
                     },
+
                     {
                         "type": "rect",
                         "data": {
                             "width": 50,
                             "height": 45,
+                            "left": 15,
                             "fill": "white",
                             "stroke": "black"
                         }
@@ -2647,21 +2663,10 @@ changeSchema = (type) => {
                         "Text": "x",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 10,
-                            "left": 20,
+                            "top": 15,
+                            "left": 38,
+                            "height": 40,
                             "fontSize": 11,
-                            "fill": "black",
-                            "changeable": false
-                        }
-                    },
-                    {
-                        "type": "name",
-                        "Text": "Product",
-                        "data": {
-                            "fontFamily": "Arial",
-                            "top": 48,
-                            "left": 0,
-                            "fontSize": 9,
                             "fill": "black",
                             "changeable": false
                         }
@@ -2672,7 +2677,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 1,
-                                "left": -15,
+                                "left": 0,
                                 "top": 22.5,
                                 "stroke": false,
                                 "invisible": true
@@ -2684,7 +2689,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 2,
-                                "left": -15,
+                                "left": 0,
                                 "top": 11,
                                 "stroke": "black",
                                 // "invisible": true
@@ -2696,7 +2701,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 2,
-                                "left": -15,
+                                "left": 0,
                                 "top": 34,
                                 "stroke": "black",
                                 // "invisible": true
@@ -2708,7 +2713,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 3,
-                                "left": -15,
+                                "left": 0,
                                 "top": 7.5,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2720,7 +2725,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 3,
-                                "left": -15,
+                                "left": 0,
                                 "top": 22.5,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2732,7 +2737,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 3,
-                                "left": -15,
+                                "left": 0,
                                 "top": 37.5,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2744,7 +2749,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 4,
-                                "left": -15,
+                                "left": 0,
                                 "top": 0,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2756,7 +2761,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 4,
-                                "left": -15,
+                                "left": 0,
                                 "top": 15,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2768,7 +2773,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 4,
-                                "left": -15,
+                                "left": 0,
                                 "top": 30,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2780,7 +2785,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 4,
-                                "left": -15,
+                                "left": 0,
                                 "top": 45,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2792,20 +2797,23 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name":"out",
-                                "left": 50,
+                                "left": 65,
                                 "top": 22.5,
                                 "stroke": "black"
                             }
-                    }
+                    },
+
+
                 ], "Scope":
                 [
                     {
                         "type": "rect",
                         "data": {
-                            "width": 45,
-                            "height": 40,
+                            "name": "bound",
+                            "width": 30,
+                            "height": 45,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue"
                             "invisible": true
                         }
                     },
@@ -2846,10 +2854,11 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
+                            "name": "bound",
                             "width": 55,
-                            "height": 40,
+                            "height": 45,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue"
                             "invisible": true
                         }
                     },
@@ -2904,10 +2913,11 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
-                            "width": 35,
-                            "height": 50,
+                            "name": "bound",
+                            "width": 30,
+                            "height": 40,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue"
                             "invisible": true
                         }
                     },
@@ -2924,6 +2934,7 @@ changeSchema = (type) => {
                         "type": "text",
                         "Text": "+",
                         "data": {
+                            "name": "symbol",
                             "fontFamily": "Arial",
                             "top": 3,
                             "left": 3,
@@ -2936,6 +2947,7 @@ changeSchema = (type) => {
                         "type": "text",
                         "Text": "+",
                         "data": {
+                            "name": "symbol",
                             "fontFamily": "Arial",
                             "top": 15,
                             "left": 3,
@@ -2953,7 +2965,7 @@ changeSchema = (type) => {
                             "left": 3,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "SimOut":
@@ -3006,11 +3018,12 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
+                            "name": "bound",
                             "width": 55,
                             "height": 40,
                             "fill": false,
-                            "stroke": false,
-                            "invisible": true
+                            "stroke": "blue"
+                            // "invisible": true
                         }
                     },
                     {
@@ -3452,10 +3465,11 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
-                            "width": 58,
+                            "name": "bound",
+                            "width": 30,
                             "height": 40,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue"
                             "invisible": true
                         }
                     },
@@ -3504,29 +3518,29 @@ changeSchema = (type) => {
                         }
                     },
                     {
-                        "type": "text",
-                        "Text": "Discrete-T",
+                        "type": "name",
+                        "Text": "Discrete-T\nIntegrator",
                         "data": {
                             "fontFamily": "Arial",
                             "top": 30,
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     },
-                    {
-                        "type": "name",
-                        "Text": "Integrator",
-                        "data": {
-                            "fontFamily": "Arial",
-                            "top": 40,
-                            "left": 0,
-                            "fontSize": 9,
-                            "fill": "black",
-                            "changeable": false
-                        }
-                    }
+                    // {
+                    //     "type": "text",
+                    //     "Text": "Integrator",
+                    //     "data": {
+                    //         "fontFamily": "Arial",
+                    //         "top": 40,
+                    //         "left": 0,
+                    //         "fontSize": 9,
+                    //         "fill": "black",
+                    //         "changeable": true
+                    //     }
+                    // }
                 ], "DiscreteTransfer":
                 [
                     {
@@ -4152,8 +4166,8 @@ changeSchema = (type) => {
                         "NumOfBot": 0,
                         "hasExtra": false,
                         "defaultExtra": null,
-                        "BlockType": "Product",
-                        "title": "Parametre product"
+                        "BlockType": "Scope",
+                        "title": "Parametre scope"
                     }
                 ], "StateSpace":
                 [
@@ -5288,83 +5302,84 @@ changeSchema = (type) => {
                                 },
                             ],
                             4:[{
-                                "top":-14,
+                                "top":2,
                                 "left":5.5,
                             },
                                 {
-                                    "top":-14,
+                                    "top":2,
                                     "left":-9.5,
                                 },
                                 {
-                                    "top":-14,
+                                    "top":2,
                                     "left":-24.5,
                                 },
                                 {
-                                    "top":-14,
+                                    "top":2,
                                     "left":-39.5,
                                 },
                             ]},
                         "out":{
-                            "top":70,
+                            "top":91,
                             "left":-17,
                         }
                     },
                     180:{
-                        "in":{"top":28,
-                            "left":32,
+                        "in":{"top":28.5,
+                            "left":80,
                             2:[{
                                 "top":16.5,
-                                "left":32,
+                                "left":79,
                             },
                                 {
                                     "top":39,
-                                    "left":32,
+                                    "left":79,
                                 }
                             ],
                             3:[{
                                 "top":43.5,
-                                "left":32.5,
+                                "left":79,
                             },
                                 {
                                     "top":28.5,
-                                    "left":32.5,
+                                    "left":79,
                                 },
                                 {
                                     "top":13.5,
-                                    "left":32.5,
+                                    "left":79,
                                 },
                             ],
-                            4:[{
-                                "top":50.5,
-                                "left":64,
+                            4:[
+                            {
+                                "top":5.5,
+                                "left":79,
                             },
-                                {
-                                    "top":35.5,
-                                    "left":64,
-                                },
-                                {
-                                    "top":20.5,
-                                    "left":64,
-                                },
-                                {
-                                    "top":5.5,
-                                    "left":64,
-                                },
+                            {
+                                "top":20.5,
+                                "left":79,
+                            },
+                            {
+                                "top":35.5,
+                                "left":79,
+                            },
+                            {
+                                "top":50.5,
+                                "left":79,
+                            },
                             ]},
                         "out":{
                             "top":28,
-                            "left":-25,
+                            "left":-10,
                         }
                     },
                     270:{
                         "in":{"top":-1,
                             "left":17,
                             2:[{
-                                "top":-1,
+                                "top":0,
                                 "left":5.5,
                             },
                                 {
-                                    "top":-1,
+                                    "top":0,
                                     "left":28.5,
                                 }
                             ],
@@ -5382,24 +5397,24 @@ changeSchema = (type) => {
                                 },
                             ],
                             4:[{
-                                "top":14,
+                                "top":-2,
                                 "left":-6,
                             },
                                 {
-                                    "top":14,
+                                    "top":-2,
                                     "left":9.5,
                                 },
                                 {
-                                    "top":14,
+                                    "top":-2,
                                     "left":24.5,
                                 },
                                 {
-                                    "top":14,
+                                    "top":-2,
                                     "left":38.5,
                                 },
                             ]},
                         "out":{
-                            "top":-76,
+                            "top":-91,
                             "left":17,
                         }
                     },
@@ -5430,210 +5445,154 @@ changeSchema = (type) => {
                             ],
                             4:[{
                                 "top":-6,
-                                "left":-14,
+                                "left":2,
                             },
                                 {
                                     "top":9,
-                                    "left":-14,
+                                    "left":2,
                                 },
                                 {
                                     "top":24,
-                                    "left":-14,
+                                    "left":2,
                                 },
                                 {
                                     "top":39,
-                                    "left":-14,
+                                    "left":2,
                                 },
                             ]},
                         "out":{
                             "top":17.5,
-                            "left":76,
+                            "left":91,
                         }
                     }
                 }, "Scope":
                 {
                     90:{
-                        "in":[{
-                            "top":1,
+                        "in":{
+                            "top":0,
                             "left":-5,
-                        },
-                            {
-                                "top":1,
-                                "left":-25,
-                            }
-                        ],
-                        "out":{
-                            "top":51,
-                            "left":-15,
                         }
                     },
                     180:{
-                        "in":[{
-                            "top":18,
-                            "left":40,
-                        },
-                            {
-                                "top":36,
-                                "left":40,
-                            }
-                        ],
-                        "out":{
-                            "top":25,
-                            "left":-10,
+                        "in":{
+                            "top":10,
+                            "left":32,
                         }
                     },
                     270:{
-                        "in":[{
-                            "top":0,
-                            "left":4,
-                        },
-                            {
-                                "top":0,
-                                "left":25,
-                            }
-                        ],
-                        "out":{
-                            "top":-51,
-                            "left":15,
+                        "in":{
+                            "top":2,
+                            "left":2,
                         }
                     },
                     0:{
-                        "in":[{
+                        "in":{
                             "top":5,
-                            "left":2,
-                        },
-                            {
-                                "top":25,
-                                "left":2,
-                            }
-                        ],
-                        "out":{
-                            "top":15,
-                            "left":51,
+                            "left":0,
                         }
                     }
                 }, "StateSpace":
                 {
                     90:{
-                        "in":[{
-                            "top":1,
-                            "left":-5,
+                        "in":{
+                            "top":-1,
+                            "left":-10,
                         },
-                            {
-                                "top":1,
-                                "left":-25,
-                            }
-                        ],
                         "out":{
-                            "top":51,
-                            "left":-15,
-                        }
-                    },
-                    180:{
-                        "in":[{
-                            "top":18,
-                            "left":40,
-                        },
-                            {
-                                "top":36,
-                                "left":40,
-                            }
-                        ],
-                        "out":{
-                            "top":25,
+                            "top":65,
                             "left":-10,
                         }
                     },
-                    270:{
-                        "in":[{
-                            "top":0,
-                            "left":4,
+                    180:{
+                        "in":{
+                            "top":20,
+                            "left":55,
                         },
-                            {
-                                "top":0,
-                                "left":25,
-                            }
-                        ],
                         "out":{
-                            "top":-51,
-                            "left":15,
+                            "top":20,
+                            "left":-12,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":0,
+                            "left":12,
+                        },
+                        "out":{
+                            "top":-65,
+                            "left":12,
                         }
                     },
                     0:{
-                        "in":[{
-                            "top":5,
-                            "left":2,
+                        "in":{
+                            "top":10,
+                            "left":0,
                         },
-                            {
-                                "top":25,
-                                "left":2,
-                            }
-                        ],
                         "out":{
-                            "top":15,
-                            "left":51,
+                            "top":10,
+                            "left":65,
                         }
                     }
                 }, "Sum":
                 {
                     90:{
-                        "in":[{
-                            "top":1,
-                            "left":-5,
-                        },
-                            {
-                                "top":1,
-                                "left":-25,
-                            }
-                        ],
+                        "in":{2:[{
+                                "top":-1,
+                                "left":-4,
+                            },
+                                {
+                                    "top":-1,
+                                    "left":-17,
+                                }
+                            ]},
                         "out":{
-                            "top":51,
-                            "left":-15,
-                        }
-                    },
-                    180:{
-                        "in":[{
-                            "top":18,
-                            "left":40,
-                        },
-                            {
-                                "top":36,
-                                "left":40,
-                            }
-                        ],
-                        "out":{
-                            "top":25,
+                            "top":40,
                             "left":-10,
                         }
                     },
-                    270:{
-                        "in":[{
-                            "top":0,
-                            "left":4,
-                        },
-                            {
-                                "top":0,
-                                "left":25,
-                            }
-                        ],
+                    180:{
+                        "in":{2:[{
+                                "top":14,
+                                "left":30,
+                            },
+                                {
+                                    "top":25,
+                                    "left":30,
+                                }
+                            ]},
                         "out":{
-                            "top":-51,
-                            "left":15,
+                            "top":18,
+                            "left":-11,
+                        }
+                    },
+                    270:{
+                        "in":{2:[{
+                                "top":2,
+                                "left":2,
+                            },
+                                {
+                                    "top":2,
+                                    "left":16,
+                                }
+                            ]},
+                        "out":{
+                            "top":-40,
+                            "left":9,
                         }
                     },
                     0:{
-                        "in":[{
-                            "top":5,
-                            "left":2,
-                        },
-                            {
-                                "top":25,
-                                "left":2,
-                            }
-                        ],
+                        "in":{2:[{
+                                "top":4,
+                                "left":-1,
+                            },
+                                {
+                                    "top":18,
+                                    "left":-1,
+                                }
+                            ]},
                         "out":{
-                            "top":15,
-                            "left":51,
+                            "top":12,
+                            "left":41,
                         }
                     }
                 }, "SimOut":
