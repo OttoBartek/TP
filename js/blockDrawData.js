@@ -6200,11 +6200,13 @@ changeSchema = (type) => {
                 }
         };
     }
-    schemeType = type
+    schemeType = type;
     data = blockParameters;
     clearCanvas();
     resetGlobals();
     loadBlocks();
+
+    setSchemeType(type);
 
     $.each(Object.keys(blockDrawData),function(i,nameBlock){
         number[nameBlock] = 0;

@@ -26,7 +26,11 @@ function cleanScheme(){
 
 function saveScheme(){
     //console.log("SAVING...");
+
     var jsonScheme = JSON.stringify(scheme, null, '\t');
+
+    console.log(jsonScheme);
+
     //console.log(jsonScheme);
     var textToSaveAsBlob = new Blob([jsonScheme], {type:"application/json"});
     var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
