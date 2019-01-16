@@ -3,6 +3,7 @@ var number = {};
 var counter = 0;
 var schemeType;
 var allow_delete=0;
+var showNames = true;
 
 $.each(Object.keys(blockDrawData),function(i,nameBlock){
     number[nameBlock] = 0;
@@ -28,6 +29,36 @@ var rectControls = false;
 
 
 var inPosition, movingInPosition;
+
+function showNamesFunction(){
+
+    showNames=!showNames;
+
+    if(!showNames){
+        canvas.forEachObject(function(obj) {
+
+            if(obj.baseBlock) {
+                obj._objects.forEach(function(o){
+                    if(o.text && o.changeable)
+                        o.set({fill:"transparent"});
+                });
+            }
+        });
+    }else{
+        canvas.forEachObject(function(obj) {
+
+            if(obj.baseBlock) {
+                obj._objects.forEach(function(o){
+                    if(o.text && o.changeable){
+                        o.set({fill:"black"});
+                    }
+                });
+            }
+        });
+    }
+
+    canvas.renderAll();
+}
 
 window.addBlock = function (blockType, posx, posy) {
     posx -=posCanvas;
@@ -83,8 +114,12 @@ window.addBlock = function (blockType, posx, posy) {
             partBlock[i] = new fabric.Circle(subBlock.data);
         else if(subBlock.type === 'text')
             partBlock[i] = new fabric.IText(subBlock.Text, subBlock.data);
-        else if(subBlock.type === 'name')
+        else if(subBlock.type === 'name'){
             partBlock[i] = new fabric.IText(type, subBlock.data);
+            if(!showNames){
+                partBlock[i].set({fill:"transparent"});
+            }
+        }
     });
 
     var extraData = null;
@@ -238,6 +273,7 @@ window.addBlock = function (blockType, posx, posy) {
     var posLYT = posy;
     var posRXB = posx + block.width;
     var posRYB = posy + block.height;
+
     var addObj = {[type] : {
             "ZOrder" : counter,
             "NameOfBlock": type,
@@ -270,8 +306,10 @@ window.addBlock = function (blockType, posx, posy) {
 
     scheme = $.extend(scheme, addObj);
 
-    if(blockType === 'Multiply')
+    if(blockType === 'Multiply'){
         scheme[type].tex_result = 'F';
+        scheme[type].equation = ["F","1"];
+    }
 };
 
 var selectedElement = null;

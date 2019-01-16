@@ -1388,14 +1388,14 @@ changeSchema = (type) => {
                     }
                 },
                 {   "type":"text",
-                    "Text":"3",
+                    "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
                         "top":3,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
-                        "extra":"numerator-3"
+                        "extra":"numerator-1"
                     }
                 },
                 {   "type":"text",
@@ -1407,6 +1407,28 @@ changeSchema = (type) => {
                         "fontSize": 8,
                         "fill": false,
                         "extra":"numerator-2"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"3",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":3,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"numerator-3"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"4",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":3,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"numerator-4"
                     }
                 },
                 {   "type":"text",
@@ -1432,14 +1454,14 @@ changeSchema = (type) => {
                     }
                 },
                 {   "type":"text",
-                    "Text":"3",
+                    "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
                         "top":21,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
-                        "extra":"denominator-3"
+                        "extra":"denominator-1"
                     }
                 },
                 {   "type":"text",
@@ -1451,6 +1473,28 @@ changeSchema = (type) => {
                         "fontSize": 8,
                         "fill": false,
                         "extra":"denominator-2"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"3",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":21,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"denominator-3"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"4",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":21,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"denominator-4"
                     }
                 },
                 {   "type":"text",
@@ -2025,7 +2069,7 @@ changeSchema = (type) => {
                                 "left": 0,
                                 "fontSize": 9,
                                 "fill": "black",
-                                "changeable": false
+                                "changeable": true
                             }
                     }
                 ], "Constant":
@@ -2072,7 +2116,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Demux":
@@ -2146,7 +2190,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     },
                     {
@@ -2345,7 +2389,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "DigitalClock":
@@ -2392,7 +2436,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Display":
@@ -2449,7 +2493,7 @@ changeSchema = (type) => {
                             "left": 8,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Fcn":
@@ -2495,7 +2539,7 @@ changeSchema = (type) => {
                             "left": 15,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Gain":
@@ -2547,7 +2591,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Integrator":
@@ -2617,7 +2661,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Product":
@@ -2846,7 +2890,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "StateSpace":

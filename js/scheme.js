@@ -159,8 +159,12 @@ function drawBlockFromScheme(targetBlock){
             partBlock[i] = new fabric.Circle(subBlock.data);
         else if(subBlock.type === 'text')
             partBlock[i] = new fabric.IText(subBlock.Text, subBlock.data);
-        else if(subBlock.type === 'name')
+        else if(subBlock.type === 'name'){
             partBlock[i] = new fabric.IText(visibleName, subBlock.data);
+            if(!showNames){
+                partBlock[i].set({fill:"transparent"});
+            }
+        }
     });
 
     var io = data[blockType][0].io;
