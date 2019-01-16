@@ -702,7 +702,7 @@ else if(schema == "algebra") {
                     "name": "element",
                     "width":40,
                     "height":40,
-                    "fill":false,
+                    "fill":"white",
                     "stroke":"black"
                 }
             },
@@ -1075,42 +1075,42 @@ else if(schema == "algebra") {
             {
                 90:{
                     "in":{
-                        "top":3,
-                        "left":-10,
+                        "top":1,
+                        "left":-15,
                     },
                     "out":{
-                        "top":53,
-                        "left":-10,
+                        "top":51,
+                        "left":-15,
                     }
                 },
                 180:{
                     "in":{
-                        "top":20,
-                        "left":43,
+                        "top":25,
+                        "left":40,
                     },
                     "out":{
-                        "top":20,
-                        "left":-8,
+                        "top":25,
+                        "left":-11,
                     }
                 },
                 270:{
                     "in":{
-                        "top":-3,
-                        "left":10,
+                        "top":-1,
+                        "left":15,
                     },
                     "out":{
-                        "top":-53,
-                        "left":10,
+                        "top":-51,
+                        "left":15,
                     }
                 },
                 0:{
                     "in":{
-                        "top":10,
-                        "left":2,
+                        "top":15,
+                        "left":1,
                     },
                     "out":{
-                        "top":10,
-                        "left":53,
+                        "top":15,
+                        "left":51,
                     }
                 },
             },

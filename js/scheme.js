@@ -60,6 +60,9 @@ function loadModel(){
                 $.each(scheme, function (key, value) {
                     if (valid) {
                         if (key == 'schemeInfo') {
+
+                            console.log(value.type,schemeType);
+
                             if (value.type != schemeType) {
                                 window.alert("Wrong type of scheme.");
                                 valid = false;

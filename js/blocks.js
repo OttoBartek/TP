@@ -85,8 +85,6 @@ function changeBlock(){
 
             if (scheme[changingElement.type].extra[0] != numerator || scheme[changingElement.type].extra[1] != denominator) {
 
-                console.log("tu som");
-
                 if (denominator != '1') {
 
                     if (denominator.match(/^-?\d+( -?\d+)*$/)) {
@@ -142,8 +140,6 @@ function changeBlock(){
                             var denOutput = "";
                             denArray = denominator.split(" ");
                             exponent = denArray.length - 1;
-
-                            console.log(denArray);
 
                             for (var j = 0; j < denArray.length; j++) {
                                 if (parseInt(denArray[j]) === 1) {
@@ -315,8 +311,6 @@ function drawequation(block,numerator,denominator){
         text = "f(s)";
         textLeft = (width/2 - (text.length*charWidth)/2) - width/2;
 
-        console.log(width/2 - (text.length*charWidth)/2);
-
         block.set({width:width});
         block._objects[1].set({width:width,left:-left})
         block._objects[0].set({width:width,left:-left})
@@ -329,7 +323,6 @@ function drawequation(block,numerator,denominator){
 
             if(obj.extra != undefined){
                 if(obj.extra === "F"){
-                    console.log(obj.left);
                     obj.set({text:text,fill:"black", left:textLeft});
                 }
                 else if(obj.extra === "numerator-3"){
@@ -362,8 +355,6 @@ function drawequation(block,numerator,denominator){
         text = numerator[0];
         textLeft = (width/2 - (text.length*charWidth)/2) - width/2;
 
-        console.log(width/2 - (text.length*charWidth)/2);
-
         block.set({width:width});
         block._objects[1].set({width:width,left:-left})
         block._objects[0].set({width:width,left:-left})
@@ -376,7 +367,6 @@ function drawequation(block,numerator,denominator){
 
             if(obj.extra != undefined){
                 if(obj.extra === "F"){
-                    console.log(obj.left);
                     obj.set({text:text,fill:"black", left:textLeft});
                 }
                 else if(obj.extra === "numerator-3"){
@@ -437,7 +427,6 @@ function drawequation(block,numerator,denominator){
 
             if(obj.extra != undefined){
                 if(obj.extra === "F"){
-                    console.log(obj.left);
                     obj.set({text:"F",fill:false, left:0});
                 }
                 else if(obj.extra === "numerator-3"){
@@ -463,8 +452,6 @@ function drawequation(block,numerator,denominator){
                     canvas.bringToFront();
                     canvas.setActiveObject(block)
                     canvas.discardActiveObject();
-                    canvas.remove(obj);
-                    canvas.add(obj);
                 }
                 else if(obj.extra === "denominator-3"){
                     obj.set({fill:false,left:0});
@@ -493,6 +480,8 @@ function drawequation(block,numerator,denominator){
     canvas.remove(block);
 
     canvas.add(block);
+
+    redrawLine(block);
 }
 
 function rotateObject(target, rotateBy){
@@ -515,8 +504,6 @@ function rotateObject(target, rotateBy){
 
     var portPos = portPositions[target.BlockType][rotation];
 
-    console.log("rot");
-
     var equationWidth = scheme[target.type].equationWidth;
 
     if (rotation == 90) {
@@ -528,7 +515,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
+                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x+ portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -550,7 +537,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
+                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -576,12 +563,10 @@ function rotateObject(target, rotateBy){
         if(scheme[target.type].BlockType =="Mux") {
             target._objects.forEach(function (obj) {
                 if(obj.name==1 || obj.name === 2 || obj.name === 3 || obj.name === 4){
-                    console.log(obj)
                     obj.set({left: 0});
 
                 }
                 if(obj.name === "out"){
-                    console.log(obj)
                     obj.set({left: -15});
                     // obj.setCoords();
                 }
@@ -590,12 +575,10 @@ function rotateObject(target, rotateBy){
         if(scheme[target.type].BlockType =="Product") {
             target._objects.forEach(function (obj) {
                 if(obj.name==1 || obj.name === 2 || obj.name === 3 || obj.name === 4){
-                    console.log(obj)
                     obj.set({left: 25});
 
                 }
                 if(obj.name === "out"){
-                    console.log(obj)
                     obj.set({left: -40});
                     // obj.setCoords();
                 }
@@ -623,12 +606,10 @@ function rotateObject(target, rotateBy){
         if(scheme[target.type].BlockType =="Mux") {
             target._objects.forEach(function (obj) {
                 if(obj.name==1 ||obj.name === 2 || obj.name === 3 || obj.name === 4){
-                    console.log(obj)
                     obj.set({left: -18});
 
                 }
                 if(obj.name === "out"){
-                    console.log(obj)
                     obj.set({left: 2});
                 }
             });
@@ -636,12 +617,10 @@ function rotateObject(target, rotateBy){
         if(scheme[target.type].BlockType =="Product") {
             target._objects.forEach(function (obj) {
                 if(obj.name==1 ||obj.name === 2 || obj.name === 3 || obj.name === 4){
-                    console.log(obj)
                     obj.set({left: -40.5});
 
                 }
                 if(obj.name === "out"){
-                    console.log(obj)
                     obj.set({left: 24.5});
                 }
             });
@@ -657,7 +636,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
+                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -677,7 +656,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
+                    input.set({angle: 90, top: y + portPos.in[inputCount][i-1].top, left: x + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -826,7 +805,6 @@ function redrawBlock(targetBlock, originInputNum){
 
     var io = data[blockType][0].io;
     var ports = data[blockType][0].ports;
-    console.log(blockGroup)
     var block = new fabric.Group(blockGroup, {baseBlock:1, type: type, left: x, top: y, io: io, ports: ports, numberOfInputs: numberOfInputs, ZOrder: blockOrder, "BlockType" : blockType});
     block.hasBorders = block.hasControls = false;
     canvas.add(block);
@@ -861,9 +839,7 @@ function redrawBlock(targetBlock, originInputNum){
     }
     if (io === 'in' || io === 'both') {
         var inPart;
-        console.log(numberOfInputs)
         if (numberOfInputs === 1 || blockType === 'Point') {
-            console.log(portPos.in)
             var inPart = new fabric.Triangle({
                 left: x + portPos.in.left, top: y + portPos.in.top,
                 angle: 90,
@@ -887,7 +863,6 @@ function redrawBlock(targetBlock, originInputNum){
             scheme = $.extend(scheme, addPort);
         } else if (numberOfInputs > 1) {
             for (var i = 1; i <= numberOfInputs; i++) {
-                console.log(portPos)
                 var inPart = new fabric.Triangle({
                     left: x + portPos.in[numberOfInputs][i-1].left, top: y + portPos.in[numberOfInputs][i-1].top,
                     angle: 90,
