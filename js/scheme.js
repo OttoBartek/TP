@@ -90,14 +90,14 @@ function loadModel(){
                             var fromPort = this.fromPort;
                             order = this.ZOrder;
 
-                            var lineA = createLine(from, to, beginBlockOrder, endBlockOrder, typeConnection, fromPort, scheme[to.type].NumberOfInputs, dstPort);
+                            var lineA = createLine(from, to, beginBlockOrder, endBlockOrder, typeConnection, fromPort, scheme[to.type].NumberOfInputs, dstPort,order);
                             canvas.add(lineA);
 
                             //console.log(scheme[this.ToPort]);
                             scheme[this.ToPort].full = true;
                             scheme[this.ToPort].connectedLine = lineA.type;
 
-                            //lineA.sendToBack();
+                            lineA.sendToBack();
 
 
                             var deletePointA = createDeletePoint(from, to, order, dstPort);
