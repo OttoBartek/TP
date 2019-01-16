@@ -5,12 +5,11 @@ function changeBlock(){
 
     var type = changingElement.type;
 
-    console.log(scheme);
-
     //zmena mena bloku
     var newName = $('#block-name').val();
     if(newName !== scheme[changingElement.type].VisibleName){
         scheme[changingElement.type].VisibleName = newName;
+
         changingElement._objects.forEach(function(obj){
             if(obj.text && obj.changeable)
                 obj.set({text:newName});
@@ -366,7 +365,6 @@ function drawequation(block,numerator,denominator){
 }
 
 function rotateObject(target, rotateBy){
-    console.log(scheme,target)
     var inputCount = scheme[target.type].NumberOfInputs;
     var rotation = scheme[target.type].Rotation;
     var ports = scheme[target.type].io;
@@ -634,6 +632,8 @@ function deleteBlock(targetBlock, originInputNum){
 
 function redrawBlock(targetBlock, originInputNum){
 
+    console.log(targetBlock);
+
     var x = scheme[targetBlock.type].Position_Array[0];
     var y = scheme[targetBlock.type].Position_Array[1];
     var blockType = targetBlock.BlockType;
@@ -682,8 +682,12 @@ function redrawBlock(targetBlock, originInputNum){
             blockGroup[i] = new fabric.Circle(part.data);
         else if(part.type === 'text')
             blockGroup[i] = new fabric.IText(part.Text, part.data);
-        else if(part.type === 'name')
-            blockGroup[i] = new fabric.IText(visibleName, part.data);
+        else if(part.type === 'name'){
+            partBlock[i] = new fabric.IText(type, subBlock.data);
+            if(!showNames){
+                partBlock[i].set({fill:"transparent"});
+            }
+        }
     });
 
     // console.log(blockGroup);
@@ -803,6 +807,8 @@ function redrawBlock(targetBlock, originInputNum){
     var posLYT = y;
     var posRXB = x + block.width;
     var posRYB = y + block.height;
+
+
     var addObj = {[type] : {
         "ZOrder" : blockOrder,
         "NameOfBlock": type,
@@ -830,6 +836,7 @@ function redrawBlock(targetBlock, originInputNum){
         "equationWidth":0
     }
     };
+
     scheme = $.extend(scheme, addObj);
     rotateObject(getObject(blockName),blockRotation);
 }
