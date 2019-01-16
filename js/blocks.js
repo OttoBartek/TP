@@ -5,6 +5,8 @@ function changeBlock(){
 
     var type = changingElement.type;
 
+    console.log(scheme);
+
     //zmena mena bloku
     var newName = $('#block-name').val();
     if(newName !== scheme[changingElement.type].VisibleName){
@@ -19,6 +21,7 @@ function changeBlock(){
     //zmena poctu portov
     if($('#input-number').length) {
         var inputNum = $('#input-number').val();
+
         //ak je nieco pripojene na dany blok
         if(scheme[changingElement.type].NumberOfFullInputs > 0 || scheme[changingElement.type].BotFull || scheme[changingElement.type].TopFull || scheme[changingElement.type].NumberOfFullOutputs > 0) {
             window.alert("Disconnect all lines to change the number of inputs.");
@@ -31,6 +34,9 @@ function changeBlock(){
                     //console.log('changing num of IN from ' + scheme[changingElement.type].NumberOfInputs + ' to ' + inputNum);
                     originIn = scheme[changingElement.type].NumberOfInputs;
                     scheme[changingElement.type].NumberOfInputs = parseInt(inputNum);
+
+
+
                     redrawBlock(changingElement, originIn);
                 }
                 else {
@@ -82,131 +88,6 @@ function changeBlock(){
 
             var numerator = $('#multiply-citatel').val();
             var denominator = $('#multiply-menovatel').val();
-
-            if (scheme[changingElement.type].extra[0] != numerator || scheme[changingElement.type].extra[1] != denominator) {
-
-                if (denominator != '1') {
-
-                    if (denominator.match(/^-?\d+( -?\d+)*$/)) {
-                        if (numerator.match(/^-?\d+( -?\d+)*$/)) {
-
-                            scheme[changingElement.type].extra = [numerator, denominator];
-
-                            var numeratorArr;
-                            var numOutput = "";
-                            numeratorArr = numerator.split(" ");
-                            var exponent = numeratorArr.length - 1;
-
-                            for (var i = 0; i < numeratorArr.length; i++) {
-                                if (parseInt(numeratorArr[i]) === 1) {
-                                    if (exponent > 1) {
-                                        numOutput += "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        numOutput += "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        numOutput += numeratorArr[i];
-                                    }
-                                }
-                                else if (parseInt(numeratorArr[i]) > 1) {
-                                    if (exponent > 1) {
-                                        numOutput += numeratorArr[i] + "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        numOutput += numeratorArr[i] + "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        numOutput += numeratorArr[i];
-                                    }
-                                } else {
-                                    exponent--;
-                                }
-
-                                if (i < numeratorArr.length - 1 && numeratorArr[i] !== '0') {
-                                    numOutput += "+";
-                                }
-                                //console.log(numOutput);
-                            }
-                            if(numOutput.substr(numOutput.length-1, numOutput.length) == '+'){
-                                numOutput = numOutput.slice(0, -1);
-                            }
-
-                            var denArray;
-                            var denOutput = "";
-                            denArray = denominator.split(" ");
-                            exponent = denArray.length - 1;
-
-                            for (var j = 0; j < denArray.length; j++) {
-                                if (parseInt(denArray[j]) === 1) {
-                                    if (exponent > 1) {
-                                        denOutput += "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        denOutput += "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        denOutput += denArray[j];
-                                    }
-                                }
-                                else if (parseInt(denArray[j]) > 1) {
-                                    if (exponent > 1) {
-                                        denOutput += denArray[j] + "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        denOutput += denArray[j] + "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        denOutput += denArray[j];
-                                    }
-                                }
-                                else {
-                                    exponent--;
-                                }
-
-                                if (j < denArray.length - 1 && denArray[j] !== '0') {
-                                    denOutput += "+";
-                                }
-                            }
-                            if(denOutput.substr(denOutput.length-1, denOutput.length) == '+'){
-                                denOutput = denOutput.slice(0, -1);
-                            }
-
-                            var resultTex = '\\dfrac{' + numOutput + '}{' + denOutput + '}';
-
-                            $.each(objPar, function (i, subPar) {
-                                //console.log(objPar);
-                                if (subPar.type == 'text') {
-                                    scheme[changingElement.type].tex_result = resultTex;
-                                }
-                            });
-                        } else {
-                            window.alert("Invalid numerator!");
-                            return;
-                        }
-                    } else {
-                        window.alert("Invalid denominator!");
-                        return;
-                    }
-                } else {
-                    if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)/)) {
-                        scheme[changingElement.type].extra = [numerator,denominator];
-                        scheme[changingElement.type].tex_result = numerator;
-                    }
-                    else {
-                        window.alert("Invalid numerator!");
-                        return;
-                    }
-                }
-            }
 
             drawequation(changingElement,numerator.split(" "),denominator.split(" "));
         }
@@ -485,6 +366,7 @@ function drawequation(block,numerator,denominator){
 }
 
 function rotateObject(target, rotateBy){
+    console.log(scheme,target)
     var inputCount = scheme[target.type].NumberOfInputs;
     var rotation = scheme[target.type].Rotation;
     var ports = scheme[target.type].io;
@@ -665,7 +547,10 @@ function rotateObject(target, rotateBy){
             var input = getObject(blockName + 'O');
             input.set({angle: 90, top: y + portPos.out.top, left: x + portPos.out.left+equationWidth});
             input.setCoords();
+            console.log(equationWidth)
+
         }
+
     }
 
     canvas.renderAll();
@@ -761,11 +646,11 @@ function redrawBlock(targetBlock, originInputNum){
     var blockRotation = scheme[blockName].Rotation;
 
     var blockData = blockDrawData[blockType];
-    var type = blockType + blockOrder;
+    // var type = blockType + blockOrder;
+    var type = blockName;
     var blockGroup = [];
 
     deleteBlock(targetBlock, originInputNum);
-
     $.each(blockData, function(i,part) {
         if(part.type === 'rect')
             blockGroup[i] = new fabric.Rect(part.data);
@@ -801,7 +686,7 @@ function redrawBlock(targetBlock, originInputNum){
             blockGroup[i] = new fabric.IText(visibleName, part.data);
     });
 
-    //console.log(type);
+    // console.log(blockGroup);
 
     var io = data[blockType][0].io;
     var ports = data[blockType][0].ports;
@@ -835,7 +720,6 @@ function redrawBlock(targetBlock, originInputNum){
             }
         };
         scheme = $.extend(scheme, addPort);
-
     }
     if (io === 'in' || io === 'both') {
         var inPart;
@@ -942,7 +826,8 @@ function redrawBlock(targetBlock, originInputNum){
         "attributes":attr,
         "connectedToBlocks":[],
         "connectedFromBlocks":[],
-        "connectedLines":[]
+        "connectedLines":[],
+        "equationWidth":0
     }
     };
     scheme = $.extend(scheme, addObj);
@@ -1053,6 +938,12 @@ function vypocetMultiply(){
                         }
 
                         var resultTex = '\\dfrac{' + numOutput + '}{' + denOutput + '}';
+                        $.each(objPar, function (i, subPar) {
+                            //console.log(objPar);
+                            if (subPar.type == 'text') {
+                                scheme[changingElement.type].tex_result = resultTex;
+                            }
+                        });
                     } else {
                         $("#multiply-citatel").addClass("is-invalid")
                         $("#block-error").html("Invalid numerator!");
@@ -1065,6 +956,8 @@ function vypocetMultiply(){
                 }
             } else {
                 if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)/)) {
+                    scheme[changingElement.type].extra = [numerator,denominator];
+                    scheme[changingElement.type].tex_result = numerator;
                 }
                 else {
                     $("#multiply-citatel").addClass("is-invalid")
@@ -1074,4 +967,8 @@ function vypocetMultiply(){
             }
         }
     }
+    var nieco = document.getElementById('multiply-text')
+    var val = scheme[changingElement.type].tex_result;
+    katex.render(val, nieco);
+
 }

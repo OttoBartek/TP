@@ -30,7 +30,6 @@ var rectControls = false;
 var inPosition, movingInPosition;
 
 window.addBlock = function (blockType, posx, posy) {
-
     posx -=posCanvas;
     counter++;
     number[blockType]++;
@@ -848,18 +847,19 @@ canvas.on('mouse:dblclick', function(e) {
             }
         }
         else if(e.target.baseBlock){
+
             var formData;
             changingElement = e.target;
             var objPar = blockParameters[e.target.BlockType];
             var elementID, element, inputValue = null;
-
 
             $('.modal-title').text('Block settings: '+scheme[e.target.type].VisibleName);
             formData = '<div class="form-group"><label for="block-name" class="col-form-label">Block name:</label>';
             formData += '<input type="text" class="form-control" id="block-name" value="'+scheme[e.target.type].VisibleName+'"'+((schemeType === 'blockSim') ? 'disabled':'')+'></div>';
             if(scheme[e.target.type].MaxInputs > 1){
                 formData += '<div class="form-group"><label for="input-number" class="col-form-label">Number of inputs (max. '+scheme[e.target.type].MaxInputs+'):</label>';
-                formData += '<input type="text" class="form-control" id="input-number" value="'+scheme[e.target.type].NumberOfInputs+'"></div>';
+                formData += '<script>    $("#input-number").on("keyup", function() {let value = $("#input-number").val();let splitValue = value.split(".")[0];if(splitValue.length == 0 || splitValue.length == undefined) {splitValue = splitValue.split(",")[0];}$("#input-number").val(splitValue); });</script>'
+                formData += '<input type="number" min="1" max="4" step="1" class="form-control" id="input-number" value="'+scheme[e.target.type].NumberOfInputs+'"></div>';
             }
             $.each(objPar, function(i,subPar) {
                 if(subPar.type === 'input') {
@@ -1836,7 +1836,7 @@ document.addEventListener('keydown', (event) => {
     }
     //object movement with arrow keys
     //move left
-    if(keyCode === '37'){
+    if(keyCode === 37){
         if(selectedElement){
             if(selectedElement.baseBlock){
                 selectedElement.set({left:selectedElement.left-1});
@@ -1847,7 +1847,7 @@ document.addEventListener('keydown', (event) => {
         }
     }
     //move right
-    if(keyCode === '39'){
+    if(keyCode === 39){
         if(selectedElement){
             if(selectedElement.baseBlock){
                 selectedElement.set({left:selectedElement.left+1});
@@ -1858,7 +1858,7 @@ document.addEventListener('keydown', (event) => {
         }
     }
     //move up
-    if(keyCode === '38'){
+    if(keyCode === 38){
         if(selectedElement){
             if(selectedElement.baseBlock){
                 selectedElement.set({top:selectedElement.top-1});
@@ -1869,7 +1869,7 @@ document.addEventListener('keydown', (event) => {
         }
     }
     //move down
-    if(keyCode === '40'){
+    if(keyCode === 40){
         if(selectedElement){
             if(selectedElement.baseBlock){
                 selectedElement.set({top:selectedElement.top+1});
