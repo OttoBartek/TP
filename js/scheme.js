@@ -60,7 +60,11 @@ function loadModel(){
                 $.each(scheme, function (key, value) {
                     if (valid) {
                         if (key == 'schemeInfo') {
-                            if (value.type != schemeType) {
+                            if (value.type === "rlc" || value.type === "algebra" || value.type === "blockSim") {
+                                changeSchema(value.type)
+                                scheme = JSON.parse(textFromFileLoaded)
+                            }
+                            else{
                                 window.alert("Wrong type of scheme.");
                                 valid = false;
                                 cleanScheme();
@@ -68,6 +72,7 @@ function loadModel(){
                             }
                         }
                         if (this.hasOwnProperty("objectType") && this.objectType === "block") {
+                            console.log(this)
                             drawBlockFromScheme(this.NameOfBlock);
                             counter++;
                             number[this.BlockType]++;
