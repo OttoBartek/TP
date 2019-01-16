@@ -1388,14 +1388,14 @@ changeSchema = (type) => {
                     }
                 },
                 {   "type":"text",
-                    "Text":"3",
+                    "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
                         "top":3,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
-                        "extra":"numerator-3"
+                        "extra":"numerator-1"
                     }
                 },
                 {   "type":"text",
@@ -1407,6 +1407,28 @@ changeSchema = (type) => {
                         "fontSize": 8,
                         "fill": false,
                         "extra":"numerator-2"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"3",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":3,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"numerator-3"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"4",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":3,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"numerator-4"
                     }
                 },
                 {   "type":"text",
@@ -1432,14 +1454,14 @@ changeSchema = (type) => {
                     }
                 },
                 {   "type":"text",
-                    "Text":"3",
+                    "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
                         "top":21,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
-                        "extra":"denominator-3"
+                        "extra":"denominator-1"
                     }
                 },
                 {   "type":"text",
@@ -1451,6 +1473,28 @@ changeSchema = (type) => {
                         "fontSize": 8,
                         "fill": false,
                         "extra":"denominator-2"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"3",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":21,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"denominator-3"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"4",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":21,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"denominator-4"
                     }
                 },
                 {   "type":"text",

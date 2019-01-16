@@ -306,8 +306,10 @@ window.addBlock = function (blockType, posx, posy) {
 
     scheme = $.extend(scheme, addObj);
 
-    if(blockType === 'Multiply')
+    if(blockType === 'Multiply'){
         scheme[type].tex_result = 'F';
+        scheme[type].equation = ["F","1"];
+    }
 };
 
 var selectedElement = null;
