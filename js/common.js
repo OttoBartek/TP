@@ -1,3 +1,1 @@
-reloadPage = () => {
-    location.reload();
-}
+
