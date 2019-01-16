@@ -2069,7 +2069,7 @@ changeSchema = (type) => {
                                 "left": 0,
                                 "fontSize": 9,
                                 "fill": "black",
-                                "changeable": false
+                                "changeable": true
                             }
                     }
                 ], "Constant":
@@ -2116,7 +2116,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Demux":
@@ -2190,7 +2190,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     },
                     {
@@ -2389,7 +2389,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "DigitalClock":
@@ -2436,7 +2436,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Display":
@@ -2493,7 +2493,7 @@ changeSchema = (type) => {
                             "left": 8,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Fcn":
@@ -2539,7 +2539,7 @@ changeSchema = (type) => {
                             "left": 15,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Gain":
@@ -2591,7 +2591,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Integrator":
@@ -2661,7 +2661,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Product":
@@ -2707,7 +2707,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     },
                     {
@@ -2882,7 +2882,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "StateSpace":
