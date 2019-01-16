@@ -840,9 +840,9 @@ function redrawBlock(targetBlock, originInputNum){
         else if(part.type === 'text')
             blockGroup[i] = new fabric.IText(part.Text, part.data);
         else if(part.type === 'name'){
-            partBlock[i] = new fabric.IText(type, subBlock.data);
+            blockGroup[i] = new fabric.IText(type, part.data);
             if(!showNames){
-                partBlock[i].set({fill:"transparent"});
+                blockGroup[i].set({fill:"transparent"});
             }
         }
     });

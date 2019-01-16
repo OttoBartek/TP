@@ -2677,7 +2677,7 @@ changeSchema = (type) => {
                             "fill": "black",
                             "width": 80,
                             "height": 60,
-                            "changeable": false
+                            "changeable": true
                         }
                     },
                     {
