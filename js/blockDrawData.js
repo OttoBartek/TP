@@ -677,6 +677,7 @@ changeSchema = (type) => {
     cleanScheme();
 
     if(type == "rlc") {
+        $("#solve").html('<i class="fa fa-check" aria-hidden="true"></i> solve');
         blockDrawData = {
             "Resistor":
                 [
@@ -1353,6 +1354,7 @@ changeSchema = (type) => {
         };
     }
     else if(type == "algebra") {
+        $("#solve").html('<i class="fa fa-check" aria-hidden="true"></i> solve');
         blockDrawData = {
             "Multiply":[
                 {
@@ -1902,6 +1904,7 @@ changeSchema = (type) => {
         };
     }
     else if(type == "blockSim") {
+        $("#solve").html('<i class="fa fa-check" aria-hidden="true"></i> export to .mdl');
         blockDrawData = {
             "AnalogInput":
                 [
