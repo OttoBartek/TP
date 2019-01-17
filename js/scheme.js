@@ -26,7 +26,11 @@ function cleanScheme(){
 
 function saveScheme(){
     //console.log("SAVING...");
+
     var jsonScheme = JSON.stringify(scheme, null, '\t');
+
+    console.log(jsonScheme);
+
     //console.log(jsonScheme);
     var textToSaveAsBlob = new Blob([jsonScheme], {type:"application/json"});
     var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
@@ -60,7 +64,11 @@ function loadModel(){
                 $.each(scheme, function (key, value) {
                     if (valid) {
                         if (key == 'schemeInfo') {
-                            if (value.type != schemeType) {
+                            if (value.type === "rlc" || value.type === "algebra" || value.type === "blockSim") {
+                                changeSchema(value.type)
+                                scheme = JSON.parse(textFromFileLoaded)
+                            }
+                            else{
                                 window.alert("Wrong type of scheme.");
                                 valid = false;
                                 cleanScheme();
@@ -86,14 +94,14 @@ function loadModel(){
                             var fromPort = this.fromPort;
                             order = this.ZOrder;
 
-                            var lineA = createLine(from, to, beginBlockOrder, endBlockOrder, typeConnection, fromPort, scheme[to.type].NumberOfInputs, dstPort);
+                            var lineA = createLine(from, to, beginBlockOrder, endBlockOrder, typeConnection, fromPort, scheme[to.type].NumberOfInputs, dstPort,order);
                             canvas.add(lineA);
 
                             //console.log(scheme[this.ToPort]);
                             scheme[this.ToPort].full = true;
                             scheme[this.ToPort].connectedLine = lineA.type;
 
-                            //lineA.sendToBack();
+                            lineA.sendToBack();
 
 
                             var deletePointA = createDeletePoint(from, to, order, dstPort);
@@ -155,8 +163,12 @@ function drawBlockFromScheme(targetBlock){
             partBlock[i] = new fabric.Circle(subBlock.data);
         else if(subBlock.type === 'text')
             partBlock[i] = new fabric.IText(subBlock.Text, subBlock.data);
-        else if(subBlock.type === 'name')
+        else if(subBlock.type === 'name'){
             partBlock[i] = new fabric.IText(visibleName, subBlock.data);
+            if(!showNames){
+                partBlock[i].set({fill:"transparent"});
+            }
+        }
     });
 
     var io = data[blockType][0].io;

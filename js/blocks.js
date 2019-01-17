@@ -5,10 +5,13 @@ function changeBlock(){
 
     var type = changingElement.type;
 
+    // console.log(scheme);
+
     //zmena mena bloku
     var newName = $('#block-name').val();
     if(newName !== scheme[changingElement.type].VisibleName){
         scheme[changingElement.type].VisibleName = newName;
+
         changingElement._objects.forEach(function(obj){
             if(obj.text && obj.changeable)
                 obj.set({text:newName});
@@ -19,6 +22,7 @@ function changeBlock(){
     //zmena poctu portov
     if($('#input-number').length) {
         var inputNum = $('#input-number').val();
+
         //ak je nieco pripojene na dany blok
         if(scheme[changingElement.type].NumberOfFullInputs > 0 || scheme[changingElement.type].BotFull || scheme[changingElement.type].TopFull || scheme[changingElement.type].NumberOfFullOutputs > 0) {
             window.alert("Disconnect all lines to change the number of inputs.");
@@ -31,6 +35,9 @@ function changeBlock(){
                     //console.log('changing num of IN from ' + scheme[changingElement.type].NumberOfInputs + ' to ' + inputNum);
                     originIn = scheme[changingElement.type].NumberOfInputs;
                     scheme[changingElement.type].NumberOfInputs = parseInt(inputNum);
+
+
+
                     redrawBlock(changingElement, originIn);
                 }
                 else {
@@ -83,135 +90,6 @@ function changeBlock(){
             var numerator = $('#multiply-citatel').val();
             var denominator = $('#multiply-menovatel').val();
 
-            if (scheme[changingElement.type].extra[0] != numerator || scheme[changingElement.type].extra[1] != denominator) {
-
-                console.log("tu som");
-
-                if (denominator != '1') {
-
-                    if (denominator.match(/^-?\d+( -?\d+)*$/)) {
-                        if (numerator.match(/^-?\d+( -?\d+)*$/)) {
-
-                            scheme[changingElement.type].extra = [numerator, denominator];
-
-                            var numeratorArr;
-                            var numOutput = "";
-                            numeratorArr = numerator.split(" ");
-                            var exponent = numeratorArr.length - 1;
-
-                            for (var i = 0; i < numeratorArr.length; i++) {
-                                if (parseInt(numeratorArr[i]) === 1) {
-                                    if (exponent > 1) {
-                                        numOutput += "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        numOutput += "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        numOutput += numeratorArr[i];
-                                    }
-                                }
-                                else if (parseInt(numeratorArr[i]) > 1) {
-                                    if (exponent > 1) {
-                                        numOutput += numeratorArr[i] + "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        numOutput += numeratorArr[i] + "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        numOutput += numeratorArr[i];
-                                    }
-                                } else {
-                                    exponent--;
-                                }
-
-                                if (i < numeratorArr.length - 1 && numeratorArr[i] !== '0') {
-                                    numOutput += "+";
-                                }
-                                //console.log(numOutput);
-                            }
-                            if(numOutput.substr(numOutput.length-1, numOutput.length) == '+'){
-                                numOutput = numOutput.slice(0, -1);
-                            }
-
-                            var denArray;
-                            var denOutput = "";
-                            denArray = denominator.split(" ");
-                            exponent = denArray.length - 1;
-
-                            console.log(denArray);
-
-                            for (var j = 0; j < denArray.length; j++) {
-                                if (parseInt(denArray[j]) === 1) {
-                                    if (exponent > 1) {
-                                        denOutput += "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        denOutput += "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        denOutput += denArray[j];
-                                    }
-                                }
-                                else if (parseInt(denArray[j]) > 1) {
-                                    if (exponent > 1) {
-                                        denOutput += denArray[j] + "s^{" + exponent+"}";
-                                        exponent--;
-                                    }
-                                    else if (exponent === 1) {
-                                        denOutput += denArray[j] + "s";
-                                        exponent--;
-                                    }
-                                    else {
-                                        denOutput += denArray[j];
-                                    }
-                                }
-                                else {
-                                    exponent--;
-                                }
-
-                                if (j < denArray.length - 1 && denArray[j] !== '0') {
-                                    denOutput += "+";
-                                }
-                            }
-                            if(denOutput.substr(denOutput.length-1, denOutput.length) == '+'){
-                                denOutput = denOutput.slice(0, -1);
-                            }
-
-                            var resultTex = '\\dfrac{' + numOutput + '}{' + denOutput + '}';
-
-                            $.each(objPar, function (i, subPar) {
-                                //console.log(objPar);
-                                if (subPar.type == 'text') {
-                                    scheme[changingElement.type].tex_result = resultTex;
-                                }
-                            });
-                        } else {
-                            window.alert("Invalid numerator!");
-                            return;
-                        }
-                    } else {
-                        window.alert("Invalid denominator!");
-                        return;
-                    }
-                } else {
-                    if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)/)) {
-                        scheme[changingElement.type].extra = [numerator,denominator];
-                        scheme[changingElement.type].tex_result = numerator;
-                    }
-                    else {
-                        window.alert("Invalid numerator!");
-                        return;
-                    }
-                }
-            }
-
             drawequation(changingElement,numerator.split(" "),denominator.split(" "));
         }
     }
@@ -257,8 +135,103 @@ function changeBlock(){
 
 function drawequation(block,numerator,denominator){
 
-    var charWidth = 6.5;
-    var expWidth = 4.5;
+    var numStr = "";
+    var denStr = "";
+
+    var splitted;
+    var splitted2;
+
+    var numExp = [0,0,0,0];
+    var denExp = [0,0,0,0];
+
+    var numExpLeft = [0,0,0,0];
+    var denExpLeft = [0,0,0,0];
+
+    var cnt = 0;
+
+    var long = false;
+
+    if(denominator.length < 101){
+
+        var equation = scheme[block.type].equation;
+
+        var num = equation[0];
+        var den = equation[1];
+
+        if(numerator.length == 1){
+            numStr = num;
+        }else{
+            splitted = num.split("+");
+
+            for(let i=0;i<splitted.length;i++){
+
+                splitted2 = splitted[i].split("^");
+                if(splitted2.length > 1){
+                    numStr+=splitted2[0];
+
+                    numExp[cnt] = splitted2[1].substr(1,splitted2[1].length-2);
+                    numExpLeft[cnt] = numStr.length;
+                    cnt++;
+
+                    if(cnt > 4){
+                        long = true;
+                        break;
+                    }
+                }else{
+                    numStr+=splitted2[0];
+                }
+
+                if(i!=splitted.length-1)
+                    numStr+= " + ";
+
+                if(denStr.length > 20){
+                    long = true;
+                    break;
+                }
+            }
+        }
+
+        if(!long){
+            cnt=0;
+
+            if(denominator.length == 1){
+                denStr = den;
+            }else{
+                splitted = den.split("+");
+
+                for(let i=0;i<splitted.length;i++){
+                    splitted2 = splitted[i].split("^");
+                    if(splitted2.length > 1){
+                        denStr+=splitted2[0];
+                        denExp[cnt] = splitted2[1].substr(1,splitted2[1].length-2);
+                        denExpLeft[cnt] = denStr.length;
+                        cnt++;
+
+                        if(cnt > 4){
+                            long = true;
+                            break;
+                        }
+
+                    }else{
+                        denStr+=splitted2[0];
+                    }
+
+                    if(i!=splitted.length-1)
+                        denStr+= " + ";
+
+                    if(denStr.length > 20){
+                        long = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }else{
+        long = true;
+    }
+
+    var charWidth = 6.6;
+    var charExpWidth = 4.5;
     var paddingEquation = 10;
     var paddingLine = 5;
 
@@ -267,55 +240,20 @@ function drawequation(block,numerator,denominator){
     var text = "";
     var textLeft = 0;
 
-    var strDen = "";
-    var strNum = "";
-
     var denLength = 0;
     var numLength = 0;
 
     scheme[block.type].equationWidth = 0;
 
-    if(denominator.length <= 3){
-        for(i=0; i<denominator.length; i++){
+    denLength = denStr.length;
+    numLength = numStr.length;
 
-            if(denominator[i] === "0"){
-                continue;
-            }
-
-            if(denominator[i]!="1"|| i==denominator.length - 1)
-                strDen+=denominator[i];
-
-            if(i!=denominator.length - 1 && denominator.length>1){
-                strDen+="s + ";
-            }
-        }
-
-        for(i=0; i<numerator.length; i++){
-
-            if(numerator[i] === "0"){
-                continue;
-            }
-
-            if(numerator[i]!="1" || i==numerator.length - 1)
-                strNum+=numerator[i];
-
-            if(i!=numerator.length - 1 && numerator.length>1){
-                strNum+="s + ";
-            }
-        }
-    }
-
-    denLength = strDen.length;
-    numLength = strNum.length;
-
-    if(denominator.length > 3 || (denominator.length == 1 && denominator[0] == 1 && numerator[0].length > 5) || denLength > 14 || numLength>14){
+    if(long || (denStr==="1" && numerator[0].length > 5)){
 
         width = 40;
         left = width/2 + 0.5;
         text = "f(s)";
         textLeft = (width/2 - (text.length*charWidth)/2) - width/2;
-
-        console.log(width/2 - (text.length*charWidth)/2);
 
         block.set({width:width});
         block._objects[1].set({width:width,left:-left})
@@ -329,13 +267,18 @@ function drawequation(block,numerator,denominator){
 
             if(obj.extra != undefined){
                 if(obj.extra === "F"){
-                    console.log(obj.left);
                     obj.set({text:text,fill:"black", left:textLeft});
+                }
+                else if(obj.extra === "numerator-1"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "numerator-2"){
+                    obj.set({fill:false,left:0});
                 }
                 else if(obj.extra === "numerator-3"){
                     obj.set({fill:false,left:0});
                 }
-                else if(obj.extra === "numerator-2"){
+                else if(obj.extra === "numerator-4"){
                     obj.set({fill:false,left:0});
                 }
                 else if(obj.extra === "numerator-equation"){
@@ -344,10 +287,16 @@ function drawequation(block,numerator,denominator){
                 else if(obj.extra === "equation-line"){
                     obj.set({fill:false,left:0,width:0,height:0});
                 }
-                else if(obj.extra === "denominator-3"){
+                else if(obj.extra === "denominator-1"){
                     obj.set({fill:false,left:0});
                 }
                 else if(obj.extra === "denominator-2"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "denominator-3"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "denominator-4"){
                     obj.set({fill:false,left:0});
                 }
                 else if(obj.extra === "denominator-equation"){
@@ -355,14 +304,12 @@ function drawequation(block,numerator,denominator){
                 }
             }
         });
-    }else if(denominator.length == 1 && denominator[0] === "1"){
+    }else if(denStr==="1"){
 
         width = 40;
         left = width/2 + 0.5;
-        text = numerator[0];
+        text = numStr;
         textLeft = (width/2 - (text.length*charWidth)/2) - width/2;
-
-        console.log(width/2 - (text.length*charWidth)/2);
 
         block.set({width:width});
         block._objects[1].set({width:width,left:-left})
@@ -376,13 +323,18 @@ function drawequation(block,numerator,denominator){
 
             if(obj.extra != undefined){
                 if(obj.extra === "F"){
-                    console.log(obj.left);
                     obj.set({text:text,fill:"black", left:textLeft});
+                }
+                else if(obj.extra === "numerator-1"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "numerator-2"){
+                    obj.set({fill:false,left:0});
                 }
                 else if(obj.extra === "numerator-3"){
                     obj.set({fill:false,left:0});
                 }
-                else if(obj.extra === "numerator-2"){
+                else if(obj.extra === "numerator-4"){
                     obj.set({fill:false,left:0});
                 }
                 else if(obj.extra === "numerator-equation"){
@@ -391,10 +343,16 @@ function drawequation(block,numerator,denominator){
                 else if(obj.extra === "equation-line"){
                     obj.set({fill:false,left:0,width:0,height:0});
                 }
-                else if(obj.extra === "denominator-3"){
+                else if(obj.extra === "denominator-1"){
                     obj.set({fill:false,left:0});
                 }
                 else if(obj.extra === "denominator-2"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "denominator-3"){
+                    obj.set({fill:false,left:0});
+                }
+                else if(obj.extra === "denominator-4"){
                     obj.set({fill:false,left:0});
                 }
                 else if(obj.extra === "denominator-equation"){
@@ -406,7 +364,32 @@ function drawequation(block,numerator,denominator){
 
         var maxChar = Math.max(denLength,numLength);
 
-        width = charWidth*maxChar+2*paddingEquation;
+        var expWidth = 0;
+
+        if(denLength > numLength){
+
+            if(denominator.length > 4){
+                for(let i=3;i>=0;i++){
+                    if(denExp[i] != 0){
+                        expWidth = denExp[i].length*charExpWidth;
+                        break;
+                    }
+                }
+            }
+        }else{
+
+            if(numerator.length > 4){
+                for(let i=3;i>=0;i++){
+                    if(numExp[i] != 0){
+                        expWidth = numExp[i].length*charExpWidth;
+                        break;
+                    }
+                }
+            }
+        }
+
+        width = charWidth*maxChar+2*paddingEquation+expWidth;
+
         left = width/2 + 0.5;
 
         scheme[block.type].equationWidth = width-40;
@@ -437,52 +420,75 @@ function drawequation(block,numerator,denominator){
 
             if(obj.extra != undefined){
                 if(obj.extra === "F"){
-                    console.log(obj.left);
                     obj.set({text:"F",fill:false, left:0});
                 }
-                else if(obj.extra === "numerator-3"){
-                    obj.set({fill:false,left:0});
+                else if(obj.extra === "numerator-1"){
+                    if(numExp[0] == 0){
+                        obj.set({fill:false,left:0,text:"1"});
+                    }else{
+                        obj.set({fill:"black",left:leftNum+(numExpLeft[0]*charWidth),text:numExp[0]});
+                    }
                 }
                 else if(obj.extra === "numerator-2"){
-                    if(numerator.length > 2){
-                        if(numerator[0] === "1")
-                            obj.set({fill:"black",left:leftNum+(((numerator[0]).length)*charWidth)});
-                        else if(numerator[0] === "0")
-                            obj.set({fill:false,left:0});
-                        else
-                            obj.set({fill:"black",left:leftNum+(((numerator[0]).length+1)*charWidth)});
+                    if(numExp[1] == 0){
+                        obj.set({fill:false,left:0,text:"2"});
                     }else{
-                        obj.set({fill:false,left:0});
+                        obj.set({fill:"black",left:leftNum+(numExpLeft[1]*charWidth),text:numExp[1]});
+                    }
+                }
+                else if(obj.extra === "numerator-3"){
+                    if(numExp[2] == 0){
+                        obj.set({fill:false,left:0,text:"3"});
+                    }else{
+                        obj.set({fill:"black",left:leftNum+(numExpLeft[2]*charWidth),text:numExp[2]});
+                    }
+                }
+                else if(obj.extra === "numerator-4"){
+                    if(numExp[3] == 0){
+                        obj.set({fill:false,left:0,text:"4"});
+                    }else{
+                        obj.set({fill:"black",left:leftNum+(numExpLeft[3]*charWidth),text:numExp[3]});
                     }
                 }
                 else if(obj.extra === "numerator-equation"){
-                    obj.set({text:strNum,fill:"black",left:leftNum});
+                    obj.set({text:numStr,fill:"black",left:leftNum});
                 }
                 else if(obj.extra === "equation-line"){
                     obj.set({fill:"black",left:leftLine,width:widthLine,height:0.1});
                     canvas.bringToFront();
                     canvas.setActiveObject(block)
                     canvas.discardActiveObject();
-                    canvas.remove(obj);
-                    canvas.add(obj);
                 }
-                else if(obj.extra === "denominator-3"){
-                    obj.set({fill:false,left:0});
+                else if(obj.extra === "denominator-1"){
+                    if(denExp[0] == 0){
+                        obj.set({fill:false,left:0,text:"1"});
+                    }else{
+                        obj.set({fill:"black",left:leftDen+(denExpLeft[0]*charWidth),text:denExp[0]});
+                    }
                 }
                 else if(obj.extra === "denominator-2"){
-                    if(denominator.length > 2){
-                        if(denominator[0] === "1")
-                            obj.set({fill:"black",left:leftDen+(((denominator[0]).length)*charWidth)});
-                        else if(denominator[0] === "0")
-                            obj.set({fill:false,left:0});
-                        else
-                            obj.set({fill:"black",left:leftDen+(((denominator[0]).length+1)*charWidth)});
+                    if(denExp[1] == 0){
+                        obj.set({fill:false,left:0,text:"2"});
                     }else{
-                        obj.set({fill:false,left:0});
+                        obj.set({fill:"black",left:leftDen+(denExpLeft[1]*charWidth),text:denExp[1]});
+                    }
+                }
+                else if(obj.extra === "denominator-3"){
+                    if(denExp[2] == 0){
+                        obj.set({fill:false,left:0,text:"3"});
+                    }else{
+                        obj.set({fill:"black",left:leftDen+(denExpLeft[2]*charWidth),text:denExp[2]});
+                    }
+                }
+                else if(obj.extra === "denominator-4"){
+                    if(denExp[3] == 0){
+                        obj.set({fill:false,left:0,text:"4"});
+                    }else{
+                        obj.set({fill:"black",left:leftDen+(denExpLeft[3]*charWidth),text:denExp[3]});
                     }
                 }
                 else if(obj.extra === "denominator-equation"){
-                    obj.set({text:strDen,fill:"black",left:leftDen});
+                    obj.set({text:denStr,fill:"black",left:leftDen});
                 }
             }
         });
@@ -493,9 +499,12 @@ function drawequation(block,numerator,denominator){
     canvas.remove(block);
 
     canvas.add(block);
+
+    redrawLine(block);
 }
 
 function rotateObject(target, rotateBy){
+    // console.log(scheme,target)
     var inputCount = scheme[target.type].NumberOfInputs;
     var rotation = scheme[target.type].Rotation;
     var ports = scheme[target.type].io;
@@ -526,7 +535,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
+                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x+ portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -548,7 +557,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
+                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -574,12 +583,10 @@ function rotateObject(target, rotateBy){
         if(scheme[target.type].BlockType =="Mux") {
             target._objects.forEach(function (obj) {
                 if(obj.name==1 || obj.name === 2 || obj.name === 3 || obj.name === 4){
-                    console.log(obj)
                     obj.set({left: 0});
 
                 }
                 if(obj.name === "out"){
-                    console.log(obj)
                     obj.set({left: -15});
                     // obj.setCoords();
                 }
@@ -588,14 +595,22 @@ function rotateObject(target, rotateBy){
         if(scheme[target.type].BlockType =="Product") {
             target._objects.forEach(function (obj) {
                 if(obj.name==1 || obj.name === 2 || obj.name === 3 || obj.name === 4){
-                    console.log(obj)
                     obj.set({left: 25});
 
                 }
                 if(obj.name === "out"){
-                    console.log(obj)
                     obj.set({left: -40});
                     // obj.setCoords();
+                }
+            });
+        }
+
+        if(scheme[target.type].BlockType =="Sum") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==="symbol"){
+                    // console.log(obj.left) //-12.5
+                    obj.set({left: 5});
+
                 }
             });
         }
@@ -621,26 +636,32 @@ function rotateObject(target, rotateBy){
         if(scheme[target.type].BlockType =="Mux") {
             target._objects.forEach(function (obj) {
                 if(obj.name==1 ||obj.name === 2 || obj.name === 3 || obj.name === 4){
-                    console.log(obj)
                     obj.set({left: -18});
 
                 }
                 if(obj.name === "out"){
-                    console.log(obj)
                     obj.set({left: 2});
                 }
             });
         }
         if(scheme[target.type].BlockType =="Product") {
             target._objects.forEach(function (obj) {
+
                 if(obj.name==1 ||obj.name === 2 || obj.name === 3 || obj.name === 4){
-                    console.log(obj)
                     obj.set({left: -40.5});
 
                 }
                 if(obj.name === "out"){
-                    console.log(obj)
                     obj.set({left: 24.5});
+                }
+            });
+        }
+        if(scheme[target.type].BlockType =="Sum") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==="symbol"){
+                    // console.log(obj.left) //-12.5
+                    obj.set({left: -12.5});
+
                 }
             });
         }
@@ -655,7 +676,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
+                    input.set({angle: rotation + 90, top: y + portPos.in[inputCount][i-1].top, left: x + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -675,7 +696,7 @@ function rotateObject(target, rotateBy){
             }else{
                 for (var i = 1; i <= inputCount; i++){
                     var input = getObject(blockName+'I'+i);
-                    input.set({angle: 90, top: y + portPos.in[inputCount][i-1].top, left: x + + portPos.in[inputCount][i-1].left});
+                    input.set({angle: 90, top: y + portPos.in[inputCount][i-1].top, left: x + portPos.in[inputCount][i-1].left});
                     input.setCoords();
                 }
             }
@@ -684,7 +705,9 @@ function rotateObject(target, rotateBy){
             var input = getObject(blockName + 'O');
             input.set({angle: 90, top: y + portPos.out.top, left: x + portPos.out.left+equationWidth});
             input.setCoords();
+
         }
+
     }
 
     canvas.renderAll();
@@ -780,11 +803,11 @@ function redrawBlock(targetBlock, originInputNum){
     var blockRotation = scheme[blockName].Rotation;
 
     var blockData = blockDrawData[blockType];
-    var type = blockType + blockOrder;
+    // var type = blockType + blockOrder;
+    var type = blockName;
     var blockGroup = [];
 
     deleteBlock(targetBlock, originInputNum);
-
     $.each(blockData, function(i,part) {
         if(part.type === 'rect')
             blockGroup[i] = new fabric.Rect(part.data);
@@ -816,15 +839,18 @@ function redrawBlock(targetBlock, originInputNum){
             blockGroup[i] = new fabric.Circle(part.data);
         else if(part.type === 'text')
             blockGroup[i] = new fabric.IText(part.Text, part.data);
-        else if(part.type === 'name')
-            blockGroup[i] = new fabric.IText(visibleName, part.data);
+        else if(part.type === 'name'){
+            blockGroup[i] = new fabric.IText(type, part.data);
+            if(!showNames){
+                blockGroup[i].set({fill:"transparent"});
+            }
+        }
     });
 
-    //console.log(type);
+    // console.log(blockGroup);
 
     var io = data[blockType][0].io;
     var ports = data[blockType][0].ports;
-    console.log(blockGroup)
     var block = new fabric.Group(blockGroup, {baseBlock:1, type: type, left: x, top: y, io: io, ports: ports, numberOfInputs: numberOfInputs, ZOrder: blockOrder, "BlockType" : blockType});
     block.hasBorders = block.hasControls = false;
     canvas.add(block);
@@ -855,13 +881,10 @@ function redrawBlock(targetBlock, originInputNum){
             }
         };
         scheme = $.extend(scheme, addPort);
-
     }
     if (io === 'in' || io === 'both') {
         var inPart;
-        console.log(numberOfInputs)
         if (numberOfInputs === 1 || blockType === 'Point') {
-            console.log(portPos.in)
             var inPart = new fabric.Triangle({
                 left: x + portPos.in.left, top: y + portPos.in.top,
                 angle: 90,
@@ -885,7 +908,6 @@ function redrawBlock(targetBlock, originInputNum){
             scheme = $.extend(scheme, addPort);
         } else if (numberOfInputs > 1) {
             for (var i = 1; i <= numberOfInputs; i++) {
-                console.log(portPos)
                 var inPart = new fabric.Triangle({
                     left: x + portPos.in[numberOfInputs][i-1].left, top: y + portPos.in[numberOfInputs][i-1].top,
                     angle: 90,
@@ -942,6 +964,8 @@ function redrawBlock(targetBlock, originInputNum){
     var posLYT = y;
     var posRXB = x + block.width;
     var posRYB = y + block.height;
+
+
     var addObj = {[type] : {
         "ZOrder" : blockOrder,
         "NameOfBlock": type,
@@ -965,9 +989,11 @@ function redrawBlock(targetBlock, originInputNum){
         "attributes":attr,
         "connectedToBlocks":[],
         "connectedFromBlocks":[],
-        "connectedLines":[]
+        "connectedLines":[],
+        "equationWidth":0
     }
     };
+
     scheme = $.extend(scheme, addObj);
     rotateObject(getObject(blockName),blockRotation);
 }
@@ -985,15 +1011,17 @@ function vypocetMultiply(){
         if (scheme[changingElement.type].extra[0] != numerator || scheme[changingElement.type].extra[1] != denominator) {
             // console.log(scheme[changingElement.type].extra)
             if (denominator != '1') {
-                if (denominator.match(/^-?\d+( -?\d+)*$/)) {
-                    if (numerator.match(/^-?\d+( -?\d+)*$/)) {
+                ///^-?\d+( -?\d+)*$/
+                ///^\[(-?\d+(\.\d+)?( -?\d+(\.\d+)?)*)\]$/
+                if (denominator.match(/^-?\d+(\.\d+)?( -?\d+(\.\d+)?)*$/)) {
+                    if (numerator.match(/^-?\d+(\.\d+)?( -?\d+(\.\d+)?)*$/)) {
                         var numeratorArr;
                         var numOutput = "";
                         numeratorArr = numerator.split(" ");
                         var exponent = numeratorArr.length - 1;
 
                         for (var i = 0; i < numeratorArr.length; i++) {
-                            if (parseInt(numeratorArr[i]) === 1) {
+                            if (numeratorArr[i] === "1") {
                                 if (exponent > 1) {
                                     numOutput += "s^{" + exponent+"}";
                                     exponent--;
@@ -1005,8 +1033,10 @@ function vypocetMultiply(){
                                 else {
                                     numOutput += numeratorArr[i];
                                 }
+                            }else if(numeratorArr[i] === "0"){
+                                exponent--;
                             }
-                            else if (parseInt(numeratorArr[i]) > 1) {
+                            else {
                                 if (exponent > 1) {
                                     numOutput += numeratorArr[i] + "s^{" + exponent+"}";
                                     exponent--;
@@ -1018,10 +1048,7 @@ function vypocetMultiply(){
                                 else {
                                     numOutput += numeratorArr[i];
                                 }
-                            } else {
-                                exponent--;
                             }
-
                             if (i < numeratorArr.length - 1 && numeratorArr[i] !== '0') {
                                 numOutput += "+";
                             }
@@ -1037,7 +1064,7 @@ function vypocetMultiply(){
                         exponent = denArray.length - 1;
 
                         for (var j = 0; j < denArray.length; j++) {
-                            if (parseInt(denArray[j]) === 1) {
+                            if (denArray[j] === "1") {
                                 if (exponent > 1) {
                                     denOutput += "s^{" + exponent+"}";
                                     exponent--;
@@ -1049,8 +1076,10 @@ function vypocetMultiply(){
                                 else {
                                     denOutput += denArray[j];
                                 }
+                            }else if(denArray[j] === "0"){
+                                exponent--;
                             }
-                            else if (parseInt(denArray[j]) > 1) {
+                            else {
                                 if (exponent > 1) {
                                     denOutput += denArray[j] + "s^{" + exponent+"}";
                                     exponent--;
@@ -1063,9 +1092,7 @@ function vypocetMultiply(){
                                     denOutput += denArray[j];
                                 }
                             }
-                            else {
-                                exponent--;
-                            }
+
 
                             if (j < denArray.length - 1 && denArray[j] !== '0') {
                                 denOutput += "+";
@@ -1076,6 +1103,17 @@ function vypocetMultiply(){
                         }
 
                         var resultTex = '\\dfrac{' + numOutput + '}{' + denOutput + '}';
+
+                        scheme[changingElement.type].extra = [numerator,denominator];
+
+                        scheme[changingElement.type].equation = [numOutput,denOutput];
+
+                        $.each(objPar, function (i, subPar) {
+                            //console.log(objPar);
+                            if (subPar.type == 'text') {
+                                scheme[changingElement.type].tex_result = resultTex;
+                            }
+                        });
                     } else {
                         $("#multiply-citatel").addClass("is-invalid")
                         $("#block-error").html("Invalid numerator!");
@@ -1087,7 +1125,10 @@ function vypocetMultiply(){
                     return;
                 }
             } else {
-                if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)/)) {
+                if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)|(^-?\d+(\.\d+)?)/)) {
+                    scheme[changingElement.type].extra = [numerator,denominator];
+                    scheme[changingElement.type].equation = [numerator,denominator];
+                    scheme[changingElement.type].tex_result = numerator;
                 }
                 else {
                     $("#multiply-citatel").addClass("is-invalid")
@@ -1097,4 +1138,8 @@ function vypocetMultiply(){
             }
         }
     }
+    var nieco = document.getElementById('multiply-text')
+    var val = scheme[changingElement.type].tex_result;
+    katex.render(val, nieco);
+
 }

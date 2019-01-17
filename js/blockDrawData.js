@@ -1,3 +1,4 @@
+var schemeType = "rlc"
 var blockDrawData = {
     "Resistor":
         [
@@ -416,266 +417,264 @@ var blockParameters = {
         ]
 };
 
-var portPositions = {
-    "Resistor":
-        {
-            90:{
-                "in":{
-                    "top":2,
-                    "left":1,
+    var portPositions = {
+        "Resistor":
+            {
+                90:{
+                    "in":{
+                        "top":2,
+                        "left":1,
+                    },
+                    "out":{
+                        "top":60,
+                        "left":1,
+                    }
                 },
-                "out":{
-                    "top":60,
-                    "left":1,
-                }
-            },
-            180:{
-                "in":{
-                    "top":11,
-                    "left":49,
+                180:{
+                    "in":{
+                        "top":11,
+                        "left":49,
+                    },
+                    "out":{
+                        "top":11,
+                        "left":-10,
+                    }
                 },
-                "out":{
-                    "top":11,
-                    "left":-10,
-                }
-            },
-            270:{
-                "in":{
-                    "top":-1,
-                    "left":-0.5,
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":-0.5,
+                    },
+                    "out":{
+                        "top":-61,
+                        "left":-0.5,
+                    }
                 },
-                "out":{
-                    "top":-61,
-                    "left":-0.5,
-                }
-            },
-            0:{
-                "in":{
-                    "top":-0.5,
-                    "left":1,
-                },
-                "out":{
-                    "top":-1,
-                    "left":60,
-                }
-            }
-        }
-    , "Inductor":
-        {
-            90:{
-                "in":{
-                    "top":5,
-                    "left":-14,
-                },
-                "out":{
-                    "top":58,
-                    "left":-14,
-                }
-            },
-            180:{
-                "in":{
-                    "top":25,
-                    "left":46,
-                },
-                "out":{
-                    "top":25,
-                    "left":-8,
-                }
-            },
-            270:{
-                "in":{
-                    "top":-5,
-                    "left":14,
-                },
-                "out":{
-                    "top":-58,
-                    "left":14,
-                }
-            },
-            0:{
-                "in":{
-                    "top":14,
-                    "left":5,
-                },
-                "out":{
-                    "top":14,
-                    "left":58,
+                0:{
+                    "in":{
+                        "top":-0.5,
+                        "left":1,
+                    },
+                    "out":{
+                        "top":-1,
+                        "left":60,
+                    }
                 }
             }
-        }, "Capacitor":
-        {
-            90:{
-                "in":{
-                    "top":2,
-                    "left":-5,
+        , "Inductor":
+            {
+                90:{
+                    "in":{
+                        "top":2,
+                        "left":-2.5,
+                    },
+                    "out":{
+                        "top":55,
+                        "left":-2.5,
+                    }
                 },
-                "out":{
-                    "top":46,
-                    "left":-5,
+                180:{
+                    "in":{
+                        "top":14.5,
+                        "left":44,
+                    },
+                    "out":{
+                        "top":14.5,
+                        "left":-10.5,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-2,
+                        "left":2.5,
+                    },
+                    "out":{
+                        "top":-56,
+                        "left":2.5,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":2.5,
+                        "left":0.5,
+                    },
+                    "out":{
+                        "top":2.5,
+                        "left":55.5,
+                    }
                 }
-            },
-            180:{
-                "in":{
-                    "top":16,
-                    "left":33,
+            }, "Capacitor":
+            {
+                90:{
+                    "in":{
+                        "top":2,
+                        "left":-4.5,
+                    },
+                    "out":{
+                        "top":56,
+                        "left":-4.5,
+                    }
                 },
-                "out":{
-                    "top":16,
-                    "left":-10,
+                180:{
+                    "in":{
+                        "top":16,
+                        "left":43,
+                    },
+                    "out":{
+                        "top":16,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-2,
+                        "left":5,
+                    },
+                    "out":{
+                        "top":-56,
+                        "left":5,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":4.5,
+                        "left":1,
+                    },
+                    "out":{
+                        "top":4.5,
+                        "left":55,
+                    }
                 }
-            },
-            270:{
-                "in":{
-                    "top":-2,
-                    "left":5,
+            }, "Uin":
+            {
+                90:{
+                    "in":{
+                        "top":1,
+                        "left":-4.5,
+                    },
+                    "out":{
+                        "top":53,
+                        "left":-4.5,
+                    }
                 },
-                "out":{
-                    "top":-46,
-                    "left":5,
+                180:{
+                    "in":{
+                        "top":15.5,
+                        "left":41,
+                    },
+                    "out":{
+                        "top":15.5,
+                        "left":-11,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":4.5,
+                    },
+                    "out":{
+                        "top":-53,
+                        "left":4.5,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":4.5,
+                        "left":1,
+                    },
+                    "out":{
+                        "top":4.5,
+                        "left":53.5,
+                    }
                 }
-            },
-            0:{
-                "in":{
-                    "top":13,
-                    "left":5,
+            }, "Uout":
+            {
+                90:{
+                    "in":{
+                        "top":1,
+                        "left":-4.5,
+                    },
+                    "out":{
+                        "top":53,
+                        "left":-4.5,
+                    }
                 },
-                "out":{
-                    "top":13,
-                    "left":48,
+                180:{
+                    "in":{
+                        "top":15.5,
+                        "left":41,
+                    },
+                    "out":{
+                        "top":15.5,
+                        "left":-11,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-1,
+                        "left":4.5,
+                    },
+                    "out":{
+                        "top":-53,
+                        "left":4.5,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":4.5,
+                        "left":1,
+                    },
+                    "out":{
+                        "top":4.5,
+                        "left":53.5,
+                    }
+                }
+            }, "Point":
+            {
+                90:{
+                    "in":{
+                        "top":2,
+                        "left":0.5,
+                    },
+                    "out":{
+                        "top":50,
+                        "left":0.5,
+                    }
+                },
+                180:{
+                    "in":{
+                        "top":10.5,
+                        "left":39,
+                    },
+                    "out":{
+                        "top":10.5,
+                        "left":-10,
+                    }
+                },
+                270:{
+                    "in":{
+                        "top":-0.5,
+                        "left":-0.5,
+                    },
+                    "out":{
+                        "top":-50,
+                        "left":0,
+                    }
+                },
+                0:{
+                    "in":{
+                        "top":0,
+                        "left":6,
+                    },
+                    "out":{
+                        "top":0,
+                        "left":50,
+                    }
                 }
             }
-        }, "Uin":
-        {
-            90:{
-                "in":{
-                    "top":5,
-                    "left":-13,
-                },
-                "out":{
-                    "top":56,
-                    "left":-13,
-                }
-            },
-            180:{
-                "in":{
-                    "top":24,
-                    "left":45,
-                },
-                "out":{
-                    "top":24,
-                    "left":-7,
-                }
-            },
-            270:{
-                "in":{
-                    "top":-5,
-                    "left":13,
-                },
-                "out":{
-                    "top":-56,
-                    "left":13,
-                }
-            },
-            0:{
-                "in":{
-                    "top":12.5,
-                    "left":5,
-                },
-                "out":{
-                    "top":12.5,
-                    "left":56,
-                }
-            }
-        }, "Uout":
-        {
-            90:{
-                "in":{
-                    "top":5,
-                    "left":-13,
-                },
-                "out":{
-                    "top":56,
-                    "left":-13,
-                }
-            },
-            180:{
-                "in":{
-                    "top":24,
-                    "left":45,
-                },
-                "out":{
-                    "top":24,
-                    "left":-7,
-                }
-            },
-            270:{
-                "in":{
-                    "top":-5,
-                    "left":13,
-                },
-                "out":{
-                    "top":-56,
-                    "left":13,
-                }
-            },
-            0:{
-                "in":{
-                    "top":12.5,
-                    "left":5,
-                },
-                "out":{
-                    "top":12.5,
-                    "left":56,
-                }
-            }
-        }, "Point":
-        {
-            90:{
-                "in":{
-                    "top":6,
-                    "left":-10.5,
-                },
-                "out":{
-                    "top":55,
-                    "left":-10.5,
-                }
-            },
-            180:{
-                "in":{
-                    "top":21.5,
-                    "left":43,
-                },
-                "out":{
-                    "top":21.5,
-                    "left":-5,
-                }
-            },
-            270:{
-                "in":{
-                    "top":-7.5,
-                    "left":10.5,
-                },
-                "out":{
-                    "top":-54.5,
-                    "left":10.5,
-                }
-            },
-            0:{
-                "in":{
-                    "top":10.5,
-                    "left":6,
-                },
-                "out":{
-                    "top":10,
-                    "left":55,
-                }
-            }
-        }
-};
-
+    };
 changeSchema = (type) => {
     cleanScheme();
-
     if(type == "rlc") {
         $("#solve").html('<i class="fa fa-check" aria-hidden="true"></i> solve');
         blockDrawData = {
@@ -737,7 +736,7 @@ changeSchema = (type) => {
                             "fill": "black",
                             "changeable": true
                         }
-    
+
                     }
                 ], "Point":
                 [
@@ -798,7 +797,7 @@ changeSchema = (type) => {
                             "fill": "black",
                             "changeable": true
                         }
-    
+
                     },
                     {
                         "type": "rect",
@@ -1012,8 +1011,8 @@ changeSchema = (type) => {
                 }
                 ]
         };
-    
-        blockParameters = {
+
+         blockParameters = {
             "Resistor":
                 [
                     {
@@ -1095,7 +1094,7 @@ changeSchema = (type) => {
                     }
                 ]
         };
-    
+
         portPositions = {
             "Resistor":
                 {
@@ -1144,42 +1143,42 @@ changeSchema = (type) => {
                 {
                     90:{
                         "in":{
-                            "top":5,
-                            "left":-14,
+                            "top":2,
+                            "left":-2.5,
                         },
                         "out":{
-                            "top":58,
-                            "left":-14,
+                            "top":55,
+                            "left":-2.5,
                         }
                     },
                     180:{
                         "in":{
-                            "top":25,
-                            "left":46,
+                            "top":14.5,
+                            "left":44,
                         },
                         "out":{
-                            "top":25,
-                            "left":-8,
+                            "top":14.5,
+                            "left":-10.5,
                         }
                     },
                     270:{
                         "in":{
-                            "top":-5,
-                            "left":14,
+                            "top":-2,
+                            "left":2.5,
                         },
                         "out":{
-                            "top":-58,
-                            "left":14,
+                            "top":-56,
+                            "left":2.5,
                         }
                     },
                     0:{
                         "in":{
-                            "top":14,
-                            "left":5,
+                            "top":2.5,
+                            "left":0.5,
                         },
                         "out":{
-                            "top":14,
-                            "left":58,
+                            "top":2.5,
+                            "left":55.5,
                         }
                     }
                 }, "Capacitor":
@@ -1187,17 +1186,17 @@ changeSchema = (type) => {
                     90:{
                         "in":{
                             "top":2,
-                            "left":-5,
+                            "left":-4.5,
                         },
                         "out":{
-                            "top":46,
-                            "left":-5,
+                            "top":56,
+                            "left":-4.5,
                         }
                     },
                     180:{
                         "in":{
                             "top":16,
-                            "left":33,
+                            "left":43,
                         },
                         "out":{
                             "top":16,
@@ -1210,144 +1209,144 @@ changeSchema = (type) => {
                             "left":5,
                         },
                         "out":{
-                            "top":-46,
+                            "top":-56,
                             "left":5,
                         }
                     },
                     0:{
                         "in":{
-                            "top":13,
-                            "left":5,
+                            "top":4.5,
+                            "left":1,
                         },
                         "out":{
-                            "top":13,
-                            "left":48,
+                            "top":4.5,
+                            "left":55,
                         }
                     }
                 }, "Uin":
                 {
                     90:{
                         "in":{
-                            "top":5,
-                            "left":-13,
+                            "top":1,
+                            "left":-4.5,
                         },
                         "out":{
-                            "top":56,
-                            "left":-13,
+                            "top":53,
+                            "left":-4.5,
                         }
                     },
                     180:{
                         "in":{
-                            "top":24,
-                            "left":45,
+                            "top":15.5,
+                            "left":41,
                         },
                         "out":{
-                            "top":24,
-                            "left":-7,
+                            "top":15.5,
+                            "left":-11,
                         }
                     },
                     270:{
                         "in":{
-                            "top":-5,
-                            "left":13,
+                            "top":-1,
+                            "left":4.5,
                         },
                         "out":{
-                            "top":-56,
-                            "left":13,
+                            "top":-53,
+                            "left":4.5,
                         }
                     },
                     0:{
                         "in":{
-                            "top":12.5,
-                            "left":5,
+                            "top":4.5,
+                            "left":1,
                         },
                         "out":{
-                            "top":12.5,
-                            "left":56,
+                            "top":4.5,
+                            "left":53.5,
                         }
                     }
                 }, "Uout":
                 {
                     90:{
                         "in":{
-                            "top":5,
-                            "left":-13,
+                            "top":1,
+                            "left":-4.5,
                         },
                         "out":{
-                            "top":56,
-                            "left":-13,
+                            "top":53,
+                            "left":-4.5,
                         }
                     },
                     180:{
                         "in":{
-                            "top":24,
-                            "left":45,
+                            "top":15.5,
+                            "left":41,
                         },
                         "out":{
-                            "top":24,
-                            "left":-7,
+                            "top":15.5,
+                            "left":-11,
                         }
                     },
                     270:{
                         "in":{
-                            "top":-5,
-                            "left":13,
+                            "top":-1,
+                            "left":4.5,
                         },
                         "out":{
-                            "top":-56,
-                            "left":13,
+                            "top":-53,
+                            "left":4.5,
                         }
                     },
                     0:{
                         "in":{
-                            "top":12.5,
-                            "left":5,
+                            "top":4.5,
+                            "left":1,
                         },
                         "out":{
-                            "top":12.5,
-                            "left":56,
+                            "top":4.5,
+                            "left":53.5,
                         }
                     }
                 }, "Point":
                 {
                     90:{
                         "in":{
-                            "top":6,
-                            "left":-10.5,
+                            "top":2,
+                            "left":0.5,
                         },
                         "out":{
-                            "top":55,
-                            "left":-10.5,
+                            "top":50,
+                            "left":0.5,
                         }
                     },
                     180:{
                         "in":{
-                            "top":21.5,
-                            "left":43,
+                            "top":10.5,
+                            "left":39,
                         },
                         "out":{
-                            "top":21.5,
-                            "left":-5,
+                            "top":10.5,
+                            "left":-10,
                         }
                     },
                     270:{
                         "in":{
-                            "top":-7.5,
-                            "left":10.5,
+                            "top":-0.5,
+                            "left":-0.5,
                         },
                         "out":{
-                            "top":-54.5,
-                            "left":10.5,
+                            "top":-50,
+                            "left":0,
                         }
                     },
                     0:{
                         "in":{
-                            "top":10.5,
+                            "top":0,
                             "left":6,
                         },
                         "out":{
-                            "top":10,
-                            "left":55,
+                            "top":0,
+                            "left":50,
                         }
                     }
                 }
@@ -1374,7 +1373,7 @@ changeSchema = (type) => {
                         "name": "element",
                         "width":40,
                         "height":40,
-                        "fill":false,
+                        "fill":"white",
                         "stroke":"black"
                     }
                 },
@@ -1391,14 +1390,14 @@ changeSchema = (type) => {
                     }
                 },
                 {   "type":"text",
-                    "Text":"3",
+                    "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
                         "top":3,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
-                        "extra":"numerator-3"
+                        "extra":"numerator-1"
                     }
                 },
                 {   "type":"text",
@@ -1410,6 +1409,28 @@ changeSchema = (type) => {
                         "fontSize": 8,
                         "fill": false,
                         "extra":"numerator-2"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"3",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":3,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"numerator-3"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"4",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":3,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"numerator-4"
                     }
                 },
                 {   "type":"text",
@@ -1435,14 +1456,14 @@ changeSchema = (type) => {
                     }
                 },
                 {   "type":"text",
-                    "Text":"3",
+                    "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
                         "top":21,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
-                        "extra":"denominator-3"
+                        "extra":"denominator-1"
                     }
                 },
                 {   "type":"text",
@@ -1454,6 +1475,28 @@ changeSchema = (type) => {
                         "fontSize": 8,
                         "fill": false,
                         "extra":"denominator-2"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"3",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":21,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"denominator-3"
+                    }
+                },
+                {   "type":"text",
+                    "Text":"4",
+                    "data":{
+                        "fontFamily": "Consolas",
+                        "top":21,
+                        "left":0,
+                        "fontSize": 8,
+                        "fill": false,
+                        "extra":"denominator-4"
                     }
                 },
                 {   "type":"text",
@@ -1479,7 +1522,7 @@ changeSchema = (type) => {
                         "fill": "black",
                         "changeable": true
                     }
-    
+
                 }
             ]
             ,"Sumator":
@@ -1539,7 +1582,7 @@ changeSchema = (type) => {
                             "fill": "black",
                             "changeable": true
                         }
-    
+
                     }
                 ],"IOin":
                 [
@@ -1585,7 +1628,7 @@ changeSchema = (type) => {
                             "fill": "black",
                             "changeable": true
                         }
-    
+
                     }
                 ],"IOout":
                 [
@@ -1631,11 +1674,11 @@ changeSchema = (type) => {
                             "fill": "black",
                             "changeable": true
                         }
-    
+
                     }
                 ]
         };
-    
+
         blockParameters = {
             "Multiply":
                 [
@@ -1740,49 +1783,49 @@ changeSchema = (type) => {
                         "BlockType":"IOout",
                         "title":"Parametre IOout"
                     }
-        ]};
-    
+                ]};
+
         portPositions = {
             "Multiply":
                 {
                     90:{
                         "in":{
-                            "top":3,
-                            "left":-10,
+                            "top":1,
+                            "left":-12,
                         },
                         "out":{
-                            "top":53,
-                            "left":-10,
+                            "top":51,
+                            "left":-12,
                         }
                     },
                     180:{
                         "in":{
-                            "top":20,
-                            "left":43,
+                            "top":22,
+                            "left":41,
                         },
                         "out":{
-                            "top":20,
-                            "left":-8,
+                            "top":22,
+                            "left":-10,
                         }
                     },
                     270:{
                         "in":{
-                            "top":-3,
-                            "left":10,
+                            "top":-1,
+                            "left":12,
                         },
                         "out":{
-                            "top":-53,
-                            "left":10,
+                            "top":-51,
+                            "left":12,
                         }
                     },
                     0:{
                         "in":{
-                            "top":10,
-                            "left":2,
+                            "top":12,
+                            "left":0,
                         },
                         "out":{
-                            "top":10,
-                            "left":53,
+                            "top":12,
+                            "left":51,
                         }
                     },
                 },
@@ -1790,114 +1833,114 @@ changeSchema = (type) => {
                 {
                     90:{
                         "in":{2:[{
-                            "top":1,
-                            "left":0,
-                        },
-                            {
-                                "top":1,
-                                "left":-20,
-                            }
-                        ]},
+                                "top":-1,
+                                "left":-2,
+                            },
+                                {
+                                    "top":-1,
+                                    "left":-22,
+                                }
+                            ]},
                         "out":{
-                            "top":53,
-                            "left":-10,
+                            "top":51,
+                            "left":-12,
                         }
                     },
                     180:{
                         "in":{2:[{
-                            "top":13,
-                            "left":41,
-                        },
-                            {
-                                "top":31,
+                                "top":13,
                                 "left":41,
-                            }
-                        ]},
+                            },
+                                {
+                                    "top":31,
+                                    "left":41,
+                                }
+                            ]},
                         "out":{
-                            "top":20,
-                            "left":-9,
+                            "top":22,
+                            "left":-11,
                         }
                     },
                     270:{
                         "in":{2:[{
-                            "top":-2,
-                            "left":0,
-                        },
-                            {
-                                "top":-2,
-                                "left":20,
-                            }
-                        ]},
+                                "top":0,
+                                "left":2,
+                            },
+                                {
+                                    "top":0,
+                                    "left":22,
+                                }
+                            ]},
                         "out":{
-                            "top":-54,
-                            "left":10,
+                            "top":-52,
+                            "left":12,
                         }
                     },
                     0:{
                         "in":{2:[{
-                            "top":0,
-                            "left":2,
-                        },
-                            {
-                                "top":20,
-                                "left":2,
-                            }
-                        ]},
+                                "top":2,
+                                "left":0,
+                            },
+                                {
+                                    "top":22,
+                                    "left":0,
+                                }
+                            ]},
                         "out":{
-                            "top":10,
-                            "left":53,
+                            "top":12,
+                            "left":51,
                         }
                     }
                 },"IOin":
                 {
                     90:{
                         "out":{
-                            "top":53,
-                            "left":-10,
+                            "top":51,
+                            "left":-12,
                         }
                     },
                     180:{
                         "out":{
-                            "top":23,
-                            "left":-8,
+                            "top":25,
+                            "left":-10,
                         }
                     },
                     270:{
                         "out":{
-                            "top":-53,
-                            "left":10,
+                            "top":-51,
+                            "left":12,
                         }
                     },
                     0:{
                         "out":{
-                            "top":10,
-                            "left":53,
+                            "top":12,
+                            "left":51,
                         }
                     }
                 },"IOout":
                 {
                     90:{
                         "in":{
-                            "top":2,
-                            "left":-10,
+                            "top":0,
+                            "left":-12,
                         }
                     },
                     180:{
                         "in":{
-                            "top":20,
-                            "left":42,
+                            "top":22,
+                            "left":40,
                         }
                     },
                     270:{
                         "in":{
-                            "top":-3,
-                            "left":10,
+                            "top":-1,
+                            "left":12,
                         }
                     },
                     0:{
                         "in":{
-                            "top":10,
-                            "left":2,
+                            "top":12,
+                            "left":0,
                         }
                     }
                 }
@@ -2029,7 +2072,7 @@ changeSchema = (type) => {
                                 "left": 0,
                                 "fontSize": 9,
                                 "fill": "black",
-                                "changeable": false
+                                "changeable": true
                             }
                     }
                 ], "Constant":
@@ -2076,12 +2119,12 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Demux":
                 [
-    
+
                     {
                         "type": "name",
                         "Text": "Demux",
@@ -2139,7 +2182,7 @@ changeSchema = (type) => {
                     }
                 ], "Mux":
                 [
-    
+
                     {
                         "type": "name",
                         "Text": "Mux",
@@ -2150,7 +2193,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     },
                     {
@@ -2349,7 +2392,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "DigitalClock":
@@ -2396,7 +2439,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Display":
@@ -2453,7 +2496,7 @@ changeSchema = (type) => {
                             "left": 8,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Fcn":
@@ -2499,7 +2542,7 @@ changeSchema = (type) => {
                             "left": 15,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Gain":
@@ -2527,7 +2570,7 @@ changeSchema = (type) => {
                                 "stroke": "black",
                                 "fill": "white",
                                 "angle": 90
-    
+
                             }
                     },
                     {
@@ -2551,7 +2594,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Integrator":
@@ -2621,27 +2664,43 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Product":
                 [
                     {
+                        "type": "name",
+                        "Text": "Product",
+                        "data": {
+                            "fontFamily": "Arial",
+                            "top": 48,
+                            "left": 0,
+                            "fontSize": 9,
+                            "fill": "black",
+                            "width": 80,
+                            "height": 60,
+                            "changeable": true
+                        }
+                    },
+                    {
                         "type": "rect",
                         "data": {
                             "name": "bound",
-                            "width": 50,
+                            "width": 80,
                             "height": 60,
                             "fill": false,
                             // "stroke": "blue"
                             "invisible": true
                         }
                     },
+
                     {
                         "type": "rect",
                         "data": {
                             "width": 50,
                             "height": 45,
+                            "left": 15,
                             "fill": "white",
                             "stroke": "black"
                         }
@@ -2651,21 +2710,10 @@ changeSchema = (type) => {
                         "Text": "x",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 10,
-                            "left": 20,
+                            "top": 15,
+                            "left": 38,
+                            "height": 40,
                             "fontSize": 11,
-                            "fill": "black",
-                            "changeable": false
-                        }
-                    },
-                    {
-                        "type": "name",
-                        "Text": "Product",
-                        "data": {
-                            "fontFamily": "Arial",
-                            "top": 48,
-                            "left": 0,
-                            "fontSize": 9,
                             "fill": "black",
                             "changeable": false
                         }
@@ -2676,7 +2724,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 1,
-                                "left": -15,
+                                "left": 0,
                                 "top": 22.5,
                                 "stroke": false,
                                 "invisible": true
@@ -2688,7 +2736,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 2,
-                                "left": -15,
+                                "left": 0,
                                 "top": 11,
                                 "stroke": "black",
                                 // "invisible": true
@@ -2700,7 +2748,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 2,
-                                "left": -15,
+                                "left": 0,
                                 "top": 34,
                                 "stroke": "black",
                                 // "invisible": true
@@ -2712,7 +2760,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 3,
-                                "left": -15,
+                                "left": 0,
                                 "top": 7.5,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2724,7 +2772,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 3,
-                                "left": -15,
+                                "left": 0,
                                 "top": 22.5,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2736,7 +2784,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 3,
-                                "left": -15,
+                                "left": 0,
                                 "top": 37.5,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2748,7 +2796,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 4,
-                                "left": -15,
+                                "left": 0,
                                 "top": 0,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2760,7 +2808,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 4,
-                                "left": -15,
+                                "left": 0,
                                 "top": 15,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2772,7 +2820,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 4,
-                                "left": -15,
+                                "left": 0,
                                 "top": 30,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2784,7 +2832,7 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name": 4,
-                                "left": -15,
+                                "left": 0,
                                 "top": 45,
                                 // "stroke": "green",
                                 "invisible": true
@@ -2796,20 +2844,23 @@ changeSchema = (type) => {
                         "data":
                             {
                                 "name":"out",
-                                "left": 50,
+                                "left": 65,
                                 "top": 22.5,
                                 "stroke": "black"
                             }
-                    }
+                    },
+
+
                 ], "Scope":
                 [
                     {
                         "type": "rect",
                         "data": {
-                            "width": 45,
-                            "height": 40,
+                            "name": "bound",
+                            "width": 30,
+                            "height": 45,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue"
                             "invisible": true
                         }
                     },
@@ -2842,7 +2893,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "StateSpace":
@@ -2850,10 +2901,11 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
+                            "name": "bound",
                             "width": 55,
-                            "height": 40,
+                            "height": 45,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue"
                             "invisible": true
                         }
                     },
@@ -2908,10 +2960,11 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
-                            "width": 35,
-                            "height": 50,
+                            "name": "bound",
+                            "width": 30,
+                            "height": 40,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue"
                             "invisible": true
                         }
                     },
@@ -2928,6 +2981,7 @@ changeSchema = (type) => {
                         "type": "text",
                         "Text": "+",
                         "data": {
+                            "name": "symbol",
                             "fontFamily": "Arial",
                             "top": 3,
                             "left": 3,
@@ -2940,6 +2994,7 @@ changeSchema = (type) => {
                         "type": "text",
                         "Text": "+",
                         "data": {
+                            "name": "symbol",
                             "fontFamily": "Arial",
                             "top": 15,
                             "left": 3,
@@ -2957,7 +3012,7 @@ changeSchema = (type) => {
                             "left": 3,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "SimOut":
@@ -3010,11 +3065,12 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
+                            "name": "bound",
                             "width": 55,
                             "height": 40,
                             "fill": false,
-                            "stroke": false,
-                            "invisible": true
+                            "stroke": "blue"
+                            // "invisible": true
                         }
                     },
                     {
@@ -3456,10 +3512,11 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
-                            "width": 58,
+                            "name": "bound",
+                            "width": 30,
                             "height": 40,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue"
                             "invisible": true
                         }
                     },
@@ -3508,29 +3565,29 @@ changeSchema = (type) => {
                         }
                     },
                     {
-                        "type": "text",
-                        "Text": "Discrete-T",
+                        "type": "name",
+                        "Text": "Discrete-T\nIntegrator",
                         "data": {
                             "fontFamily": "Arial",
                             "top": 30,
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     },
-                    {
-                        "type": "name",
-                        "Text": "Integrator",
-                        "data": {
-                            "fontFamily": "Arial",
-                            "top": 40,
-                            "left": 0,
-                            "fontSize": 9,
-                            "fill": "black",
-                            "changeable": false
-                        }
-                    }
+                    // {
+                    //     "type": "text",
+                    //     "Text": "Integrator",
+                    //     "data": {
+                    //         "fontFamily": "Arial",
+                    //         "top": 40,
+                    //         "left": 0,
+                    //         "fontSize": 9,
+                    //         "fill": "black",
+                    //         "changeable": true
+                    //     }
+                    // }
                 ], "DiscreteTransfer":
                 [
                     {
@@ -3725,7 +3782,7 @@ changeSchema = (type) => {
                     }
                 ]
         };
-    
+
         blockParameters = {
             "AnalogInput":
                 [
@@ -4133,7 +4190,7 @@ changeSchema = (type) => {
                 [
                     {
                         "io": "both",
-                        "NumberOfInputs": 4,
+                        "NumberOfInputs": 2,
                         "NumberOfOutputs": 1,
                         "MaxInputs": 4,
                         "ports": null,
@@ -4156,8 +4213,8 @@ changeSchema = (type) => {
                         "NumOfBot": 0,
                         "hasExtra": false,
                         "defaultExtra": null,
-                        "BlockType": "Product",
-                        "title": "Parametre product"
+                        "BlockType": "Scope",
+                        "title": "Parametre scope"
                     }
                 ], "StateSpace":
                 [
@@ -4706,152 +4763,152 @@ changeSchema = (type) => {
                     }
                 ]
         };
-    
+
         portPositions = {
             "AnalogInput":
                 {
                     90:{
                         "out":{
-                            "top":58,
-                            "left":-15,
+                            "top":62,
+                            "left":-10,
                         }
                     },
                     180:{
                         "out":{
-                            "top":25,
-                            "left":-13,
+                            "top":20,
+                            "left":-11,
                         }
                     },
                     270:{
                         "out":{
-                            "top":-58,
-                            "left":15,
+                            "top":-60,
+                            "left":10,
                         }
                     },
                     0:{
                         "out":{
-                            "top":15,
-                            "left":58,
+                            "top":10,
+                            "left":62,
                         }
                     }
                 }, "AnalogOutput":
                 {
                     90:{
                         "in":{
-                            "top":-2,
-                            "left":-15,
+                            "top":0,
+                            "left":-10,
                         }
                     },
                     180:{
                         "in":{
-                            "top":25,
-                            "left":48,
+                            "top":20,
+                            "left":50,
                         }
                     },
                     270:{
                         "in":{
-                            "top":3,
-                            "left":15,
+                            "top":1,
+                            "left":10,
                         }
                     },
                     0:{
                         "in":{
-                            "top":15,
-                            "left":-2,
+                            "top":10,
+                            "left":0,
                         }
                     }
                 }, "Clock":
                 {
                     90:{
                         "out":{
-                            "top":46,
+                            "top":42,
                             "left":-12,
                         }
                     },
                     180:{
                         "out":{
-                            "top":23,
-                            "left":3,
+                            "top":21,
+                            "left":-12,
                         }
                     },
                     270:{
                         "out":{
-                            "top":-40,
-                            "left":5,
+                            "top":-42,
+                            "left":10,
                         }
                     },
                     0:{
                         "out":{
                             "top":11,
-                            "left":46,
+                            "left":42,
                         }
                     }
                 }, "Constant":
                 {
                     90:{
                         "out":{
-                            "top":50,
-                            "left":-10,
+                            "top":53,
+                            "left":-8,
                         }
                     },
                     180:{
                         "out":{
-                            "top":22,
-                            "left":0,
+                            "top":20,
+                            "left":-10,
                         }
                     },
                     270:{
                         "out":{
-                            "top":-50,
-                            "left":11,
+                            "top":-53,
+                            "left":10,
                         }
                     },
                     0:{
                         "out":{
-                            "top":10,
-                            "left":49,
+                            "top":8,
+                            "left":54,
                         }
                     }
                 }, "Demux":
                 {
                     90:{
                         "in":{
-                            "top":16,
-                            "left":-10,
+                            "top":1,
+                            "left":-14.5,
                         },
                         "out":{
-                            "top":32,
-                            "left":-10,
+                            "top":45,
+                            "left":-14.5,
                         }
                     },
                     180:{
                         "in":{
-                            "top":20,
-                            "left":20,
+                            "top":25.5,
+                            "left":34,
                         },
                         "out":{
-                            "top":20,
-                            "left":5,
+                            "top":25.5,
+                            "left":-10,
                         }
                     },
                     270:{
                         "in":{
-                            "top":-15,
-                            "left":10,
+                            "top":-1,
+                            "left":14.5,
                         },
                         "out":{
-                            "top":-32,
-                            "left":10,
+                            "top":-45,
+                            "left":14.5,
                         }
                     },
                     0:{
                         "in":{
-                            "top":10,
-                            "left":17,
+                            "top":14.5,
+                            "left":2,
                         },
                         "out":{
-                            "top":10,
-                            "left":32,
+                            "top":14.5,
+                            "left":45,
                         }
                     }
                 }, "Mux":
@@ -5000,45 +5057,45 @@ changeSchema = (type) => {
                     0:{
                         "in":{"top":17,
                             "left":2,
-                        2:[{
-                            "top":6,
-                            "left":2,
-                        },
-                        {
-                            "top":28,
-                            "left":2,
-                        }
-                        ],
-                        3:[{
-                            "top":2.5,
-                            "left":2,
-                        },
-                            {
-                                "top":17.5,
+                            2:[{
+                                "top":6,
                                 "left":2,
                             },
-                            {
-                                "top":32.5,
+                                {
+                                    "top":28,
+                                    "left":2,
+                                }
+                            ],
+                            3:[{
+                                "top":2.5,
                                 "left":2,
                             },
-                        ],
-                        4:[{
-                            "top":-6,
-                            "left":2,
-                        },
-                            {
-                                "top":9,
+                                {
+                                    "top":17.5,
+                                    "left":2,
+                                },
+                                {
+                                    "top":32.5,
+                                    "left":2,
+                                },
+                            ],
+                            4:[{
+                                "top":-6,
                                 "left":2,
                             },
-                            {
-                                "top":24,
-                                "left":2,
-                            },
-                            {
-                                "top":39,
-                                "left":2,
-                            },
-                        ]},
+                                {
+                                    "top":9,
+                                    "left":2,
+                                },
+                                {
+                                    "top":24,
+                                    "left":2,
+                                },
+                                {
+                                    "top":39,
+                                    "left":2,
+                                },
+                            ]},
                         "out":{
                             "top":17.5,
                             "left":46,
@@ -5292,83 +5349,84 @@ changeSchema = (type) => {
                                 },
                             ],
                             4:[{
-                                "top":-14,
+                                "top":2,
                                 "left":5.5,
                             },
                                 {
-                                    "top":-14,
+                                    "top":2,
                                     "left":-9.5,
                                 },
                                 {
-                                    "top":-14,
+                                    "top":2,
                                     "left":-24.5,
                                 },
                                 {
-                                    "top":-14,
+                                    "top":2,
                                     "left":-39.5,
                                 },
                             ]},
                         "out":{
-                            "top":70,
+                            "top":91,
                             "left":-17,
                         }
                     },
                     180:{
-                        "in":{"top":28,
-                            "left":32,
+                        "in":{"top":28.5,
+                            "left":80,
                             2:[{
                                 "top":16.5,
-                                "left":32,
+                                "left":79,
                             },
                                 {
                                     "top":39,
-                                    "left":32,
+                                    "left":79,
                                 }
                             ],
                             3:[{
                                 "top":43.5,
-                                "left":32.5,
+                                "left":79,
                             },
                                 {
                                     "top":28.5,
-                                    "left":32.5,
+                                    "left":79,
                                 },
                                 {
                                     "top":13.5,
-                                    "left":32.5,
+                                    "left":79,
                                 },
                             ],
-                            4:[{
-                                "top":50.5,
-                                "left":64,
+                            4:[
+                            {
+                                "top":5.5,
+                                "left":79,
                             },
-                                {
-                                    "top":35.5,
-                                    "left":64,
-                                },
-                                {
-                                    "top":20.5,
-                                    "left":64,
-                                },
-                                {
-                                    "top":5.5,
-                                    "left":64,
-                                },
+                            {
+                                "top":20.5,
+                                "left":79,
+                            },
+                            {
+                                "top":35.5,
+                                "left":79,
+                            },
+                            {
+                                "top":50.5,
+                                "left":79,
+                            },
                             ]},
                         "out":{
                             "top":28,
-                            "left":-25,
+                            "left":-10,
                         }
                     },
                     270:{
                         "in":{"top":-1,
                             "left":17,
                             2:[{
-                                "top":-1,
+                                "top":0,
                                 "left":5.5,
                             },
                                 {
-                                    "top":-1,
+                                    "top":0,
                                     "left":28.5,
                                 }
                             ],
@@ -5386,24 +5444,24 @@ changeSchema = (type) => {
                                 },
                             ],
                             4:[{
-                                "top":14,
+                                "top":-2,
                                 "left":-6,
                             },
                                 {
-                                    "top":14,
+                                    "top":-2,
                                     "left":9.5,
                                 },
                                 {
-                                    "top":14,
+                                    "top":-2,
                                     "left":24.5,
                                 },
                                 {
-                                    "top":14,
+                                    "top":-2,
                                     "left":38.5,
                                 },
                             ]},
                         "out":{
-                            "top":-76,
+                            "top":-91,
                             "left":17,
                         }
                     },
@@ -5434,210 +5492,154 @@ changeSchema = (type) => {
                             ],
                             4:[{
                                 "top":-6,
-                                "left":-14,
+                                "left":2,
                             },
                                 {
                                     "top":9,
-                                    "left":-14,
+                                    "left":2,
                                 },
                                 {
                                     "top":24,
-                                    "left":-14,
+                                    "left":2,
                                 },
                                 {
                                     "top":39,
-                                    "left":-14,
+                                    "left":2,
                                 },
                             ]},
                         "out":{
                             "top":17.5,
-                            "left":76,
+                            "left":91,
                         }
                     }
                 }, "Scope":
                 {
                     90:{
-                        "in":[{
-                            "top":1,
+                        "in":{
+                            "top":0,
                             "left":-5,
-                        },
-                            {
-                                "top":1,
-                                "left":-25,
-                            }
-                        ],
-                        "out":{
-                            "top":51,
-                            "left":-15,
                         }
                     },
                     180:{
-                        "in":[{
-                            "top":18,
-                            "left":40,
-                        },
-                            {
-                                "top":36,
-                                "left":40,
-                            }
-                        ],
-                        "out":{
-                            "top":25,
-                            "left":-10,
+                        "in":{
+                            "top":10,
+                            "left":32,
                         }
                     },
                     270:{
-                        "in":[{
-                            "top":0,
-                            "left":4,
-                        },
-                            {
-                                "top":0,
-                                "left":25,
-                            }
-                        ],
-                        "out":{
-                            "top":-51,
-                            "left":15,
+                        "in":{
+                            "top":2,
+                            "left":2,
                         }
                     },
                     0:{
-                        "in":[{
+                        "in":{
                             "top":5,
-                            "left":2,
-                        },
-                            {
-                                "top":25,
-                                "left":2,
-                            }
-                        ],
-                        "out":{
-                            "top":15,
-                            "left":51,
+                            "left":0,
                         }
                     }
                 }, "StateSpace":
                 {
                     90:{
-                        "in":[{
-                            "top":1,
-                            "left":-5,
+                        "in":{
+                            "top":-1,
+                            "left":-10,
                         },
-                            {
-                                "top":1,
-                                "left":-25,
-                            }
-                        ],
                         "out":{
-                            "top":51,
-                            "left":-15,
-                        }
-                    },
-                    180:{
-                        "in":[{
-                            "top":18,
-                            "left":40,
-                        },
-                            {
-                                "top":36,
-                                "left":40,
-                            }
-                        ],
-                        "out":{
-                            "top":25,
+                            "top":65,
                             "left":-10,
                         }
                     },
-                    270:{
-                        "in":[{
-                            "top":0,
-                            "left":4,
+                    180:{
+                        "in":{
+                            "top":20,
+                            "left":55,
                         },
-                            {
-                                "top":0,
-                                "left":25,
-                            }
-                        ],
                         "out":{
-                            "top":-51,
-                            "left":15,
+                            "top":20,
+                            "left":-12,
+                        }
+                    },
+                    270:{
+                        "in":{
+                            "top":0,
+                            "left":12,
+                        },
+                        "out":{
+                            "top":-65,
+                            "left":12,
                         }
                     },
                     0:{
-                        "in":[{
-                            "top":5,
-                            "left":2,
+                        "in":{
+                            "top":10,
+                            "left":0,
                         },
-                            {
-                                "top":25,
-                                "left":2,
-                            }
-                        ],
                         "out":{
-                            "top":15,
-                            "left":51,
+                            "top":10,
+                            "left":65,
                         }
                     }
                 }, "Sum":
                 {
                     90:{
-                        "in":[{
-                            "top":1,
-                            "left":-5,
-                        },
-                            {
-                                "top":1,
-                                "left":-25,
-                            }
-                        ],
+                        "in":{2:[{
+                                "top":-1,
+                                "left":-4,
+                            },
+                                {
+                                    "top":-1,
+                                    "left":-17,
+                                }
+                            ]},
                         "out":{
-                            "top":51,
-                            "left":-15,
-                        }
-                    },
-                    180:{
-                        "in":[{
-                            "top":18,
-                            "left":40,
-                        },
-                            {
-                                "top":36,
-                                "left":40,
-                            }
-                        ],
-                        "out":{
-                            "top":25,
+                            "top":40,
                             "left":-10,
                         }
                     },
-                    270:{
-                        "in":[{
-                            "top":0,
-                            "left":4,
-                        },
-                            {
-                                "top":0,
-                                "left":25,
-                            }
-                        ],
+                    180:{
+                        "in":{2:[{
+                                "top":14,
+                                "left":30,
+                            },
+                                {
+                                    "top":25,
+                                    "left":30,
+                                }
+                            ]},
                         "out":{
-                            "top":-51,
-                            "left":15,
+                            "top":18,
+                            "left":-11,
+                        }
+                    },
+                    270:{
+                        "in":{2:[{
+                                "top":2,
+                                "left":2,
+                            },
+                                {
+                                    "top":2,
+                                    "left":16,
+                                }
+                            ]},
+                        "out":{
+                            "top":-40,
+                            "left":9,
                         }
                     },
                     0:{
-                        "in":[{
-                            "top":5,
-                            "left":2,
-                        },
-                            {
-                                "top":25,
-                                "left":2,
-                            }
-                        ],
+                        "in":{2:[{
+                                "top":4,
+                                "left":-1,
+                            },
+                                {
+                                    "top":18,
+                                    "left":-1,
+                                }
+                            ]},
                         "out":{
-                            "top":15,
-                            "left":51,
+                            "top":12,
+                            "left":41,
                         }
                     }
                 }, "SimOut":
@@ -6201,10 +6203,13 @@ changeSchema = (type) => {
                 }
         };
     }
+    schemeType = type;
     data = blockParameters;
     clearCanvas();
     resetGlobals();
     loadBlocks();
+
+    setSchemeType(type);
 
     $.each(Object.keys(blockDrawData),function(i,nameBlock){
         number[nameBlock] = 0;

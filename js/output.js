@@ -208,9 +208,9 @@ function exportScheme(){
 function getDiagramResponse(){
     var data = prepareDataForExport();
 
-    //console.log(data);
-    // console.log('action=simplify&language=sk&data='+encodeURIComponent(data));
-    // console.log(encodeURIComponent(data));
+    console.log(data);
+    console.log('action=simplify&language=sk&data='+encodeURIComponent(data));
+    console.log(encodeURIComponent(data));
 
     if(data != null){
         $.ajax({
@@ -220,6 +220,7 @@ function getDiagramResponse(){
             async: false,
             success: function(msg){
                 var response = jQuery.parseJSON(msg);
+                console.log(response)
                 if(response['status'] == 'success'){
                     //console.log('simplify success');
                     //console.log(response['solution']);
