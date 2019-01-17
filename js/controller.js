@@ -309,6 +309,7 @@ window.addBlock = function (blockType, posx, posy) {
     if(blockType === 'Multiply'){
         scheme[type].tex_result = 'F';
         scheme[type].equation = ["F","1"];
+        scheme[type].symbolsNum = [];
     }
 };
 

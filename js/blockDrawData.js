@@ -1391,7 +1391,7 @@ changeSchema = (type) => {
                     "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
-                        "top":3,
+                        "top":1,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
@@ -1402,7 +1402,7 @@ changeSchema = (type) => {
                     "Text":"2",
                     "data":{
                         "fontFamily": "Consolas",
-                        "top":3,
+                        "top":1,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
@@ -1413,7 +1413,7 @@ changeSchema = (type) => {
                     "Text":"3",
                     "data":{
                         "fontFamily": "Consolas",
-                        "top":3,
+                        "top":1,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
@@ -1421,7 +1421,7 @@ changeSchema = (type) => {
                     }
                 },
                 {   "type":"text",
-                    "Text":"4",
+                    "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
                         "top":3,
@@ -1501,7 +1501,7 @@ changeSchema = (type) => {
                     "Text":"s",
                     "data":{
                         "fontFamily": "Consolas",
-                        "top":22,
+                        "top":24,
                         "left":0,
                         "fontSize": 12,
                         "fill": false,
