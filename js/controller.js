@@ -310,6 +310,11 @@ window.addBlock = function (blockType, posx, posy) {
         scheme[type].tex_result = 'F';
         scheme[type].equation = ["F","1"];
     }
+    if(blockType === 'TransferFcn'){
+        scheme[type].tex_result = '\\dfrac{1}{s+1}';
+        scheme[type].equation = ["1","1 1"];
+        // katex.render(document.getElementById("transfer-text"),scheme[type].tex_result)
+    }
 };
 
 var selectedElement = null;
@@ -806,7 +811,7 @@ canvas.on('object:added', function (e) {
 //mouse over object | tmpLine | connect objects
 canvas.on('mouse:over', function(e) {
     if(e.target !== null) {
-        if(e.target.baseBlock && e.target.BlockType === 'Multiply'){
+        if(e.target.baseBlock && (e.target.BlockType === 'Multiply' || e.target.BlockType === 'TransferFcn')){
             var x = document.getElementById("snackbar");
             var inputValue = scheme[e.target.type].tex_result;
             katex.render(inputValue, x);
@@ -950,7 +955,7 @@ canvas.on('mouse:dblclick', function(e) {
 //mouse leaves port/point
 canvas.on('mouse:out', function(e) {
     if(e.target !== null) {
-        if(e.target.baseBlock && e.target.BlockType === 'Multiply'){
+        if(e.target.baseBlock && (e.target.BlockType === 'Multiply' || e.target.BlockType === 'TransferFcn')){
             var x = document.getElementById("snackbar");
             x.className = x.className.replace("show", "");
         }

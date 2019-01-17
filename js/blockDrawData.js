@@ -3067,7 +3067,7 @@ changeSchema = (type) => {
                         "data": {
                             "name": "bound",
                             "width": 55,
-                            "height": 40,
+                            "height": 55,
                             "fill": false,
                             "stroke": "blue"
                             // "invisible": true
@@ -3076,8 +3076,8 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
-                            "width": 53,
-                            "height": 30,
+                            "width": 55,
+                            "height": 40,
                             "fill": "white",
                             "stroke": "black"
                         }
@@ -3122,7 +3122,7 @@ changeSchema = (type) => {
                         "Text": "TransferFcn",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 30,
+                            "top": 42,
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
@@ -3588,23 +3588,24 @@ changeSchema = (type) => {
                     //         "changeable": true
                     //     }
                     // }
-                ], "DiscreteTransfer":
-                [
+                ],
+                "DiscreteTransfer":[
                     {
                         "type": "rect",
                         "data": {
-                            "width": 58,
-                            "height": 40,
+                            "name": "bound",
+                            "width": 70,
+                            "height": 65,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue"
                             "invisible": true
                         }
                     },
                     {
                         "type": "rect",
                         "data": {
-                            "width": 53,
-                            "height": 30,
+                            "width": 70,
+                            "height": 40,
                             "fill": "white",
                             "stroke": "black"
                         }
@@ -3614,8 +3615,8 @@ changeSchema = (type) => {
                         "Text": "1",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 2,
-                            "left": 20,
+                            "top": 7,
+                            "left": 30,
                             "fontSize": 12,
                             "fill": "black",
                             "changeable": false
@@ -3626,8 +3627,8 @@ changeSchema = (type) => {
                         "path": "M 0 0 L 25 0",
                         "data":
                             {
-                                "left": 13,
-                                "top": 15,
+                                "left": 23,
+                                "top": 20,
                                 "stroke": "black",
                                 "invisible": true
                             }
@@ -3637,37 +3638,37 @@ changeSchema = (type) => {
                         "Text": "z+0.5",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 15,
-                            "left": 10,
+                            "top": 20,
+                            "left": 20,
                             "fontSize": 12,
                             "fill": "black",
                             "changeable": false
                         }
                     },
                     {
-                        "type": "text",
-                        "Text": "Discrete",
-                        "data": {
-                            "fontFamily": "Arial",
-                            "top": 30,
-                            "left": 7,
-                            "fontSize": 9,
-                            "fill": "black",
-                            "changeable": false
-                        }
-                    },
-                    {
                         "type": "name",
-                        "Text": "TransferFcn",
+                        "Text": "Discrete\nTransfer",
                         "data": {
                             "fontFamily": "Arial",
-                            "top": 40,
+                            "top": 43,
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
                             "changeable": false
                         }
-                    }
+                    },
+                    // {
+                    //     "type": "name",
+                    //     "Text": "TransferFcn",
+                    //     "data": {
+                    //         "fontFamily": "Arial",
+                    //         "top": 40,
+                    //         "left": 0,
+                    //         "fontSize": 9,
+                    //         "fill": "black",
+                    //         "changeable": false
+                    //     }
+                    // }
                 ], "Relay":
                 [
                     {
@@ -4421,7 +4422,16 @@ changeSchema = (type) => {
                                 "default_value": "[1 1]",
                                 "number": 1
                             }
-                    }
+                    },
+                    {
+                    "type":"text",
+                    "data":
+                        {
+                            "id":"transfer-text",
+                            "title":"Function",
+                            "value":"F"
+                        }
+                }
                 ], "TransportDelay":
                 [
                     {
