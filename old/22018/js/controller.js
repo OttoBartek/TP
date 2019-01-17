@@ -31,7 +31,6 @@ window.addBlock = function (typeBlock) {
             partBlock[i] = new fabric.IText(type, subBlock.data);
     });
 
-    console.log(type);
 
     var io = data[typeBlock][0].io;
     var block = new fabric.Group(partBlock, {type: type, left: posx, top: posy, io: io, ZOrder: counter, "BlockType" : typeBlock});

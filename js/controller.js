@@ -311,6 +311,11 @@ window.addBlock = function (blockType, posx, posy) {
         scheme[type].equation = ["F","1"];
         scheme[type].symbolsNum = [];
     }
+    if(blockType === 'TransferFcn'){
+        scheme[type].tex_result = '\\dfrac{1}{s+1}';
+        scheme[type].equation = ["1","1 1"];
+        // katex.render(document.getElementById("transfer-text"),scheme[type].tex_result)
+    }
 };
 
 var selectedElement = null;
@@ -362,7 +367,7 @@ canvas.on('object:selected', function (e) {
         }
     }
 
-    console.log(connFromBlock);
+    // console.log(connFromBlock);
 
 });
 
@@ -560,7 +565,7 @@ canvas.on('selection:updated', function(options) {
 
             connToBlock = getObject(scheme[selectedElement.type].parentBlock);
 
-            console.log(connFromBlock,connToBlock);
+            // console.log(connFromBlock,connToBlock);
 
             var f = checkPorts(selectedElement);
             if ((f === 1) && connFromBlock != null) { //port je IN
@@ -807,7 +812,7 @@ canvas.on('object:added', function (e) {
 //mouse over object | tmpLine | connect objects
 canvas.on('mouse:over', function(e) {
     if(e.target !== null) {
-        if(e.target.baseBlock && e.target.BlockType === 'Multiply'){
+        if(e.target.baseBlock && (e.target.BlockType === 'Multiply' || e.target.BlockType === 'TransferFcn')){
             var x = document.getElementById("snackbar");
             var inputValue = scheme[e.target.type].tex_result;
             katex.render(inputValue, x);
@@ -894,7 +899,7 @@ canvas.on('mouse:dblclick', function(e) {
 
             $('.modal-title').text('Block settings: '+scheme[e.target.type].VisibleName);
             formData = '<div class="form-group"><label for="block-name" class="col-form-label">Block name:</label>';
-            formData += '<input type="text" class="form-control" id="block-name" value="'+scheme[e.target.type].VisibleName+'"'+((schemeType === 'blockSim') ? 'disabled':'')+'></div>';
+            formData += '<input type="text" class="form-control" id="block-name" value="'+scheme[e.target.type].VisibleName+'"'+((schemeType === 'blockSim') ? '':'')+'></div>';
             if(scheme[e.target.type].MaxInputs > 1){
                 formData += '<div class="form-group"><label for="input-number" class="col-form-label">Number of inputs (max. '+scheme[e.target.type].MaxInputs+'):</label>';
                 formData += '<script>    $("#input-number").on("keyup", function() {let value = $("#input-number").val();let splitValue = value.split(".")[0];if(splitValue.length == 0 || splitValue.length == undefined) {splitValue = splitValue.split(",")[0];}$("#input-number").val(splitValue); });</script>'
@@ -951,7 +956,7 @@ canvas.on('mouse:dblclick', function(e) {
 //mouse leaves port/point
 canvas.on('mouse:out', function(e) {
     if(e.target !== null) {
-        if(e.target.baseBlock && e.target.BlockType === 'Multiply'){
+        if(e.target.baseBlock && (e.target.BlockType === 'Multiply' || e.target.BlockType === 'TransferFcn')){
             var x = document.getElementById("snackbar");
             x.className = x.className.replace("show", "");
         }

@@ -5,6 +5,8 @@ function changeBlock(){
 
     var type = changingElement.type;
 
+    // console.log(scheme);
+
     //zmena mena bloku
     var newName = $('#block-name').val();
     if(newName !== scheme[changingElement.type].VisibleName){
@@ -89,6 +91,14 @@ function changeBlock(){
             var denominator = $('#multiply-menovatel').val();
 
             drawequation(changingElement,numerator.split(" "),denominator.split(" "));
+        }
+    }else if(schemeType === 'blockSim'){
+        if ($('#transfer-numer').length && $('#transfer-denom').length) {
+
+            var numerator = $('#transfer-numer').val().substring(1, $('#transfer-numer').val().length-1) ;
+            var denominator = $('#transfer-denom').val().substring(1, $('#transfer-denom').val().length-1) ;
+
+           // drawequation(changingElement,numerator.split(" "),denominator.split(" "));
         }
     }
     else {
@@ -485,6 +495,7 @@ function drawequation(block){
 }
 
 function rotateObject(target, rotateBy){
+    // console.log(scheme,target)
     var inputCount = scheme[target.type].NumberOfInputs;
     var rotation = scheme[target.type].Rotation;
     var ports = scheme[target.type].io;
@@ -585,6 +596,16 @@ function rotateObject(target, rotateBy){
             });
         }
 
+        if(scheme[target.type].BlockType =="Sum") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==="symbol"){
+                    // console.log(obj.left) //-12.5
+                    obj.set({left: 5});
+
+                }
+            });
+        }
+
         }else{
             if(scheme[target.type].BlockType ==="Sumator"){
                 target._objects.forEach(function (obj) {
@@ -616,12 +637,22 @@ function rotateObject(target, rotateBy){
         }
         if(scheme[target.type].BlockType =="Product") {
             target._objects.forEach(function (obj) {
+
                 if(obj.name==1 ||obj.name === 2 || obj.name === 3 || obj.name === 4){
                     obj.set({left: -40.5});
 
                 }
                 if(obj.name === "out"){
                     obj.set({left: 24.5});
+                }
+            });
+        }
+        if(scheme[target.type].BlockType =="Sum") {
+            target._objects.forEach(function (obj) {
+                if(obj.name==="symbol"){
+                    // console.log(obj.left) //-12.5
+                    obj.set({left: -12.5});
+
                 }
             });
         }
@@ -665,7 +696,6 @@ function rotateObject(target, rotateBy){
             var input = getObject(blockName + 'O');
             input.set({angle: 90, top: y + portPos.out.top, left: x + portPos.out.left+equationWidth});
             input.setCoords();
-            console.log(equationWidth)
 
         }
 
@@ -752,8 +782,6 @@ function deleteBlock(targetBlock, originInputNum){
 
 function redrawBlock(targetBlock, originInputNum){
 
-    console.log(targetBlock);
-
     var x = scheme[targetBlock.type].Position_Array[0];
     var y = scheme[targetBlock.type].Position_Array[1];
     var blockType = targetBlock.BlockType;
@@ -803,9 +831,9 @@ function redrawBlock(targetBlock, originInputNum){
         else if(part.type === 'text')
             blockGroup[i] = new fabric.IText(part.Text, part.data);
         else if(part.type === 'name'){
-            partBlock[i] = new fabric.IText(type, subBlock.data);
+            blockGroup[i] = new fabric.IText(type, part.data);
             if(!showNames){
-                partBlock[i].set({fill:"transparent"});
+                blockGroup[i].set({fill:"transparent"});
             }
         }
     });
@@ -1273,6 +1301,157 @@ function vypocetMultiply(){
     }
     var nieco = document.getElementById('multiply-text')
     var val = scheme[changingElement.type].tex_result;
+    katex.render(val, nieco);
+
+}
+
+function vypocetTransferFcn(){
+    $("#transfer-numer").removeClass("is-invalid")
+    $("#transfer-denom").removeClass("is-invalid")
+    $("#block-error").html("");
+    var objPar = blockParameters[changingElement.BlockType];
+    if ($('#transfer-numer').length && $('#transfer-denom').length) {
+
+        var numerator = $('#transfer-numer').val().substring(1, $('#transfer-numer').val().length-1) ;
+        var denominator = $('#transfer-denom').val().substring(1, $('#transfer-denom').val().length-1) ;
+
+        if (scheme[changingElement.type].extra[0] != numerator || scheme[changingElement.type].extra[1] != denominator) {
+            // console.log(scheme[changingElement.type].extra)
+            if (denominator != '1') {
+                ///^-?\d+( -?\d+)*$/
+                ///^\[(-?\d+(\.\d+)?( -?\d+(\.\d+)?)*)\]$/
+                if (denominator.match(/^-?\d+(\.\d+)?( -?\d+(\.\d+)?)*$/)) {
+                    if (numerator.match(/^-?\d+(\.\d+)?( -?\d+(\.\d+)?)*$/)) {
+                        var numeratorArr;
+                        var numOutput = "";
+                        numeratorArr = numerator.split(" ");
+                        var exponent = numeratorArr.length - 1;
+
+                        for (var i = 0; i < numeratorArr.length; i++) {
+                            if (numeratorArr[i] === "1") {
+                                if (exponent > 1) {
+                                    numOutput += "s^{" + exponent+"}";
+                                    exponent--;
+                                }
+                                else if (exponent === 1) {
+                                    numOutput += "s";
+                                    exponent--;
+                                }
+                                else {
+                                    numOutput += numeratorArr[i];
+                                }
+                            }else if(numeratorArr[i] === "0"){
+                                exponent--;
+                            }
+                            else {
+                                if (exponent > 1) {
+                                    numOutput += numeratorArr[i] + "s^{" + exponent+"}";
+                                    exponent--;
+                                }
+                                else if (exponent === 1) {
+                                    numOutput += numeratorArr[i] + "s";
+                                    exponent--;
+                                }
+                                else {
+                                    numOutput += numeratorArr[i];
+                                }
+                            }
+                            if (i < numeratorArr.length - 1 && numeratorArr[i] !== '0') {
+                                numOutput += "+";
+                            }
+                            //console.log(numOutput);
+                        }
+                        if (numOutput.substr(numOutput.length - 1, numOutput.length) == '+') {
+                            numOutput = numOutput.slice(0, -1);
+                        }
+
+                        var denArray;
+                        var denOutput = "";
+                        denArray = denominator.split(" ");
+                        exponent = denArray.length - 1;
+
+                        for (var j = 0; j < denArray.length; j++) {
+                            if (denArray[j] === "1") {
+                                if (exponent > 1) {
+                                    denOutput += "s^{" + exponent+"}";
+                                    exponent--;
+                                }
+                                else if (exponent === 1) {
+                                    denOutput += "s";
+                                    exponent--;
+                                }
+                                else {
+                                    denOutput += denArray[j];
+                                }
+                            }else if(denArray[j] === "0"){
+                                exponent--;
+                            }
+                            else {
+                                if (exponent > 1) {
+                                    denOutput += denArray[j] + "s^{" + exponent+"}";
+                                    exponent--;
+                                    exponent--;
+                                }
+                                else if (exponent === 1) {
+                                    denOutput += denArray[j] + "s";
+                                    exponent--;
+                                }
+                                else {
+                                    denOutput += denArray[j];
+                                }
+                            }
+
+
+                            if (j < denArray.length - 1 && denArray[j] !== '0') {
+                                denOutput += "+";
+                            }
+                        }
+                        if (denOutput.substr(denOutput.length - 1, denOutput.length) == '+') {
+                            denOutput = denOutput.slice(0, -1);
+                        }
+
+                        var resultTex = '\\dfrac{' + numOutput + '}{' + denOutput + '}';
+
+
+                        numerator="["+numerator+"]"
+                        denominator="["+denominator+"]"
+                        scheme[changingElement.type].extra = [numerator,denominator];
+
+                        scheme[changingElement.type].equation = [numOutput,denOutput];
+
+                        $.each(objPar, function (i, subPar) {
+                            //console.log(objPar);
+                            if (subPar.type == 'text') {
+                                scheme[changingElement.type].tex_result = resultTex;
+                            }
+                        });
+                    } else {
+                        $("#transfer-numer").addClass("is-invalid")
+                        $("#block-error").html("Invalid numerator!");
+                        return;
+                    }
+                } else {
+                    $("#transfer-denom").addClass("is-invalid")
+                    $("#block-error").html("Invalid denominator!");
+                    return;
+                }
+            } else {
+                if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)|(^-?\d+(\.\d+)?)/)) {
+                    scheme[changingElement.type].extra = [numerator,denominator];
+                    scheme[changingElement.type].equation = [numerator,denominator];
+                    scheme[changingElement.type].tex_result = numerator;
+                }
+                else {
+                    $("#transfer-numer").addClass("is-invalid")
+                    $("#block-error").html("Invalid numerator!");
+                    return;
+                }
+            }
+        }
+    }
+    var nieco = document.getElementById('transfer-text')
+    var val = scheme[changingElement.type].tex_result;
+    console.log(val)
     katex.render(val, nieco);
 
 }
