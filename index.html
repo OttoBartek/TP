@@ -268,6 +268,13 @@
         $(document).on("input","#multiply-menovatel", function () {
             vypocetMultiply()
         })
+        $(document).on("input","#transfer-numer", function () {
+            vypocetTransferFcn()
+        })
+
+        $(document).on("input","#transfer-denom", function () {
+            vypocetTransferFcn()
+        })
         //canvas resizing
         window.onload = function (e) {
             canvasResize();
