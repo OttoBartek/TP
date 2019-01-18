@@ -134,7 +134,7 @@ function loadModel(){
 }
 
 function drawBlockFromScheme(targetBlock){
-    //console.log("target block: "+targetBlock);
+    console.log("target block: "+targetBlock);
     var x = scheme[targetBlock].Position_Array[0];
     var y = scheme[targetBlock].Position_Array[1];
     var blockType = scheme[targetBlock].BlockType;

@@ -64,14 +64,16 @@ window.addBlock = function (blockType, posx, posy) {
     posx -=posCanvas;
     counter++;
     number[blockType]++;
-
+    console.log(blockType)
     var objBlock = blockDrawData[blockType];
     var parBlock = blockParameters[blockType];
     var type = blockType + number[blockType];
+
     var partBlock = [];
     var portPos = portPositions[blockType][0];
     var biggestW = 0;
     var biggestH = 0;
+    var visName;
 
     $.each(objBlock, function(i,subBlock) {
         if(subBlock.type === 'rect'){
@@ -115,7 +117,9 @@ window.addBlock = function (blockType, posx, posy) {
         else if(subBlock.type === 'text')
             partBlock[i] = new fabric.IText(subBlock.Text, subBlock.data);
         else if(subBlock.type === 'name'){
-            partBlock[i] = new fabric.IText(type, subBlock.data);
+            visName = subBlock.Text + number[blockType]
+            partBlock[i] = new fabric.IText(visName, subBlock.data);
+            console.log(partBlock[i])
             if(!showNames){
                 partBlock[i].set({fill:"transparent"});
             }
@@ -273,11 +277,11 @@ window.addBlock = function (blockType, posx, posy) {
     var posLYT = posy;
     var posRXB = posx + block.width;
     var posRYB = posy + block.height;
-
+    console.log(visName)
     var addObj = {[type] : {
             "ZOrder" : counter,
             "NameOfBlock": type,
-            "VisibleName": type,
+            "VisibleName": visName,
             "BlockType" : blockType ,
             "Position_Array": [posLXT, posLYT, posRXB, posRYB],
             "Rotation":0,
@@ -303,9 +307,10 @@ window.addBlock = function (blockType, posx, posy) {
             "equationWidth":0
         }
     };
+    console.log(addObj)
 
     scheme = $.extend(scheme, addObj);
-
+    console.log(scheme)
     if(blockType === 'Multiply'){
         scheme[type].tex_result = 'F';
         scheme[type].equation = ["F","1"];
