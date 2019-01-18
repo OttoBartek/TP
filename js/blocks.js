@@ -391,7 +391,10 @@ function drawequation(block){
 
         left = width/2 + 0.5;
 
-        scheme[block.type].equationWidth = width-40;
+        if(block.BlockType=="Multiply")
+            scheme[block.type].equationWidth = width-40;
+        else
+            scheme[block.type].equationWidth = width-63;
 
         var leftDen = 0;
         var leftNum = 0;
@@ -406,7 +409,6 @@ function drawequation(block){
 
         var leftLine = -left+paddingLine;
         var widthLine = width-2*paddingLine;
-
         block.set({width:width});
         block._objects[1].set({width:width,left:-left})
         block._objects[0].set({width:width,left:-left})

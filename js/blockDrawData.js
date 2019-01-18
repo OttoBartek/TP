@@ -2136,7 +2136,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     },
                     {
@@ -2952,7 +2952,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ], "Sum":
@@ -3702,8 +3702,8 @@ changeSchema = (type) => {
                             "width": 63,
                             "height": 65,
                             "fill": false,
-                            "stroke": "blue"
-                            // "invisible": true
+                            // "stroke": "blue"
+                            "invisible": true
                         }
                     },
                     {
@@ -3759,30 +3759,19 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     },
-                    // {
-                    //     "type": "name",
-                    //     "Text": "TransferFcn",
-                    //     "data": {
-                    //         "fontFamily": "Arial",
-                    //         "top": 40,
-                    //         "left": 0,
-                    //         "fontSize": 9,
-                    //         "fill": "black",
-                    //         "changeable": false
-                    //     }
-                    // }
                 ], "Relay":
                 [
                     {
                         "type": "rect",
                         "data": {
-                            "width": 35,
-                            "height": 40,
+                            "name":"bound",
+                            "width": 30,
+                            "height": 45,
                             "fill": false,
-                            "stroke": false,
+                            // "stroke": "blue",
                             "invisible": true
                         }
                     },
@@ -3883,7 +3872,7 @@ changeSchema = (type) => {
                             "left": 0,
                             "fontSize": 9,
                             "fill": "black",
-                            "changeable": false
+                            "changeable": true
                         }
                     }
                 ]
@@ -5791,18 +5780,18 @@ changeSchema = (type) => {
                             "left":-12.5,
                         },
                         "out":{
-                            "top":65,
+                            "top":74,
                             "left":-12.5,
                         }
                     },
                     180:{
                         "in":{
                             "top":25,
-                            "left":55,
+                            "left":64,
                         },
                         "out":{
                             "top":25,
-                            "left":-12.5,
+                            "left":-11,
                         }
                     },
                     270:{
@@ -5811,7 +5800,7 @@ changeSchema = (type) => {
                             "left":15,
                         },
                         "out":{
-                            "top":-65,
+                            "top":-74,
                             "left":15,
                         }
                     },
@@ -5822,7 +5811,7 @@ changeSchema = (type) => {
                         },
                         "out":{
                             "top":15,
-                            "left":65,
+                            "left":74,
                         }
                     }
                 }, "TransportDelay":
@@ -6023,22 +6012,22 @@ changeSchema = (type) => {
                 {
                     90:{
                         "in":{
-                            "top":1,
-                            "left":-12.5,
+                            "top":0,
+                            "left":-14,
                         },
                         "out":{
-                            "top":65,
-                            "left":-12.5,
+                            "top":74,
+                            "left":-14,
                         }
                     },
                     180:{
                         "in":{
                             "top":25,
-                            "left":55,
+                            "left":64,
                         },
                         "out":{
                             "top":25,
-                            "left":-12.5,
+                            "left":-11,
                         }
                     },
                     270:{
@@ -6047,7 +6036,7 @@ changeSchema = (type) => {
                             "left":15,
                         },
                         "out":{
-                            "top":-80,
+                            "top":-74,
                             "left":15,
                         }
                     },
@@ -6064,63 +6053,43 @@ changeSchema = (type) => {
                 }, "Relay":
                 {
                     90:{
-                        "in":[{
+                        "in":{
                             "top":1,
-                            "left":-5,
+                            "left":-10,
                         },
-                            {
-                                "top":1,
-                                "left":-25,
-                            }
-                        ],
                         "out":{
-                            "top":51,
-                            "left":-15,
+                            "top":40,
+                            "left":-10,
                         }
                     },
                     180:{
-                        "in":[{
-                            "top":18,
-                            "left":40,
+                        "in":{
+                            "top":20,
+                            "left":30,
                         },
-                            {
-                                "top":36,
-                                "left":40,
-                            }
-                        ],
                         "out":{
-                            "top":25,
+                            "top":20,
                             "left":-10,
                         }
                     },
                     270:{
-                        "in":[{
+                        "in":{
                             "top":0,
-                            "left":4,
+                            "left":10,
                         },
-                            {
-                                "top":0,
-                                "left":25,
-                            }
-                        ],
                         "out":{
-                            "top":-51,
-                            "left":15,
+                            "top":-40,
+                            "left":10,
                         }
                     },
                     0:{
-                        "in":[{
-                            "top":5,
-                            "left":2,
+                        "in":{
+                            "top":10,
+                            "left":0,
                         },
-                            {
-                                "top":25,
-                                "left":2,
-                            }
-                        ],
                         "out":{
-                            "top":15,
-                            "left":51,
+                            "top":10,
+                            "left":40,
                         }
                     }
                 }
