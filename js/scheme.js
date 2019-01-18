@@ -29,8 +29,6 @@ function saveScheme(){
 
     var jsonScheme = JSON.stringify(scheme, null, '\t');
 
-    console.log(jsonScheme);
-
     //console.log(jsonScheme);
     var textToSaveAsBlob = new Blob([jsonScheme], {type:"application/json"});
     var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
@@ -269,8 +267,8 @@ function drawBlockFromScheme(targetBlock){
 
     rotateObject(getObject(blockName),blockRotation);
 
-    if(blockType == "Multiply"){
-        drawequation(getObject(blockName),scheme[type].extra[0].split(" "),scheme[type].extra[1].split(" "))
+    if(blockType == "Multiply" || blockType == "TransferFcn"){
+        drawequation(getObject(blockName))
     }
 }
 

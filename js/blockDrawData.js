@@ -1393,7 +1393,7 @@ changeSchema = (type) => {
                     "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
-                        "top":3,
+                        "top":1,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
@@ -1404,7 +1404,7 @@ changeSchema = (type) => {
                     "Text":"2",
                     "data":{
                         "fontFamily": "Consolas",
-                        "top":3,
+                        "top":1,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
@@ -1415,7 +1415,7 @@ changeSchema = (type) => {
                     "Text":"3",
                     "data":{
                         "fontFamily": "Consolas",
-                        "top":3,
+                        "top":1,
                         "left":0,
                         "fontSize": 8,
                         "fill": false,
@@ -1423,7 +1423,7 @@ changeSchema = (type) => {
                     }
                 },
                 {   "type":"text",
-                    "Text":"4",
+                    "Text":"1",
                     "data":{
                         "fontFamily": "Consolas",
                         "top":3,
@@ -1503,7 +1503,7 @@ changeSchema = (type) => {
                     "Text":"s",
                     "data":{
                         "fontFamily": "Consolas",
-                        "top":22,
+                        "top":24,
                         "left":0,
                         "fontSize": 12,
                         "fill": false,
@@ -3067,7 +3067,7 @@ changeSchema = (type) => {
                         "type": "rect",
                         "data": {
                             "name": "bound",
-                            "width": 55,
+                            "width": 63,
                             "height": 55,
                             "fill": false,
                             // "stroke": "blue"
@@ -3077,45 +3077,145 @@ changeSchema = (type) => {
                     {
                         "type": "rect",
                         "data": {
-                            "width": 55,
+                            "width": 63,
                             "height": 40,
                             "fill": "white",
                             "stroke": "black"
                         }
                     },
-                    {
-                        "type": "text",
-                        "Text": "1",
-                        "data": {
-                            "fontFamily": "Arial",
-                            "top": 3,
-                            "left": 20,
+                    {   "type":"text",
+                        "Text":"1",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":1,
+                            "left":0,
+                            "fontSize": 8,
+                            "fill": false,
+                            "extra":"numerator-1"
+                        }
+                    },
+                    {   "type":"text",
+                        "Text":"2",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":1,
+                            "left":0,
+                            "fontSize": 8,
+                            "fill": false,
+                            "extra":"numerator-2"
+                        }
+                    },
+                    {   "type":"text",
+                        "Text":"3",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":1,
+                            "left":0,
+                            "fontSize": 8,
+                            "fill": false,
+                            "extra":"numerator-3"
+                        }
+                    },
+                    {   "type":"text",
+                        "Text":"4",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":3,
+                            "left":0,
+                            "fontSize": 8,
+                            "fill": false,
+                            "extra":"numerator-4"
+                        }
+                    },
+                    {   "type":"text",
+                        "Text":"1",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":4,
+                            "left":28.2,
                             "fontSize": 12,
                             "fill": "black",
-                            "changeable": false
+                            "extra":"numerator-equation"
                         }
                     },
                     {
-                        "type": "path",
-                        "path": "M 0 0 L 10 0",
-                        "data":
-                            {
-                                "left": 18,
-                                "top": 16,
-                                "stroke": "black",
-                                "invisible": true
-                            }
+                        "type":"rect",
+                        "data":{
+                            "width":53,
+                            "height":0.1,
+                            "left":5,
+                            // "fill":"black",
+                            "stroke":"black",
+                            "extra":"equation-line",
+                            "top":20
+                        }
                     },
-                    {
-                        "type": "text",
-                        "Text": "s+1",
-                        "data": {
-                            "fontFamily": "Arial",
-                            "top": 15,
-                            "left": 15,
+                    {   "type":"text",
+                        "Text":"1",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":21,
+                            "left":0,
+                            "fontSize": 8,
+                            "fill": false,
+                            "extra":"denominator-1"
+                        }
+                    },
+                    {   "type":"text",
+                        "Text":"2",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":21,
+                            "left":0,
+                            "fontSize": 8,
+                            "fill": false,
+                            "extra":"denominator-2"
+                        }
+                    },
+                    {   "type":"text",
+                        "Text":"3",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":21,
+                            "left":0,
+                            "fontSize": 8,
+                            "fill": false,
+                            "extra":"denominator-3"
+                        }
+                    },
+                    {   "type":"text",
+                        "Text":"4",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":21,
+                            "left":0,
+                            "fontSize": 8,
+                            "fill": false,
+                            "extra":"denominator-4"
+                        }
+                    },
+                    {   "type":"text",
+                        "Text":"s + 1",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":24,
+                            "left":15,
                             "fontSize": 12,
                             "fill": "black",
-                            "changeable": false
+                            "extra":"denominator-equation",
+                            "width": 101
+                        }
+                    },
+                    {   "type":"text",
+                        "Text":"F",
+                        "data":{
+                            "fontFamily": "Consolas",
+                            "top":13,
+                            "left":16.75,
+                            "fontSize": 12,
+                            "fill": false,
+                            "changeable":false,
+                            "extra":"F"
                         }
                     },
                     {
