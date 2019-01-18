@@ -313,8 +313,16 @@ window.addBlock = function (blockType, posx, posy) {
     }
     if(blockType === 'TransferFcn'){
         scheme[type].tex_result = '\\dfrac{1}{s+1}';
+        scheme[type].equation = ["1","s?1"];
+        scheme[type].symbolsNum = [];
+        scheme[type].symbolsNum = [];
+        scheme[type].symbolsDen = ["+"];
+    }
+
+    if(blockType === 'DiscreteTransfer'){
+        scheme[type].tex_result = '\\dfrac{1}{z+0.5}';
         scheme[type].equation = ["1","1 1"];
-        // katex.render(document.getElementById("transfer-text"),scheme[type].tex_result)
+        scheme[type].symbolsNum = [];
     }
 };
 

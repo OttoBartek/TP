@@ -90,7 +90,7 @@ function changeBlock(){
             var numerator = $('#multiply-citatel').val();
             var denominator = $('#multiply-menovatel').val();
 
-            drawequation(changingElement,numerator.split(" "),denominator.split(" "));
+            drawequation(changingElement);
         }
     }else if(schemeType === 'blockSim'){
         if ($('#transfer-numer').length && $('#transfer-denom').length) {
@@ -98,7 +98,7 @@ function changeBlock(){
             var numerator = $('#transfer-numer').val().substring(1, $('#transfer-numer').val().length-1) ;
             var denominator = $('#transfer-denom').val().substring(1, $('#transfer-denom').val().length-1) ;
 
-           // drawequation(changingElement,numerator.split(" "),denominator.split(" "));
+           drawequation(changingElement);
         }
     }
     else {
@@ -143,8 +143,16 @@ function changeBlock(){
 
 function drawequation(block){
 
-    var numerator = scheme[block.type].extra[0].split(" ");
-    var denominator = scheme[block.type].extra[1].split(" ");
+    var numerator = scheme[block.type].extra[0];
+    var denominator = scheme[block.type].extra[1];
+
+    if(block.BlockType === "TransferFcn"){
+        numerator = numerator.substr(1,numerator.length -2);
+        denominator = denominator.substr(1,denominator.length -2);
+    }
+
+    numerator = numerator.split(" ");
+    denominator = denominator.split(" ");
 
     var numStr = "";
     var denStr = "";
@@ -1312,112 +1320,285 @@ function vypocetTransferFcn(){
     var objPar = blockParameters[changingElement.BlockType];
     if ($('#transfer-numer').length && $('#transfer-denom').length) {
 
-        var numerator = $('#transfer-numer').val().substring(1, $('#transfer-numer').val().length-1) ;
-        var denominator = $('#transfer-denom').val().substring(1, $('#transfer-denom').val().length-1) ;
+        var numerator = $('#transfer-numer').val();
+        var denominator = $('#transfer-denom').val();
 
         if (scheme[changingElement.type].extra[0] != numerator || scheme[changingElement.type].extra[1] != denominator) {
             // console.log(scheme[changingElement.type].extra)
-            if (denominator != '1') {
+            if (denominator != '[1]') {
                 ///^-?\d+( -?\d+)*$/
                 ///^\[(-?\d+(\.\d+)?( -?\d+(\.\d+)?)*)\]$/
-                if (denominator.match(/^-?\d+(\.\d+)?( -?\d+(\.\d+)?)*$/)) {
-                    if (numerator.match(/^-?\d+(\.\d+)?( -?\d+(\.\d+)?)*$/)) {
+                if (denominator.match(/^\[(-?\d+(\.\d+)?( -?\d+(\.\d+)?)*)\]$/)) {
+                    if (numerator.match(/^\[(-?\d+(\.\d+)?( -?\d+(\.\d+)?)*)\]$/)) {
+
+                        numerator = numerator.substring(1, numerator.length-1);
+                        denominator = denominator.substring(1, denominator.length-1);
+
                         var numeratorArr;
                         var numOutput = "";
                         numeratorArr = numerator.split(" ");
                         var exponent = numeratorArr.length - 1;
+                        var symbolsNum = [];
+                        var eqNumOut = "";
 
                         for (var i = 0; i < numeratorArr.length; i++) {
                             if (numeratorArr[i] === "1") {
                                 if (exponent > 1) {
                                     numOutput += "s^{" + exponent+"}";
+                                    eqNumOut += "s^{" + exponent+"}";
                                     exponent--;
                                 }
                                 else if (exponent === 1) {
                                     numOutput += "s";
+                                    eqNumOut += "s";
                                     exponent--;
                                 }
                                 else {
                                     numOutput += numeratorArr[i];
+                                    eqNumOut += numeratorArr[i];
                                 }
-                            }else if(numeratorArr[i] === "0"){
+                            }
+                            else if (numeratorArr[i] === "-1") {
+                                if (exponent > 1) {
+                                    if(i == 0){
+                                        numOutput+="-";
+                                        eqNumOut+="-";
+                                    }
+
+                                    numOutput += "s^{" + exponent+"}";
+                                    eqNumOut += "s^{" + exponent+"}";
+                                    exponent--;
+                                }
+                                else if (exponent === 1) {
+                                    if(i == 0){
+                                        numOutput+="-";
+                                        eqNumOut+="-";
+                                    }
+                                    numOutput += "s";
+                                    eqNumOut += "s";
+                                    exponent--;
+                                }
+                                else {
+                                    if(i == 0){
+                                        numOutput+="-";
+                                        eqNumOut+="-";
+                                    }
+                                    numOutput += numeratorArr[i].substr(1,numeratorArr[i].length -1);
+                                    eqNumOut+= numeratorArr[i].substr(1,numeratorArr[i].length -1);
+                                }
+                            }
+                            else if(numeratorArr[i] === "0"){
                                 exponent--;
                             }
-                            else {
+                            else if(numeratorArr[i].substr(0,1) === "-"){
+                                if (exponent > 1) {
+                                    if(i == 0){
+                                        numOutput+="-";
+                                        eqNumOut+="-";
+                                    }
+                                    numOutput += numeratorArr[i].substr(1,numeratorArr[i].length) + "s^{" + exponent+"}";
+                                    eqNumOut += numeratorArr[i].substr(1,numeratorArr[i].length) + "s^{" + exponent+"}";
+                                    exponent--;
+                                }
+                                else if (exponent === 1) {
+                                    if(i == 0){
+                                        numOutput+="-";
+                                        eqNumOut+="-";
+                                    }
+                                    numOutput += numeratorArr[i].substr(1,numeratorArr[i].length) + "s";
+                                    eqNumOut+= numeratorArr[i].substr(1,numeratorArr[i].length) + "s";
+                                    exponent--;
+                                }
+                                else {
+                                    if(i == 0){
+                                        numOutput+="-";
+                                        eqNumOut+="-";
+                                    }
+                                    numOutput += numeratorArr[i].substr(1,numeratorArr[i].length);
+                                    eqNumOut+= numeratorArr[i].substr(1,numeratorArr[i].length);
+                                }
+                            }else {
                                 if (exponent > 1) {
                                     numOutput += numeratorArr[i] + "s^{" + exponent+"}";
+                                    eqNumOut+= numeratorArr[i] + "s^{" + exponent+"}";
                                     exponent--;
                                 }
                                 else if (exponent === 1) {
                                     numOutput += numeratorArr[i] + "s";
+                                    eqNumOut+= numeratorArr[i] + "s";
                                     exponent--;
                                 }
                                 else {
                                     numOutput += numeratorArr[i];
+                                    eqNumOut+= numeratorArr[i];
                                 }
                             }
-                            if (i < numeratorArr.length - 1 && numeratorArr[i] !== '0') {
-                                numOutput += "+";
+
+                            if (i < numeratorArr.length - 1) {
+
+                                if(i<numeratorArr.length - 1){
+                                    if(numeratorArr[i+1].substr(0,1) === "-"){
+                                        numOutput += "-";
+                                        symbolsNum.push("-");
+                                    }else if(numeratorArr[i+1] === "0"){
+                                        continue;
+                                    }
+                                    else{
+                                        numOutput += "+";
+                                        symbolsNum.push("+");
+                                    }
+                                }else{
+                                    numOutput += "+";
+                                    symbolsNum.push("+");
+                                }
+
+                                eqNumOut+= "?";
                             }
                             //console.log(numOutput);
                         }
                         if (numOutput.substr(numOutput.length - 1, numOutput.length) == '+') {
                             numOutput = numOutput.slice(0, -1);
+                            symbolsNum.pop();
                         }
 
-                        var denArray;
+                        var denominatorArr;
                         var denOutput = "";
-                        denArray = denominator.split(" ");
-                        exponent = denArray.length - 1;
+                        denominatorArr = denominator.split(" ");
+                        exponent = denominatorArr.length - 1;
+                        var symbolsDen = [];
+                        var eqDenOut = "";
 
-                        for (var j = 0; j < denArray.length; j++) {
-                            if (denArray[j] === "1") {
+                        for (var i = 0; i < denominatorArr.length; i++) {
+                            if (denominatorArr[i] === "1") {
                                 if (exponent > 1) {
                                     denOutput += "s^{" + exponent+"}";
+                                    eqDenOut += "s^{" + exponent+"}";
                                     exponent--;
                                 }
                                 else if (exponent === 1) {
                                     denOutput += "s";
+                                    eqDenOut += "s";
                                     exponent--;
                                 }
                                 else {
-                                    denOutput += denArray[j];
+                                    denOutput += denominatorArr[i];
+                                    eqDenOut += denominatorArr[i];
                                 }
-                            }else if(denArray[j] === "0"){
-                                exponent--;
                             }
-                            else {
+                            else if (denominatorArr[i] === "-1") {
                                 if (exponent > 1) {
-                                    denOutput += denArray[j] + "s^{" + exponent+"}";
-                                    exponent--;
+                                    if(i == 0){
+                                        denOutput+="-";
+                                        eqDenOut+="-";
+                                    }
+
+                                    denOutput += "s^{" + exponent+"}";
+                                    eqDenOut += "s^{" + exponent+"}";
                                     exponent--;
                                 }
                                 else if (exponent === 1) {
-                                    denOutput += denArray[j] + "s";
+                                    if(i == 0){
+                                        denOutput+="-";
+                                        eqDenOut+="-";
+                                    }
+                                    denOutput += "s";
+                                    eqDenOut += "s";
                                     exponent--;
                                 }
                                 else {
-                                    denOutput += denArray[j];
+                                    if(i == 0){
+                                        denOutput+="-";
+                                        eqDenOut+="-";
+                                    }
+                                    denOutput += denominatorArr[i].substr(1,denominatorArr[i].length -1);
+                                    eqDenOut+= denominatorArr[i].substr(1,denominatorArr[i].length -1);
+                                }
+                            }
+                            else if(denominatorArr[i] === "0"){
+                                exponent--;
+                            }
+                            else if(denominatorArr[i].substr(0,1) === "-"){
+                                if (exponent > 1) {
+                                    if(i == 0){
+                                        denOutput+="-";
+                                        eqDenOut+="-";
+                                    }
+                                    denOutput += denominatorArr[i].substr(1,denominatorArr[i].length) + "s^{" + exponent+"}";
+                                    eqDenOut += denominatorArr[i].substr(1,denominatorArr[i].length) + "s^{" + exponent+"}";
+                                    exponent--;
+                                }
+                                else if (exponent === 1) {
+                                    if(i == 0){
+                                        denOutput+="-";
+                                        eqDenOut+="-";
+                                    }
+                                    denOutput += denominatorArr[i].substr(1,denominatorArr[i].length) + "s";
+                                    eqDenOut+= denominatorArr[i].substr(1,denominatorArr[i].length) + "s";
+                                    exponent--;
+                                }
+                                else {
+                                    if(i == 0){
+                                        denOutput+="-";
+                                        eqDenOut+="-";
+                                    }
+                                    denOutput += denominatorArr[i].substr(1,denominatorArr[i].length);
+                                    eqDenOut+= denominatorArr[i].substr(1,denominatorArr[i].length);
+                                }
+                            }else {
+                                if (exponent > 1) {
+                                    denOutput += denominatorArr[i] + "s^{" + exponent+"}";
+                                    eqDenOut+= denominatorArr[i] + "s^{" + exponent+"}";
+                                    exponent--;
+                                }
+                                else if (exponent === 1) {
+                                    denOutput += denominatorArr[i] + "s";
+                                    eqDenOut+= denominatorArr[i] + "s";
+                                    exponent--;
+                                }
+                                else {
+                                    denOutput += denominatorArr[i];
+                                    eqDenOut+= denominatorArr[i];
                                 }
                             }
 
+                            if (i < denominatorArr.length - 1) {
 
-                            if (j < denArray.length - 1 && denArray[j] !== '0') {
-                                denOutput += "+";
+                                if(i<denominatorArr.length - 1){
+                                    if(denominatorArr[i+1].substr(0,1) === "-"){
+                                        denOutput += "-";
+                                        symbolsDen.push("-");
+                                    }else if(denominatorArr[i+1] === "0"){
+                                        continue;
+                                    }
+                                    else{
+                                        denOutput += "+";
+                                        symbolsDen.push("+");
+                                    }
+                                }else{
+                                    denOutput += "+";
+                                    symbolsDen.push("+");
+                                }
+
+                                eqDenOut+= "?";
                             }
+                            //console.log(denOutput);
                         }
                         if (denOutput.substr(denOutput.length - 1, denOutput.length) == '+') {
                             denOutput = denOutput.slice(0, -1);
+                            symbolsDen.pop();
                         }
 
                         var resultTex = '\\dfrac{' + numOutput + '}{' + denOutput + '}';
 
+                        numerator="["+numerator+"]";
+                        denominator="["+denominator+"]";
 
-                        numerator="["+numerator+"]"
-                        denominator="["+denominator+"]"
                         scheme[changingElement.type].extra = [numerator,denominator];
 
-                        scheme[changingElement.type].equation = [numOutput,denOutput];
+                        scheme[changingElement.type].equation = [eqNumOut,eqDenOut];
+
+                        scheme[changingElement.type].symbolsNum = symbolsNum;
+                        scheme[changingElement.type].symbolsDen = symbolsDen;
 
                         $.each(objPar, function (i, subPar) {
                             //console.log(objPar);
@@ -1436,13 +1617,17 @@ function vypocetTransferFcn(){
                     return;
                 }
             } else {
-                if (numerator.match(/(^-?[a-zA-Z][0-9]*$)|(^-?[0-9]+$)|(^-?\d+(\.\d+)?)/)) {
+                if (numerator.match(/(^\[-?[a-zA-Z][0-9]*\]$)|(^\[-?[0-9]+\]$)|(^\[-?\d+(\.\d+)?\]$)/)) {
                     scheme[changingElement.type].extra = [numerator,denominator];
+
+                    numerator = numerator.substring(1, numerator.length-1);
+                    denominator = denominator.substring(1, denominator.length-1);
+
                     scheme[changingElement.type].equation = [numerator,denominator];
                     scheme[changingElement.type].tex_result = numerator;
                 }
                 else {
-                    $("#transfer-numer").addClass("is-invalid")
+                    $("#multiply-numer").addClass("is-invalid")
                     $("#block-error").html("Invalid numerator!");
                     return;
                 }
@@ -1451,7 +1636,6 @@ function vypocetTransferFcn(){
     }
     var nieco = document.getElementById('transfer-text')
     var val = scheme[changingElement.type].tex_result;
-    console.log(val)
     katex.render(val, nieco);
 
 }
